@@ -1,0 +1,9 @@
+.featurePreview {
+  font-size: var(--font-size-sm);
+  padding: var(--spacer-3) 0;
+  display: flex;
+}
+
+.svg {
+  font-weight: 600;
+}
