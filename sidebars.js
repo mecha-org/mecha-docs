@@ -29,6 +29,15 @@ module.exports = {
         "gettingstarted/specifications",
       ],   
     },
+    {
+      type: "category",
+      label: "Connectivity",
+      items: [
+        "connectivity/connecting-via-ssh",
+        "connectivity/via-serial-console",
+        "connectivity/using-public-key-auth",
+        "connectivity/using-putty-on-windows",
+      ],   
+    },
   ],
-
 };

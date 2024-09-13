@@ -1,0 +1,63 @@
+---
+title: Connecting via Serial Console
+hide_table_of_contents: false
+---
+
+The Comet-M has an inbuilt Serial Console that can be connected using a UART cable. Note, this also can be a **Hail Mary** solution if SSH or any other form of connectivity fails.
+
+## What you'll need
+
+* USB to UART cable - [Amazon link](https://www.amazon.com/Serial-Adapter-Signal-Prolific-Windows/dp/B08BLKBK1K)
+
+## Connecting the USB to UART Cable
+
+* The Debug UART pin mapping for the Comet-M is shown below.
+
+```
+$ sudo apt add update
+```
+
+* Connect the male header pins of the UART cable to the Debug UART pins on the Comet-M
+* Connect the USB end of the cable to your machine.
+
+## Connect to Serial Console on Linux
+
+1. Open the Terminal on your Linux machine.
+2. Type `dmesg | grep tty` to list the connected devices. Your UART bridge will appear as something like `/dev/ttyUSB0`.
+
+```
+$ dmesg | grep tty
+[    0.000000] console [tty0] enabled
+[  542.711750] usb 1-4: FTDI USB Serial Device converter now attached to ttyUSB0
+```
+
+3. Connect to your device using the screen command, followed by the device path and the baud rate, which is typically `115200`.
+
+```
+$ sudo screen /dev/ttyUSB0 115200
+```
+
+4. If everything is done correctly, you should now be connected to the device via the UART cable.
+
+## Connect to Serial Console on MacOS
+
+1. Open the Terminal on your Mac.
+2. Type `ls /dev/cu.*` to list the connected devices.
+
+```
+$ ls /dev/cu.*
+/dev/cu.Bluetooth-Incoming-Port /dev/cu.usbserial-XXXX
+```
+
+3. Identify the device that represents your UART bridge. It should look something like `/dev/cu.usbserial-XXXX`.
+4. Connect to the device using the screen command followed by the device path and the baud rate i.e. `115200`.
+
+```
+$ screen /dev/cu.usbserial-XXXX 115200 
+```
+
+5. If everything is done correctly, you should now be connected to the device via the UART cable.
+
+## Connect to Serial Console on Windows
+
+You will need the PuTTY application to connect to Serial Console on Windows. Follow [this tutorial](https://www.notion.so/Using-PuTTY-on-Windows-3fba4ed0345f4bff98e6a2ac741c1fb0?pvs=21) on how to use PuTTY.

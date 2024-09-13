@@ -1,6 +1,6 @@
 ---
 title: Specifications
-hide_table_of_contents: true
+hide_table_of_contents: false
 ---
 
 import S from "@site/components/Steps/";
@@ -10,69 +10,103 @@ import S from "@site/components/Steps/";
   Saleor platform without needing credit card information or trial periods.
 </S.Column>
 
-<S>
-    <S.Step>
-        <S.Details>
-            ### Signup
-            Create an account at [Saleor Cloud](https://cloud.saleor.io/signup).
-        </S.Details>
 
-    </S.Step>
-    <S.Step>
-        <S.Details>
-            ### Create a sandbox
-            Create a store closest to the location of your project.
-        </S.Details>
-    </S.Step>
+### CPU, Memory & Disk
 
-    <S.Step>
-        <S.Details>
-            ### Explore the dashboard
-            The dashboard will be populated with sample datasets to make it easier to explore the features.
-            At this stage, you have a ready-to-use Saleor store that you can use to follow the other quickstart guides.
-        </S.Details>
-    </S.Step>
+| Specification | Description |
+| ------------- | ----------- |
+| CPU | NXP i.MX 8M Mini (64-bit) Quad-Core ARM Cortex-A53 (1.8 GHz per core) |
+| Cache | 32KB L1 Cache, 512 kB L2 Cache |
+| Secondary | Cortex-M4 core up to 400MHz |
+| GPU | Vivante GC NanoUltra 3D (1 shader), GC30 2D |
+| RAM | 4GB DDR4 LPDDR4 (3200 MHz) |
+| Disk | 32 GB eMMC NAND Flash (110 MB/s write) |
 
-    <S.Step>
-        <S.Details>
-            ### Create a snapshot
-            1. Try to modify any data (for example, deleting or editing a product) and create a snapshot of the store to save the current state of the store.
-            2. In the sandbox settings, use **Create a snapshot**.
-            3. Give the snapshot a name **Staging snapshot**.
-        </S.Details>
-        <S.Code>
-            ![Image](./create_snapshot.png)
-        </S.Code>
-    </S.Step>
+### Wireless
 
-    <S.Step>
-        <S.Details>
-            ### Clear data
-            We can completely erase data from the DB to start from scratch.
+| Specification | Description |
+| ------------- | ----------- |
+| Wireless | 2.4 GHz and 5.0 GHz IEEE 802.11ac wireless |
+| Bluetooth | Bluetooth 5.0, BLE |
 
-            In the sandbox **Danger** settings, use **Clear database**.
+### Video Processing
 
-            This will remove all data from the database, making the dashboard empty as a result.
-        </S.Details>
-    </S.Step>
+| Specification | Description |
+| ------------- | ----------- |
+| Encoding | 1080p60 H.264, VP8 |
+| Decoding | 1080p60 H.265, H.264, VP8, VP9 |
 
-    <S.Step>
-        <S.Details>
-            ### Use snapshot
-            Use **Restore from snapshot** to back the data we saved in the previous step.
+### Display
 
-            Snapshots can be used across different sandboxes. You can now also create a new sandbox using the snapshot.
+| Specification | Description |
+| ------------- | ----------- |
+| Kind | 3.4", LED with IPS TFT Display |
+| Resolution | 480 x 480, 200 pixels per inch |
+| Touch | Capacitive 2-finger touch |
 
-            Go to **Project** -> **New sandbox** -> **Create from snapshot**.
+### Audio
 
-        </S.Details>
-    </S.Step>
+| Specification | Description |
+| ------------- | ----------- |
+| Codec | High-Performance, Ultra-low Power Consumption |
+| Speaker | 1.2 W rated power, 6 Ohm rated impedance |
+| Microphone | Dual - 100 Hz ~ 10 kHz Digital, PDM Microphone MEMS |
 
-</S>
+### Camera
 
-### Next steps
+| Specification | Description |
+| ------------- | ----------- |
+| Sensor | OV5640 5 MP Sensor, Autofocus |
+| Resolution | 1080p: 30 fps, 960p: 45 fps, 720p: 60 fps |
+| Output | RAW RGB, RGB565/555/444, CCIR656, YUV422/420, YCbCr422 |
 
-<S.Column>
-  Using snapshot management can help you write migration scripts, test new
-  features, or create a new store for staging or feature development.
-</S.Column>
+### Power
+
+| Specification | Description |
+| ------------- | ----------- |
+| Input | USB Type-C, 5V DC (2-3A) |
+| Battery | 3000 mAh LiPO Battery, Fuel Gauge |
+| Charging | Fast Charging, 0 to 50% in 20 mins |
+| Consumption | 2.5 - 7.5 W, depending on load |
+
+### Peripherals
+
+| Specification | Description |
+| ------------- | ----------- |
+| RTC | Secure RTC with Onboard Coin-Cell |
+| Motion | 6-Axis Gyroscope with IRQ |
+
+### Cryptography
+
+| Specification | Description |
+| ------------- | ----------- |
+| System | Hardware Crypto Accelerator |
+| Trust | Isolated Trust anchor with RSA, ECC, AES keys |
+| OpenSSL | Engine for OpenSSL 3.0, 1.1.1g |
+| Features | Secure Boot, Disk Encryption |
+
+### Interfaces
+
+| Specification | Description |
+| ------------- | ----------- |
+| USB | 1x USB Type-A 2.0 with OTG, 1x USB Type-A 2.0 |
+| Ethernet | 1x Gigabit Ethernet with 100 Mbps/1000 Mbps indicator |
+| ADC | 16-bit, Single Channel |
+| LED | 1x RGB Programmable LED |
+| Headers | 6x8 2.54" Pitch Headers (female): 8x GPIO, 2x I2C, 2x SPI, 2x UART, 1x RTC, 1x ADC, 2x 5V, 2x 3.3V, 2x 1.8V, 2x PWM |
+| Extension | 2x https://www.mikroe.com/click |
+
+### Indicator
+
+| Specification | Description |
+| ------------- | ----------- |
+| Power | White LED for charging and discharging |
+| Programmable | Red / Green / Blue LED |
+
+### Mechanical
+
+| Specification | Description |
+| ------------- | ----------- |
+| Dimensions | 70 mm x 150 mm x 18.5 mm (2.75" x 5.90" x 0.72") |
+| Weight | 215 grams (7.5 Oz) |
+| Screws | M2.5 Socket Head (Allen) Bolt |
