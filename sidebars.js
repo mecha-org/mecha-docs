@@ -21,19 +21,14 @@ module.exports = {
         icon: "home",
       },
     },
-    // {
-    //   type: "category",
-    //   label: "Quickstart",
-    //   items: [
-    //     "quickstart/cloud",
-    //     "quickstart/running-locally",
-    //     "quickstart/api",
-    //     "quickstart/storefront",
-    //   ],   
-    // },
- 
-
-
+    {
+      type: "category",
+      label: "Getting Started",
+      items: [
+        "gettingstarted/quickstart",
+        "gettingstarted/specifications",
+      ],   
+    },
   ],
 
 };

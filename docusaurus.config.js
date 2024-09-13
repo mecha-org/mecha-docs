@@ -67,7 +67,7 @@ const config = {
         items: [
           {
             to: "https://github.com/saleor/saleor-docs/issues/new",
-            label: "Report an Issue",
+            label: "Github",
             position: "right",
           },
         ],

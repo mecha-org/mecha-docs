@@ -1,6 +1,6 @@
 ---
 slug: /
-title: Saleor Documentation
+title: Mecha Documentation
 hide_table_of_contents: true
 description: Highlights of the Saleor documentation. Learn about Saleor using tutorials, API reference, and developer guides.
 ---
@@ -35,7 +35,7 @@ import {
 
 Learn about Saleor using tutorials, API reference, and developer guides.
 
-<CardGrid>
+<!-- <CardGrid>
 
     [<Icon32 name={"play"} /> **Quickstart** Explore tutorials to get up and running quickly.](quickstart/cloud.mdx)
 
@@ -45,9 +45,9 @@ Learn about Saleor using tutorials, API reference, and developer guides.
 
     [<Icon32 name={"buildApp"} /> **Build Apps** Build integrations and dashboard apps.](developer/extending/apps/overview.mdx)
 
-</CardGrid>
+</CardGrid> -->
 
-<Block title="Core concepts" >
+<!-- <Block title="Core concepts" >
     <Chapters >
         [<Tag size={16} strokeWidth={1.5}/> **Products** _Configure catalog._](developer/products/overview.mdx)
 
@@ -66,4 +66,4 @@ Learn about Saleor using tutorials, API reference, and developer guides.
 
 <Block title={"Apps"}>
   <Apps />
-</Block>
+</Block> -->

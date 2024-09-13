@@ -62,7 +62,7 @@
   border-left: 1px solid var(--ifm-color-emphasis-200);
 }
 .details {
-  grid-column: span 5;
+  grid-column: span 7;
 }
 
 .code {
@@ -70,5 +70,5 @@
 }
 
 .column {
-  max-width: 600px;
+  max-width: 900px;
 }
