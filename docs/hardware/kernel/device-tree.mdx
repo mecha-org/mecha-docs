@@ -1,4 +1,115 @@
 ---
 title: Device tree
-hide_table_of_contents: true
+hide_table_of_contents: false
 ---
+
+## What is a Device Tree?
+
+The Device Tree (DT) is a data structure used in Linux to describe the hardware components of a system. It's particularly important in embedded systems, where hardware is highly customized. The Device Tree provides a way to inform the kernel about the hardware without hardcoding details directly into the kernel source code.
+
+## Why Use a Device Tree?
+
+In the past, Linux kernels relied on board files, which were C files included in the kernel source to define hardware configurations. This approach was not scalable as it required recompiling the kernel for each new hardware configuration. The Device Tree abstracts these hardware configurations, allowing the same kernel binary to be used across different hardware platforms by simply changing the Device Tree Blob (DTB) file.
+
+## Structure of a Device Tree
+
+The Device Tree is typically written in a plain text format called Device Tree Source (DTS), which is compiled into a binary format called Device Tree Blob (DTB). The kernel reads the DTB at boot time to configure the hardware.
+
+### Key Components of a Device Tree
+
+1. **Nodes**: Represent devices or components (e.g., CPUs, memory, peripherals).
+2. **Properties**: Key-value pairs that describe specific attributes of a node (e.g., memory size, device type).
+3. **Labels**: Provide references to nodes or properties within the Device Tree.
+4. **Overlays**: Allow modifications to the base Device Tree without altering the original file, often used for enabling or configuring additional hardware.
+
+## Writing a Device Tree
+
+### Basic Node Structure
+
+Each node in the Device Tree represents a hardware component, with properties describing its characteristics. For example:
+
+```dts
+gpio@40020000 {
+    compatible = "vendor,gpio";
+    reg = <0x40020000 0x1000>;  // Base address and size of the register map
+};
+```
+
+### Important Properties
+
+1. **compatible**: Identifies the device and allows the kernel to bind the correct driver.
+2. **reg**: Specifies the memory address and size of the device's register space.
+3. **interrupts**: Describes the interrupt line used by the device.
+4. **status**: Indicates whether the device is enabled or disabled (`"okay"` or `"disabled"`).
+
+### Example: Adding a UART Device
+
+```dts
+uart@40021000 {
+    compatible = "vendor,uart";
+    reg = <0x40021000 0x1000>;
+    interrupts = <5>;
+    status = "okay";
+};
+```
+
+## Compiling a Device Tree
+
+Once you've written the DTS file, it needs to be compiled into a DTB file that the kernel can use.
+
+1. **Install Device Tree Compiler (DTC)**:
+   ```
+   sudo apt-get install device-tree-compiler
+   ```
+
+2. **Compile the DTS to DTB**:
+   ```
+   dtc -I dts -O dtb -o mydevice.dtb mydevice.dts
+   ```
+
+3. **Deploy the DTB to the Bootloader**: Copy the DTB file to the bootloader directory, usually `/boot/` on most systems.
+
+## Integrating Device Tree with the Kernel
+
+When the Linux kernel boots, it uses the DTB file to configure the hardware. The DTB file is usually loaded by the bootloader (like U-Boot) and passed to the kernel.
+
+### Configuring the Bootloader
+
+In U-Boot, you might need to specify the DTB file in the boot configuration:
+
+```
+setenv fdtfile mydevice.dtb
+saveenv
+```
+
+### Kernel Device Tree Bindings
+
+The kernel driver needs to match the `compatible` string in the DTB to the driver. For example, if your DTS has:
+
+```dts
+compatible = "vendor,gpio";
+```
+
+Your driver should have a corresponding structure:
+
+```c
+static const struct of_device_id my_gpio_of_match[] = {
+    { .compatible = "vendor,gpio", },
+    { },
+};
+MODULE_DEVICE_TABLE(of, my_gpio_of_match);
+```
+
+## Debugging and Troubleshooting
+
+1. **Decompile a DTB to DTS**: If you want to inspect a compiled DTB file:
+   ```
+   dtc -I dtb -O dts -o mydevice.dts mydevice.dtb
+   ```
+
+2. **Check the Kernel Log**: Use `dmesg` to inspect kernel messages for any issues related to the Device Tree:
+   ```
+   dmesg | grep -i dtb
+   ```
+
+3. **Status Property**: Ensure the `status` property is set to `"okay"` for devices you want to enable.
