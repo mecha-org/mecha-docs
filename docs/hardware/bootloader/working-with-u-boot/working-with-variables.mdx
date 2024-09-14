@@ -1,4 +1,212 @@
 ---
 title: Working with variables
-hide_table_of_contents: true
+hide_table_of_contents: false
 ---
+
+# Variables Required for U-Boot
+
+To build U-Boot for the Mecha device, you need to have these variables set on your machine:
+
+```bash
+ARCH = "arm64"
+CROSS_COMPILE = "/usr/bin/aarch64-linux-gnu-"
+```
+
+These variables are required to build arm64-based U-Boot for our target Mecha platform.
+
+# How to Use Variables in Linux
+
+## 1. Introduction to Variables in Linux
+
+In Linux, variables are used to store data that can be referenced and manipulated within scripts or the command line. They are crucial for tasks such as storing user inputs, file paths, or configuration options.
+
+## 2. Types of Variables
+
+- **Environment Variables**: System-wide variables that affect the behavior of processes. Examples include `PATH`, `HOME`, and `USER`.
+- **Shell Variables**: Variables that are specific to the shell session and can include environment variables or user-defined variables.
+- **Local Variables**: Variables that are specific to a script or a function within a script.
+
+## 3. Creating and Using Variables
+
+### a. Defining a Variable
+
+To create a variable in the shell, simply assign a value to a name without any spaces around the `=` sign.
+
+```bash
+variable_name="value"
+```
+
+For example:
+
+```bash
+greeting="Hello, World!"
+```
+
+### b. Accessing a Variable
+
+To access the value of a variable, prefix the variable name with `$`.
+
+```bash
+echo $greeting
+```
+
+Output:
+
+```
+Hello, World!
+```
+
+### c. Exporting a Variable
+
+If you want a variable to be available to child processes, you need to export it:
+
+```bash
+export variable_name
+```
+
+For example:
+
+```bash
+export greeting="Hello, World!"
+```
+
+## 4. Environment Variables
+
+Environment variables are typically defined in shell initialization files like `.bashrc`, `.bash_profile`, `.zshrc`, etc.
+
+### a. Common Environment Variables
+
+- `PATH`: Specifies directories to search for executable files.
+
+```bash
+echo $PATH
+```
+
+- `HOME`: User's home directory.
+
+```bash
+echo $HOME
+```
+
+- `USER`: Current logged-in username.
+
+```bash
+echo $USER
+```
+
+### b. Setting Environment Variables
+
+To set an environment variable:
+
+```bash
+export VAR_NAME="value"
+```
+
+For example:
+
+```bash
+export EDITOR="vim"
+```
+
+This sets `vim` as the default editor.
+
+## 5. Command Substitution
+
+You can assign the output of a command to a variable using command substitution:
+
+```bash
+current_date=$(date)
+echo $current_date
+```
+
+## 6. Unsetting Variables
+
+If you need to remove a variable, you can use the `unset` command:
+
+```bash
+unset variable_name
+```
+
+For example:
+
+```bash
+unset greeting
+```
+
+## 7. Working with Arrays
+
+Bash also supports arrays, which can hold multiple values:
+
+```bash
+my_array=("value1" "value2" "value3")
+```
+
+Access elements by index:
+
+```bash
+echo ${my_array[0]}
+```
+
+## 8. Advanced Tips
+
+### a. Read-Only Variables
+
+You can create a read-only variable using the `readonly` command:
+
+```bash
+readonly pi=3.14
+```
+
+### b. String Operations
+
+You can manipulate strings stored in variables using various operators:
+
+- Length of a string:
+
+```bash
+echo ${#greeting}
+```
+
+- Substring extraction:
+
+```bash
+echo ${greeting:0:5}
+```
+
+### c. Default Values
+
+You can assign default values to variables if they are not set:
+
+```bash
+echo ${greeting:-"Default Greeting"}
+```
+
+## 9. Examples
+
+### a. Simple Script with Variables
+
+```bash
+#!/bin/bash
+
+name="John Doe"
+greeting="Hello, $name"
+echo $greeting
+```
+
+### b. Script Using Environment Variables
+
+```bash
+#!/bin/bash
+
+echo "User: $USER"
+echo "Home Directory: $HOME"
+```
+
+## 10. Persistent Variables
+
+To make variables persistent across sessions, add them to your shell configuration file (e.g., `~/.bashrc` for Bash):
+
+```bash
+echo 'export MY_VAR="my value"' >> ~/.bashrc
+source ~/.bashrc
+```

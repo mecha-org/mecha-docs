@@ -1,4 +1,58 @@
 ---
 title: U-Boot commands
-hide_table_of_contents: true
+hide_table_of_contents: false
 ---
+
+# U-Boot — the Universal Boot Loader
+
+U-Boot is the most popular boot loader in linux based embedded devices. It is released as open source under the GNU GPLv2 license. It supports a wide range of microprocessors like MIPS, ARM, PPC, Blackfin, AVR32 and x86. It even supports FPGA based nios platforms. If your hardware design is based out of any of these processors and if you are looking for a bootloader the best bet is to try U-Boot first. It also supports different methods of booting which is pretty much needed on fallback situations. For example, it has support to boot from USB, SD Card, NOR and NAND flash (non volatile memory). It also has the support to boot linux kernel from the network using TFTP. The list of filesystems supported by U-Boot is huge. So you are covered in all aspects that is needed from a bootloader and more so.
+
+## 1. Getting Started with U-Boot
+
+### 1.1 Prerequisites
+
+* **Cross-Compiler**: You'll need a cross-compiler for the target architecture. For ARM architecture, you can use `gcc-arm-none-eabi`.
+* **Source Code**: Obtain the U-Boot source code from the official GitHub repository.
+
+```bash
+git clone https://github.com/u-boot/u-boot.git
+cd u-boot
+```
+
+### 1.2 Understanding U-Boot Components
+
+* **Primary Bootloader (SPL)**: A small piece of code that runs first to initialize the basic hardware and load the full U-Boot image.
+* **Secondary Bootloader (U-Boot)**: The main bootloader that provides command-line interface and functionality to load the operating system.
+
+## Common Commands
+
+U-Boot offers a variety of commands for different purposes:
+
+### System Information
+* `printenv`: Display environment variables
+* `version`: Show U-Boot version
+
+### Memory Operations
+* `md`: Memory display
+* `mm`: Memory modify
+* `cp`: Memory copy
+
+### Boot Commands
+* `boot`: Start the OS boot process
+* `bootm`: Boot from memory
+
+### Flash Operations
+* `erase`: Erase flash memory
+* `nand write`: Write to NAND flash memory
+
+### Network Commands
+* `dhcp`: Obtain IP address via DHCP
+* `ping`: Test network connectivity
+
+## Environment Variables
+
+U-Boot uses environment variables to store configuration settings. Some important variables include:
+
+* `bootargs`: Kernel command line arguments
+* `bootcmd`: Default boot command
+* `ethaddr`: Ethernet MAC address

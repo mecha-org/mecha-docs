@@ -1,4 +1,186 @@
 ---
 title: Mount USB storage
-hide_table_of_contents: true
+hide_table_of_contents: false
 ---
+
+# Configuring USB Ports in Mecha Hardware
+
+In this tutorial, we'll walk through the steps to check and set the modes of the USB ports on Mecha hardware, which has two Type-A USB ports that can be configured as either host or gadget modes using sysfs entries. By default, USB-1 (J214) operates in gadget mode, and USB-2 (J213) operates in host mode.
+
+## 1. Check the Current Mode of USB Ports
+
+Before making any changes, it's important to know the current mode of the USB ports. You can do this by reading the role file for each port in the sysfs.
+
+Check Mode for USB-1 (J214):
+
+```bash
+cat /sys/class/udc/ci_hdrc.0/device/role
+```
+
+Check Mode for USB-2 (J213):
+
+```bash
+cat /sys/class/udc/ci_hdrc.1/device/role
+```
+
+These commands will output either host or gadget, indicating the current mode of each USB port.
+
+## 2. Set Host Mode for USB Ports
+
+If you want to configure the USB ports to operate as a host, you can set the role to host. This mode allows the USB port to control other devices (e.g., USB drives, keyboards).
+
+Set Host Mode for USB-1 (J214):
+
+```bash
+echo host > /sys/class/udc/ci_hdrc.0/device/role
+```
+
+Set Host Mode for USB-2 (J213):
+
+```bash
+echo host > /sys/class/udc/ci_hdrc.1/device/role
+```
+
+After running these commands, the USB ports will be switched to host mode.
+
+## 3. Set Gadget Mode for USB Ports
+
+To switch the USB ports to gadget mode, where they can act as USB devices (e.g., appearing as storage devices or network interfaces when connected to a host), set the role to gadget.
+
+Set Gadget Mode for USB-1 (J214):
+
+```bash
+echo gadget > /sys/class/udc/ci_hdrc.0/device/role
+```
+
+Set Gadget Mode for USB-2 (J213):
+
+```bash
+echo gadget > /sys/class/udc/ci_hdrc.1/device/role
+```
+
+After these commands, the USB ports will function in gadget mode.
+
+## 4. Verify the Changes
+
+After setting the modes, it's a good practice to verify that the changes have taken effect.
+
+Verify Mode for USB-1 (J214):
+
+```bash
+cat /sys/class/udc/ci_hdrc.0/device/role
+```
+
+Verify Mode for USB-2 (J213):
+
+```bash
+cat /sys/class/udc/ci_hdrc.1/device/role
+```
+
+The output should reflect the new mode (host or gadget) based on the changes you made.
+
+# How to use USB on Linux machine
+
+## 1. Plug in the USB Device
+
+Insert the USB device into a USB port on your Linux machine.
+
+## 2. Check if the USB Device is Detected
+
+Open a terminal and type the following command to list all connected storage devices:
+
+```bash
+lsblk
+```
+
+This will display a list of all block devices. Look for your USB device, typically labeled as /dev/sdX (where X is a letter like a, b, etc.). You can also use:
+
+```bash
+dmesg | tail
+```
+
+This will show the latest kernel messages, which should include information about the connected USB device.
+
+## 3. Create a Mount Point (if necessary)
+
+Create a directory where you can mount the USB device, for example:
+
+```bash
+sudo mkdir /mnt/usb
+```
+
+## 4. Mount the USB Device
+
+Mount the USB drive to the directory you just created. Replace /dev/sdX1 with the correct partition (e.g., /dev/sdb1):
+
+```bash
+sudo mount /dev/sdX1 /mnt/usb
+```
+
+After mounting, you can access the files on the USB drive using:
+
+```bash
+cd /mnt/usb
+ls
+```
+
+## 5. Access and Manage Files
+
+You can now copy, move, delete, or edit files on the USB drive using standard Linux commands like cp, mv, rm, etc.
+Example:
+
+```bash
+cp /path/to/file /mnt/usb/
+```
+
+## 6. Safely Unmount the USB Device
+
+Before removing the USB device, unmount it to ensure that all data is properly written and to avoid file system corruption:
+
+```bash
+sudo umount /mnt/usb
+```
+
+If you get a "device is busy" error, it means some process is still using the USB device. You can use the lsof command to find out what is using the device:
+
+```bash
+lsof +f -- /mnt/usb
+```
+
+After resolving the issue, try unmounting again.
+
+## 7. Remove the USB Device
+
+Once unmounted, you can safely remove the USB device from the port.
+
+## 8. Additional Tips
+
+### Formatting the USB Drive
+
+If you need to format the USB drive, you can use mkfs for various file systems like FAT32, NTFS, or ext4:
+
+```bash
+sudo mkfs.vfat /dev/sdX1    # For FAT32
+sudo mkfs.ntfs /dev/sdX1    # For NTFS
+sudo mkfs.ext4 /dev/sdX1    # For ext4
+```
+
+### Checking Disk Usage
+
+To see how much space is used or free on the USB drive:
+
+```bash
+df -h /mnt/usb
+```
+
+## 9. Auto-mount USB Devices
+
+Most modern Linux distributions automatically mount USB devices when plugged in. If this doesn't happen, you can add an entry to the /etc/fstab file for auto-mounting.
+
+Example entry in /etc/fstab:
+
+```
+/dev/sdX1 /mnt/usb <vfat> defaults 0 0
+```
+
+This guide should help you get started with using USB devices on a Linux system, whether you're accessing files, managing partitions, or safely removing the device.
