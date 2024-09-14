@@ -78,6 +78,12 @@ const config = {
             label: "Mechanix OS",
           },
           {
+            type: "docSidebar",
+            sidebarId: "mechaCloudSidebar",
+            position: "left",
+            label: "Mecha Cloud",
+          },
+          {
             to: "https://github.com/saleor/saleor-docs/issues/new",
             label: "Github",
             position: "right",
