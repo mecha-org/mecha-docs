@@ -5,7 +5,7 @@ export default function LayoutWrapper(props) {
   return (
     <>
       <div style={{
-        backgroundColor:"yellow",
+        backgroundColor:"#FAEC78",
         color:"black",
         paddingLeft:"12px",
         paddingRight:"12px",
