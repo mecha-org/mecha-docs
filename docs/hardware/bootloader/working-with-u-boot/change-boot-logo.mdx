@@ -7,20 +7,20 @@ hide_table_of_contents: false
 
 Customizing the boot splash image on your OS can give it a personal touch. This guide will walk you through the process of locating the default splash image, replacing it with your custom image, and ensuring that the changes are applied when you reboot.
 
-## Step 1: Locate the Default Splash Image
+### Step 1: Locate the Default Splash Image
 
 The default splash images used by Plymouth are typically located in `/boot/splash/logo.bmp`. This file controls the appearance of the U-Boot logo.
 
 **Note**: The resolution must be 480x480 pixels.
 
-## Step 2: Replace the Default Image
+### Step 2: Replace the Default Image
 
-### 1. Prepare Your Custom Image
+#### 1. Prepare Your Custom Image
 
 - Create or choose an image you want to use as the boot logo.
 - Ensure the image is in BMP format and has a resolution of 480x480 pixels.
 
-### 2. Backup the Original Image
+#### 2. Backup the Original Image
 
 Before replacing the image, back up the original one:
 
@@ -28,7 +28,7 @@ Before replacing the image, back up the original one:
 sudo cp /boot/splash/logo.bmp /boot/splash/logo.bmp.bak
 ```
 
-### 3. Replace the Image
+#### 3. Replace the Image
 
 Copy your custom image over the default one:
 

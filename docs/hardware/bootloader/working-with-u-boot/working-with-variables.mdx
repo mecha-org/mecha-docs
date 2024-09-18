@@ -14,21 +14,21 @@ CROSS_COMPILE = "/usr/bin/aarch64-linux-gnu-"
 
 These variables are required to build arm64-based U-Boot for our target Mecha platform.
 
-# How to Use Variables in Linux
+## How to Use Variables in Linux
 
-## 1. Introduction to Variables in Linux
+### 1. Introduction to Variables in Linux
 
 In Linux, variables are used to store data that can be referenced and manipulated within scripts or the command line. They are crucial for tasks such as storing user inputs, file paths, or configuration options.
 
-## 2. Types of Variables
+### 2. Types of Variables
 
 - **Environment Variables**: System-wide variables that affect the behavior of processes. Examples include `PATH`, `HOME`, and `USER`.
 - **Shell Variables**: Variables that are specific to the shell session and can include environment variables or user-defined variables.
 - **Local Variables**: Variables that are specific to a script or a function within a script.
 
-## 3. Creating and Using Variables
+### 3. Creating and Using Variables
 
-### a. Defining a Variable
+#### a. Defining a Variable
 
 To create a variable in the shell, simply assign a value to a name without any spaces around the `=` sign.
 
@@ -42,7 +42,7 @@ For example:
 greeting="Hello, World!"
 ```
 
-### b. Accessing a Variable
+#### b. Accessing a Variable
 
 To access the value of a variable, prefix the variable name with `$`.
 
@@ -56,7 +56,7 @@ Output:
 Hello, World!
 ```
 
-### c. Exporting a Variable
+#### c. Exporting a Variable
 
 If you want a variable to be available to child processes, you need to export it:
 
@@ -70,11 +70,11 @@ For example:
 export greeting="Hello, World!"
 ```
 
-## 4. Environment Variables
+### 4. Environment Variables
 
 Environment variables are typically defined in shell initialization files like `.bashrc`, `.bash_profile`, `.zshrc`, etc.
 
-### a. Common Environment Variables
+#### a. Common Environment Variables
 
 - `PATH`: Specifies directories to search for executable files.
 
@@ -94,7 +94,7 @@ echo $HOME
 echo $USER
 ```
 
-### b. Setting Environment Variables
+#### b. Setting Environment Variables
 
 To set an environment variable:
 
@@ -110,7 +110,7 @@ export EDITOR="vim"
 
 This sets `vim` as the default editor.
 
-## 5. Command Substitution
+### 5. Command Substitution
 
 You can assign the output of a command to a variable using command substitution:
 
@@ -119,7 +119,7 @@ current_date=$(date)
 echo $current_date
 ```
 
-## 6. Unsetting Variables
+### 6. Unsetting Variables
 
 If you need to remove a variable, you can use the `unset` command:
 
@@ -133,7 +133,7 @@ For example:
 unset greeting
 ```
 
-## 7. Working with Arrays
+### 7. Working with Arrays
 
 Bash also supports arrays, which can hold multiple values:
 
@@ -147,9 +147,9 @@ Access elements by index:
 echo ${my_array[0]}
 ```
 
-## 8. Advanced Tips
+### 8. Advanced Tips
 
-### a. Read-Only Variables
+#### a. Read-Only Variables
 
 You can create a read-only variable using the `readonly` command:
 
@@ -157,7 +157,7 @@ You can create a read-only variable using the `readonly` command:
 readonly pi=3.14
 ```
 
-### b. String Operations
+#### b. String Operations
 
 You can manipulate strings stored in variables using various operators:
 
@@ -173,7 +173,7 @@ echo ${#greeting}
 echo ${greeting:0:5}
 ```
 
-### c. Default Values
+#### c. Default Values
 
 You can assign default values to variables if they are not set:
 
@@ -181,9 +181,9 @@ You can assign default values to variables if they are not set:
 echo ${greeting:-"Default Greeting"}
 ```
 
-## 9. Examples
+### 9. Examples
 
-### a. Simple Script with Variables
+#### a. Simple Script with Variables
 
 ```bash
 #!/bin/bash
@@ -193,7 +193,7 @@ greeting="Hello, $name"
 echo $greeting
 ```
 
-### b. Script Using Environment Variables
+#### b. Script Using Environment Variables
 
 ```bash
 #!/bin/bash
@@ -202,7 +202,7 @@ echo "User: $USER"
 echo "Home Directory: $HOME"
 ```
 
-## 10. Persistent Variables
+### 10. Persistent Variables
 
 To make variables persistent across sessions, add them to your shell configuration file (e.g., `~/.bashrc` for Bash):
 
