@@ -3,20 +3,20 @@ import styles from "./AppMetadata.module.css";
 import ExternalLinkIcon from "../../static/assets/icons/external-link.svg";
 
 type Props = {
-  minSaleorVersion: string;
+  minMechaVersion: string;
   roadmapUrl?: string;
   githubUrl?: string;
 };
 
 export const AppMetadata = ({
-  minSaleorVersion,
+  minMechaVersion,
   roadmapUrl,
   githubUrl,
 }: Props) => {
   return (
     <div className={styles.root}>
       <span>
-        Saleor version required: <strong>{minSaleorVersion}</strong>
+        Mecha version required: <strong>{minMechaVersion}</strong>
       </span>
       {roadmapUrl && (
         <span>

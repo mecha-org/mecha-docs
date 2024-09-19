@@ -59,10 +59,10 @@ const config = {
       navbar: {
         hideOnScroll: true,
         logo: {
-          alt: "Saleor",
+          alt: "Mecha",
           src: "img/logo.svg",
           srcDark: "img/logo-white.svg",
-          className: "saleor-logo",
+          className: "Mecha-logo",
         },
         items: [
           {
