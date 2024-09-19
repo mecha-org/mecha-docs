@@ -1,4 +1,87 @@
 ---
-title: Add your first machine
+title: OpenTelemetry Specifications Explained
 hide_table_of_contents: true
 ---
+
+OpenTelemetry is an open-source project that provides a set of tools, APIs, and SDKs to enable the collection of telemetry data (such as metrics, logs, and traces) from distributed systems. It is designed to standardize the way this data is generated, collected, and exported, making it easier for developers and operations teams to monitor, observe, and troubleshoot their systems. Understanding OpenTelemetry specifications is crucial for implementing effective observability in modern cloud-native applications.
+
+### What is OpenTelemetry?
+
+OpenTelemetry is a collaborative project under the Cloud Native Computing Foundation (CNCF) that aims to create a unified standard for collecting and transmitting telemetry data. It supports multiple programming languages and can be integrated with a variety of backends and visualization tools.
+
+#### Key Goals of OpenTelemetry:
+
+- **Interoperability**: Provide a standard way to collect and export telemetry data across different platforms and technologies.
+- **Ease of Use**: Simplify the process of instrumenting code to generate telemetry data.
+- **Vendor-Agnostic**: Ensure that the data collected can be used with any observability backend, avoiding vendor lock-in.
+
+### Core Components of OpenTelemetry
+
+#### Traces:
+
+- **Definition**: Traces represent the journey of a single request as it flows through various components of a system. A trace is composed of multiple spans, each representing a single operation or step in the process.
+- **Purpose**: Traces are used to understand the flow of requests and to diagnose latency or performance issues within distributed systems.
+- **Example**: A trace might show how a user request travels through a frontend service, to a backend API, and then to a database, capturing timing information at each step.
+
+#### Metrics:
+
+- **Definition**: Metrics are numerical data points that provide quantitative insights into the health and performance of a system. Common metrics include CPU usage, memory consumption, request rates, and error rates.
+- **Purpose**: Metrics are used to monitor the overall health of systems and identify trends or anomalies over time.
+- **Example**: A metric might track the average response time of an API endpoint, or the number of requests served by a particular service per minute.
+
+#### Logs:
+
+- **Definition**: Logs are timestamped records of discrete events that occur within a system. Logs can capture detailed information about errors, state changes, or other significant events.
+- **Purpose**: Logs are used for in-depth troubleshooting and forensic analysis, helping to pinpoint the exact cause of issues.
+- **Example**: A log might record an error message when a service fails to connect to a database or a successful transaction when a user completes a purchase.
+
+#### Baggage:
+
+- **Definition**: Baggage is a set of key-value pairs that are propagated along with a trace through different services. It allows context to be shared across services as requests are processed.
+- **Purpose**: Baggage is used to pass metadata through different components of a system, aiding in cross-service tracing and correlation.
+- **Example**: Baggage might carry information about a user session or request ID that needs to be accessible in every service the request touches.
+
+### OpenTelemetry Specification Details
+
+#### API Specification:
+
+- **Definition**: The API specification defines the interfaces that applications use to interact with OpenTelemetry. This includes how to create traces, metrics, and logs, and how to propagate context across services.
+- **Purpose**: To standardize the way telemetry data is generated and managed across different programming languages and platforms.
+- **Key Features**:
+  - **Tracers and Meters**: Objects that create spans and metrics, respectively.
+  - **Context Propagation**: Mechanisms to pass context across service boundaries.
+
+#### SDK Specification:
+
+- **Definition**: The SDK specification provides the concrete implementations of the APIs, including how data is collected, processed, and exported to backend systems.
+- **Purpose**: To ensure consistent behavior and performance of OpenTelemetry instrumentation across different environments.
+- **Key Features**:
+  - **Processors**: Manage how telemetry data is handled before export, such as batching or sampling.
+  - **Exporters**: Send data to various backends, like Prometheus for metrics or Jaeger for traces.
+
+#### Semantic Conventions:
+
+- **Definition**: Semantic conventions are a set of guidelines that define standard naming and structure for attributes, events, and metrics. This ensures consistency in how telemetry data is labeled and interpreted across different services.
+- **Purpose**: To provide a common language for describing telemetry data, making it easier to correlate and analyze data from different sources.
+- **Key Features**:
+  - **Span Attributes**: Standard keys like http.method or db.statement that describe common operations.
+  - **Resource Attributes**: Identify the source of telemetry data, such as service.name or host.id.
+
+#### Instrumentation Libraries:
+
+- **Definition**: These are pre-built libraries that automatically collect telemetry data from popular frameworks and libraries, such as HTTP clients, databases, or web servers.
+- **Purpose**: To reduce the effort required to instrument applications by providing out-of-the-box support for common technologies.
+- **Key Features**:
+  - **Auto-Instrumentation**: Automatically captures telemetry data without requiring changes to application code.
+  - **Manual Instrumentation**: Allows developers to add custom spans, metrics, and logs where necessary.
+
+### How OpenTelemetry Works
+
+1. **Instrumentation**: Developers instrument their applications using OpenTelemetry APIs or libraries. This involves adding code to create traces, metrics, and logs that capture key events and data points.
+2. **Context Propagation**: As requests flow through different services, OpenTelemetry propagates context (such as trace IDs and baggage) across service boundaries, enabling distributed tracing.
+3. **Data Processing**: The OpenTelemetry SDK processes the telemetry data, applying filters, sampling, or batching as configured.
+4. **Exporting**: Finally, the processed telemetry data is exported to a backend of choice, such as Prometheus, Jaeger, or any other supported observability platform.
+
+### Conclusion
+
+OpenTelemetry provides a powerful, flexible, and standardized way to collect and manage telemetry data in distributed systems. By adhering to OpenTelemetry specifications, organizations can ensure consistent observability across different environments, reduce the complexity of instrumentation, and avoid vendor lock-in. Whether you’re dealing with traces, metrics, logs, or context propagation, OpenTelemetry's comprehensive specifications ensure that you have the tools needed to achieve full observability, enabling better monitoring, troubleshooting, and optimization of your systems.

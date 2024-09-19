@@ -1,4 +1,94 @@
 ---
-title: Add your first machine
+title: Monitoring and Analyzing Machine Metrics
 hide_table_of_contents: true
 ---
+# Monitoring and Analyzing Machine Metrics
+
+## Introduction
+
+Monitoring and analyzing machine metrics is crucial for maintaining optimal performance, identifying potential issues, and ensuring system stability. This guide provides detailed steps to help you effectively monitor key metrics, apply filters for specific insights, and use tools like Grafana for advanced data analysis.
+
+## Accessing the Metrics Dashboard
+
+### Navigate to the Metrics Section:
+
+1. From the machine details page in the Mecha Console, select the **Metrics** tab.
+2. This section provides a comprehensive view of various metrics like CPU usage, Disk memory usage, Filesystem usage, System load, and Network activity.
+
+## Viewing and Understanding Metrics
+
+### Metrics Overview:
+
+The dashboard displays various metrics categorized into different panels. Each panel represents a specific type of metric:
+
+- **CPU Utilization**: Indicates the percentage of CPU capacity in use.
+- **Disk Utilization**: Shows read/write activities on the disk.
+- **File System Utilization**: Reflects the amount of disk space currently in use.
+- **System Load**: Represents the workload handled by the machine over time.
+- **Network In/Out**: Monitors network traffic, including data transmitted and received.
+- **Memory Utilization**: Tracks the amount of memory in use and available.
+
+### Hide/View Specific Metrics:
+
+- Use the filter options to customize the view:
+  - To focus on specific metrics, select or deselect metrics to display or hide certain data points.
+  - This helps narrow down the information to what is most relevant for your analysis.
+
+## Applying Time Filters
+
+### Time Query:
+
+- Use the time filters located at the top-right corner of the dashboard:
+  - Select a specific time range (e.g., Last 5 minutes, Last 1 hour, Last 24 hours) to focus on a particular period.
+  - This allows for a targeted analysis of metrics, making it easier to spot trends or anomalies over time.
+
+## Analyzing the Results
+
+### Analyze Results:
+
+- Review the displayed metrics to assess system performance or identify potential issues:
+  - Look for unexpected spikes or dips in CPU, memory, disk, and network usage.
+  - Identify patterns or trends that may indicate system inefficiencies or resource constraints.
+
+### Refresh Metrics:
+
+- To get the latest real-time data, click the refresh button located near the time filter options.
+  - This ensures that you are working with the most current information, essential for time-sensitive analysis.
+
+## Exploring Advanced Analysis with Grafana
+
+### Explore in Grafana:
+
+- Click the **Explore** button to open the Grafana service directly from the Mecha Console. No additional authentication is required.
+- In Grafana, you can:
+  - Access machine metrics and logs in real time.
+  - Use advanced filtering options to refine your analysis.
+  - Create custom dashboards and visualizations for a more comprehensive view.
+
+Grafana allows for deeper insights into machine performance, enabling you to apply complex queries, set alerts, and correlate different data points effectively.
+
+For detailed guidance on how to visualize and explore the metrics data effectively in Grafana, refer to [How-to Guide: Query Metrics on Grafana](#).
+
+## Setting Up Alerts in Grafana
+
+### Creating Alerts:
+
+- Grafana offers robust alerting capabilities to help you stay informed about critical metric changes or system anomalies.
+  - You can create custom alerts based on specific thresholds for any metric you are monitoring.
+
+For detailed guidance on configuring alerts, refer to the [Grafana Alerting Documentation](#).
+
+## Best Practices for Monitoring Metrics
+
+- **Regular Monitoring**:
+  - Establish a routine for monitoring metrics to detect anomalies early and prevent potential issues.
+
+- **Understanding Baselines**:
+  - Determine baseline values for normal operation to quickly identify when metrics deviate from the norm.
+
+- **Proactive Troubleshooting**:
+  - Use insights gained from metric analysis to implement proactive measures, such as optimizing configurations or scaling resources.
+
+## Conclusion
+
+Monitoring and analyzing machine metrics is an essential practice for maintaining system health and performance. By regularly reviewing key metrics, applying filters, setting up alerts, and leveraging tools like Grafana, you can gain a deeper understanding of your system’s behavior and make informed decisions to enhance efficiency and resolve issues proactively.

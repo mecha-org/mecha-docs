@@ -1,4 +1,96 @@
 ---
-title: Add your first machine
+title: Overview
 hide_table_of_contents: true
 ---
+
+Mecha-Agent is an open-source tool designed to manage and monitor Mecha Machines. It provides a range of services to ensure efficient operation and communication within the Mecha ecosystem.
+
+## Services
+
+- **Provisioning:** Configuring and setting up Mecha Machines for operation within the network, including initial setup and configurations.
+- **Messaging:** Facilitating secure communication between Mecha Machines and other components, supporting multiple messaging protocols and real-time data transmission.
+- **Machine Status:** Monitoring the health and operational status of Mecha Machines, providing alerts for critical issues.
+- **Settings:** Configuring various operational parameters of the Mecha Agent, including network configurations, logging options, and custom settings.
+- **Networking:** Managing connectivity aspects of Mecha Machines, supporting different network protocols, and handling dynamic network environments.
+- **Telemetry:** Collecting and transmitting performance data from Mecha Machines to monitor system health, optimize performance, and analyze machine operations.
+
+## Set up Mecha Agent
+
+- **Docker:** Deploy the Mecha Agent using Docker containers for a consistent and isolated environment, enabling easy scaling and management across different systems.
+- **Linux:** Install and configure the Mecha Agent on Linux-based operating systems. Ensure compatibility with various distributions and make use of native system tools for deployment.
+- **macOS:** Set up the Mecha Agent on macOS environments. Utilize system-specific commands and configurations to ensure smooth operation on both Intel and Apple Silicon architectures.
+- **Windows:** Install and run the Mecha Agent on Windows operating systems, using available installation packages and compatible tools for seamless integration.
+- **Kubernetes:** Deploy the Mecha Agent within a Kubernetes cluster for automated orchestration, scaling, and management of containerized applications.
+- **Building from source:** Compile the Mecha Agent directly from the source code, allowing for custom modifications and optimizations suited to specific deployment requirements.
+
+## Create Configuration File
+
+Files in the format of `yml` are supported. When starting Mecha Agent, you specify the path to the settings file via the `-- -s` flag. The `settings.yml` file is used to manage the configuration of Mecha Agent. Here is an example of what the file might look like:
+
+```yaml
+# settings.yml
+
+version: 1.0
+logging:
+  enabled: true
+  path: /var/log/mecha-agent.log
+  level: DEBUG
+server:
+  url: 0.0.0.0
+  port: 3001
+  tls: false
+messaging:
+  system:
+    enabled: true
+    url: nats://nats:4222
+  user:
+    enabled: true
+    url: nats://nats-machine:4222
+  service_urls:
+    base_url: 
+    get_nonce: /v1/messaging/get_nonce
+    issue_auth_token: /v1/messaging/issue_token
+settings:
+  storage:
+    type: file
+    path: ~/.mecha/agent/db
+status:
+  time_interval_sec: 60
+networking:
+  enabled: true
+  disco_addr: 0.0.0.0:8080
+  wireguard:
+    tun: wg0
+    port: 51820
+    userspace: linux
+telemetry:
+  enabled: true
+  collect:
+    system: true
+    user: true
+```
+## Environmental Variables
+Environmental variables take precedence over config file values. Nested paths get mapped to config values by putting an underscore `__` (double underscore) between every level, so `messaging.service_urls.get_nonce` becomes `MECHA_AGENT_MESSAGING__SERVICE_URLS__GET_NONCE=<value>`.
+
+## Start Agent
+
+```
+# to build 
+cargo build 
+
+# to run 
+sudo cargo run -- -s "./settings.yml"
+
+# env to set settings file path
+MECHA_AGENT_SETTINGS_PATH # default ~/.mecha/agent/settings.yml
+```
+
+## Supported Platforms
+- Linux
+        - Minimum version: kernel 2.6.32 or later
+        - Architectures: AMD64, ARM64
+
+- macOS
+
+    - Minimum version: macOS 10.13 or later
+    - Architectures: AMD64 (Intel), ARM64 (Apple Silicon)

@@ -159,8 +159,6 @@ const sidebars = {
             "mecha-cloud/references/byok-with-networking",
             "mecha-cloud/references/monitoring-and-analysing-metrics",
             "mecha-cloud/references/monitoring-and-analysing-logs",
-            "mecha-cloud/references/query-logs-on-grafana",
-            "mecha-cloud/references/delete-network-from-console",
           ],
         },
         {
@@ -183,7 +181,6 @@ const sidebars = {
       label: "Mecha Agent",
       items: [
         "mecha-cloud/mecha-agent/overview",
-
         {
           type: "category",
           label: "Services",

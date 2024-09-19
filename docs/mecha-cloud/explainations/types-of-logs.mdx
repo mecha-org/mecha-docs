@@ -1,4 +1,78 @@
 ---
-title: Add your first machine
+title: Types of Logs - Error, Info, Debug, Warn
 hide_table_of_contents: true
 ---
+
+In software systems, logs are an essential tool for understanding the behavior of applications and diagnosing issues. They provide a detailed record of events, errors, and other important activities within the system. Logs are typically categorized by their severity or purpose, helping developers and system administrators focus on specific aspects of the system's operation. The primary types of logs are Error, Info, Debug, and Warn. Understanding these types is key to effective monitoring and troubleshooting.
+
+### 1. Error Logs:
+- **Definition:**
+  Error logs capture events that signify a problem or malfunction within the system. These logs indicate that something has gone wrong, and immediate attention may be required to prevent further issues.
+- **Purpose:**
+  - To record critical failures or issues that disrupt normal operation.
+  - To provide detailed information about errors that need to be addressed to maintain system stability.
+- **Typical Use Cases:**
+  - An application crashes due to an unhandled exception.
+  - A database connection fails, preventing data from being saved or retrieved.
+  - A critical file required for operation is missing or corrupted.
+- **Example:**
+
+```
+ERROR: 2024-08-16 10:47:32.123 - Unable to connect to the database. Connection timeout.
+```
+
+
+### 2. Info Logs:
+- **Definition:**
+Info logs contain general information about the normal operation of the system. These logs are used to confirm that processes and activities are functioning as expected.
+- **Purpose:**
+- To document successful operations, key events, or status updates.
+- To provide a record of the system's regular activities for auditing and tracking purposes.
+- **Typical Use Cases:**
+- A user successfully logs into the system.
+- A scheduled task completes without issues.
+- A service starts up and initializes correctly.
+- **Example:**
+
+```
+INFO: 2024-08-16 10:47:32.456 - User 'admin' logged in successfully.
+```
+
+
+### 3. Debug Logs:
+- **Definition:**
+Debug logs are detailed records used by developers during the debugging process. These logs provide in-depth information about the system's internal state and are usually more verbose than other log types.
+- **Purpose:**
+- To help developers diagnose and troubleshoot issues by providing detailed insights into the application's behavior.
+- To track variable values, function calls, and the flow of execution.
+- **Typical Use Cases:**
+- Tracing the execution path of a function to understand how data is being processed.
+- Logging the values of variables at different stages of code execution.
+- Diagnosing issues that only occur under specific conditions.
+- **Example:**
+
+
+```
+DEBUG: 2024-08-16 10:47:32.789 - Retrieved user details: {id: 123, name: 'John Doe', role: 'admin'}.
+```
+
+
+### 4. Warn Logs:
+- **Definition:**
+Warn logs capture events that are not errors but could potentially lead to issues if not addressed. These logs serve as alerts or warnings about unusual or unexpected behavior that may require attention.
+- **Purpose:**
+- To highlight situations that are not critical but might indicate potential problems.
+- To give early warnings about conditions that could escalate into errors if left unresolved.
+- **Typical Use Cases:**
+- A disk is nearing its storage capacity, which could lead to future errors if not managed.
+- A deprecated API is being used, and future updates may remove support for it.
+- A network connection is slow but still functional.
+- **Example:**
+
+```
+WARN: 2024-08-16 10:47:32.654 - Disk space usage at 85%. Consider cleaning up old files.
+```
+
+
+### Conclusion:
+Understanding the different types of logs—Error, Info, Debug, and Warn—is essential for effective system monitoring and troubleshooting. Each log type serves a specific purpose and provides varying levels of detail. Error logs indicate critical issues requiring immediate attention, Info logs document normal operations, Debug logs offer detailed insights for troubleshooting, and Warn logs signal potential issues. By categorizing logs in this way, teams can quickly identify and prioritize issues, ensuring the system remains stable and performant.

@@ -1,4 +1,78 @@
 ---
-title: Add your first machine
+title: Networking Component and Their Roles
 hide_table_of_contents: true
 ---
+
+## Introduction
+
+Networking within the Mecha Console involves several key components, each playing a crucial role in ensuring smooth communication and management of devices. This guide provides an overview of these components, explaining their functions and how they interact within a network.
+
+## Key Networking Components
+
+### 1. IP Address
+
+**Definition:** An Internet Protocol (IP) address is a unique identifier assigned to each device within a network. It allows devices to communicate with each other by specifying a destination for data packets.
+
+**Role:**
+- Facilitates device identification within the network.
+- Enables routing of data between devices by providing a unique address.
+- Helps in network management by organizing devices under a structured IP scheme.
+
+**Example:** In the network newnet, 172.16.36.107 is the IP address assigned to the node aquatic-valkyrie.
+
+### 2. DNS (Domain Name System)
+
+**Definition:** The Domain Name System (DNS) translates human-readable domain names (e.g., newnet.mec.sh) into IP addresses that machines use to identify each other on the network.
+
+**Role:**
+- Simplifies network navigation by allowing users to connect to services using easy-to-remember names instead of numeric IP addresses.
+- Supports the organization of nodes by associating domain names with specific IP addresses.
+- Enhances network security by managing and verifying domain name associations.
+
+**Example:** The DNS entry aquatic-valkyrie.newnet.mec.sh corresponds to the IP address 172.16.36.107.
+
+### 3. Subnet
+
+**Definition:** A subnet, or subnetwork, is a segmented piece of a larger network, typically defined by a range of IP addresses.
+
+**Role:**
+- Helps in organizing a network into smaller, manageable segments.
+- Enhances security by isolating portions of a network from one another.
+- Improves network performance by reducing traffic within a segment.
+
+**Example:** The subnet 172.16.36.0/24 in the newnet network defines the range of IP addresses available to nodes within this network.
+
+### 4. Network ID
+
+**Definition:** The Network ID is a unique identifier assigned to each network within the Mecha Console.
+
+**Role:**
+- Distinguishes one network from another within the console.
+- Assists in managing and configuring settings specific to a particular network.
+
+**Example:** The network newnet has a Network ID of 0dc526d8c4fa-vnqj-212.
+
+### 5. Encryption
+
+**Definition:** Encryption is the process of converting data into a code to prevent unauthorized access.
+
+**Role:**
+- Secures data transmission between devices within the network.
+- Ensures that sensitive information is protected from potential threats.
+- Managed by Mecha to maintain a consistent level of security across all connected devices.
+
+**Example:** In the newnet network, encryption is managed by Mecha, ensuring secure communication between nodes.
+
+## Summary of Roles in a Network
+
+- **IP Address:** Identifies devices and directs data flow within the network.
+- **DNS:** Translates domain names to IP addresses, simplifying device access.
+- **Subnet:** Organizes the network into smaller segments for better management.
+- **Network ID:** Uniquely identifies the network for management purposes.
+- **Encryption:** Secures data transmission within the network.
+
+## Conclusion
+
+Understanding the roles of these networking components is crucial for effective network management. They work together to ensure that devices communicate efficiently, data remains secure, and the network is organized in a way that supports scalability and performance.
+
+This guide covers the essential networking components and their roles within a Mecha network.
