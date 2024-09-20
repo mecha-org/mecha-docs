@@ -2,7 +2,7 @@
 slug: /
 title: Mecha Documentation
 hide_table_of_contents: true
-description: Highlights of the Saleor documentation. Learn about Saleor using tutorials, API reference, and developer guides.
+description: Highlights of the Mecha documentation. Learn about Mecha using tutorials, API reference, and developer guides.
 ---
 
 <style>
@@ -33,7 +33,7 @@ import {
 
 <Tiles />
 
-Learn about Saleor using tutorials, API reference, and developer guides.
+Learn about Mecha using tutorials, API reference, and developer guides.
 
 <!-- <CardGrid>
 
@@ -41,7 +41,7 @@ Learn about Saleor using tutorials, API reference, and developer guides.
 
     [<Icon32 name={"api"} /> **API Reference** Lookup GraphQL types, queries and mutations.](api-reference/api-reference.mdx)
 
-    [<Icon32 name={"feature"} /> **Why Saleor** Learn about product vision and architecture.](overview/why-saleor/headless.mdx)
+    [<Icon32 name={"feature"} /> **Why Mecha** Learn about product vision and architecture.](overview/why-Mecha/headless.mdx)
 
     [<Icon32 name={"buildApp"} /> **Build Apps** Build integrations and dashboard apps.](developer/extending/apps/overview.mdx)
 

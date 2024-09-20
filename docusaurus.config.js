@@ -5,10 +5,10 @@ import { themes as prismThemes } from "prism-react-renderer";
 const config = {
   title: "Mecha Documentation",
   tagline: "Build computing in the real world",
-  favicon: "img/favicon.ico",
+  favicon: "img/logo.png",
 
   // Set the production URL of your site here
-  url: "https://your-docusaurus-site.example.com",
+  url: "https://developers.mecha.so",
   baseUrl: "/",
 
   organizationName: "Mecha Systems",
@@ -97,7 +97,7 @@ const config = {
           label: "API",
         },
         {
-          to: "https://github.com/saleor/saleor-docs/issues/new",
+          to: "https://github.com/mecha-org/mecha-docs",
           label: "GitHub",
           position: "right",
         },
