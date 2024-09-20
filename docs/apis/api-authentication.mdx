@@ -1,0 +1,95 @@
+---
+sidebar_position: 1
+
+title: API Authentication
+---
+import apiAuth1Url from './assets/api-auth1.png';
+import apiAuth2Url from './assets/api-auth2.png';
+import apiAuthCurl3Url from './assets/api-auth-curl3.png';
+import apiAuth3Url from './assets/api-auth3.png';
+import apiAuth4Url from './assets/api-auth4.png';
+import apiAuth5Url from './assets/api-auth5.png';
+
+# API Authentication
+
+Using the Mecha API requires authentication so that Mecha knows who is making requests and what permissions you have. Create an API key to grant access to the API to perform actions.
+
+### **Key Components of API Key Authentication**
+
+1. **API Key Generation:**
+    - The server generates a unique API key for each client.
+    - The key is issued after the client registers or signs up for access.
+2. **API Key Transmission:**
+    - The client sends the API key with each request, in the request header.
+3. **Server Validation:**
+    - The server validates the API key with each request. If the key is valid, the request is processed otherwise, the server rejects the request.
+
+### **Generating an API Key**
+
+- Steps to generate an API key
+    1. From [Mecha Console](https://console.sandbox-v1.mecha.build/settings/api-keys), go to **Settings** → **API Keys**
+    2. Select **Generate key,** add key name, select expiry and description
+        
+    <img src={apiAuth1Url} alt="Generate API Key" />;
+        
+    
+    Once API key is generated make sure to copy and save your personal access token(i.e. Key Secret) , as you will not be able to see it again.
+    The key secret is **only shown once**. Do not store the secret in plaintext where others can access it. Anyone with this token can perform the authorized actions against the resources that the token has access to.
+    
+    <img src={apiAuth2Url} alt="API Key Generated" />;
+    
+
+### **Making Authenticated Requests**
+
+- How to use the API key in HTTP requests?
+    
+    **In the HTTP Headers :**
+    
+    This is a secure and common method where the API key is included in the request headers.
+    
+- Sample request
+    1. Curl Request:
+    
+    <img src={apiAuthCurl3Url} alt="Curl API Key" />;
+    
+    2. Bruno example
+    
+    <img src={apiAuth3Url} alt="Bruno API Key" />;
+    
+
+### **Revoke API Key**
+
+- Purpose of revoking API Key
+    
+    If your key secret is lost or compromised, you can create a new API Key to generate a new secret. And delete the old API Key.
+    
+- How to revoke API key?
+    1. From [Mecha Console](https://console.sandbox-v1.mecha.build/settings/api-keys), go to **Settings** → **API Keys**
+    2. Select **delete icon.**        
+    
+    <img src={apiAuth4Url} alt="Delete API Key" />;
+    
+     
+    
+    1. Confirm delete.       ****
+    
+    <img src={apiAuth5Url} alt="Confirm Delete API Key" />;
+    
+
+### **API Access control**
+
+All Mecha API are not accessible using API key, there are restrictions for some modules as mentioned below,
+1. Accounts
+2. Users
+3. Authentication
+
+### **Server-Side API Key Validation**
+
+On the server, each incoming request's API key is validated. Here's a simplified flow:
+
+- The server extracts the API key from the header.
+- It then checks the key against a database.
+- If the key is valid, the server processes the request.
+- If the key is invalid or missing, the server returns an error response, typically a `401 Unauthorized` or `403 Forbidden`.
+
+API Key Authentication offers a straightforward approach to securing your APIs, making it a popular choice for many applications. By following best practices-such as keeping keys secure, using HTTPS you can enhance the security of your APIs and protect your data from unauthorized access. Regularly review your API key management strategies to ensure they continue to meet your security needs.

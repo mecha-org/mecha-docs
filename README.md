@@ -1,41 +1,30 @@
-# Website
+# Mecha
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+Welcome to the documentation site for Mecha. Below are the commands you need to execute to setup  and run the documentation site.
 
-### Installation
+## Commands
 
-```
-$ yarn
-```
+### Install dependencies
 
-### Local Development
-
-```
-$ yarn start
+```bash
+$ npm install
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+### Generate API docs
+
+```bash
+$ npm run docusaurus clean-api-docs all
+$ npm run docusaurus gen-api-docs all
+```
 
 ### Build
 
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
+```bash
+$ npm run build
 ```
 
-Not using SSH:
+### Run
 
+```bash
+npm run start
 ```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.

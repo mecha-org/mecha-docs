@@ -1,0 +1,47 @@
+---
+sidebar_position: 1
+
+title: Make Your First Request
+---
+import newApiKeyaUrl from './assets/new-api-key.png';
+import copyKeyUrl from './assets/copy-key-secrets.png';
+import curlRequestUrl from './assets/curl-request.png';
+import apiKeyBrunoUrl from './assets/api-key-bruno-example.png';
+
+# Make Your First Request
+
+This tutorial will walk you through making your first request to the Mecha API. By the end of this tutorial, you’ll be able to send a request and receive a response, setting you on your way to integrating with the Mecha system.
+
+- **Generating an API Key**
+    - Prerequisites
+        1. Sign Up to [Mecha Console](https://console.sandbox-v1.mecha.build/auth/signup)
+    - Steps to generate an API key
+        1. From [Mecha Console](https://console.sandbox-v1.mecha.build/settings/api-keys), go to **Settings** → **API Keys**
+        2. Select **Generate key,** add key name, select expiry and description
+            
+            <img src={newApiKeyaUrl} alt="CAPTCHA" />;
+            
+        
+        1. Make sure to copy and save your personal access token(i.e. Key Secret) , as you will not be able to see it again.
+        The key secret is **only shown once**. Do not store the secret in plaintext where others can access it. Anyone with this token can perform the authorized actions against the resources that the token has access to.
+            
+            <img src={copyKeyUrl} alt="CAPTCHA" />;
+            
+- **Making Authenticated Requests**
+    - How to use the API key in HTTP requests?
+        
+        **In the HTTP Headers :**
+        
+        This is a secure and common method where the API key is included in the request headers.
+        
+    - Sample request
+        1. Curl Request:
+        
+        <img src={curlRequestUrl} alt="Curl Request" />
+        
+        2. Bruno example
+            
+        <img src={apiKeyBrunoUrl} alt="API Key Bruno Sample Request" />
+            
+
+Congratulations on making your first request to the Mecha API! Now that you’re familiar with the process, you can start exploring other API endpoints to build powerful integrations with Mecha.

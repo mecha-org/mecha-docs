@@ -1,0 +1,48 @@
+---
+sidebar_position: 1
+
+title: Provisioning A New Machine
+---
+import newMcBrunoUrl from './assets/new-mc-req-bruno.png';
+import statusBrunoUrl from './assets/provision-request-status-bruno.png';
+import flowchartUrl from './assets/provisioning-flowchart.png';
+
+# Provisioning A New Machine
+
+Provisioning a new machine is a fundamental task that ensures your system is configured correctly and ready for use. This guide will walk you through the essential steps to set up your new machine efficiently.
+
+## **Set up machine provisioning**
+
+- **Provisioning a Machine Using provisioning code**
+    1. Get the provision code from one of the following,
+        - Using the connector App (GUI) or
+        - Using the terminal (CLI)
+    2. Add a machine provision request with the provided provision code to add a new machine for an account.             
+    With below request new provision request created with machine ID
+    
+    **Reference : Bruno Screenshot**
+        
+    <img src={newMcBrunoUrl} alt="New Provisioning Bruno" />
+        
+    
+    Once the provision request added, machine certificate, CA- bundle certificate will be added for a machine.
+    
+    And telemetry logs, metrics collection is enabled at the time of adding machine.
+    Then the provisioning request is marked as complete.
+    
+    ****
+    
+- **Verifying the machine is correctly provisioned**
+    
+    To verify machine got provisioned or not, you can check status using below request,
+    
+    **Reference : Bruno Screenshot**
+    
+    <img src={statusBrunoUrl} alt="Provisioning Status Bruno" />
+    
+    If **statusCode = “COMPLETE”** means machine got added, you can check machine details using **get machine details** API.
+    
+
+By following these steps, your new machine should now be fully provisioned and ready to meet your needs.
+
+<img src={flowchartUrl} alt="Provisioning Machine Flowchart" />

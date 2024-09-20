@@ -1,0 +1,104 @@
+---
+sidebar_position: 3
+
+title: Adding A Virtual IP To Your Machine
+---
+import addNetworkUrl from './assets/add-network.png';
+import updateNetworkUrl from './assets/update-network.png';
+import defaultNetworkUrl from './assets/default-network.png';
+import generatingIpv4Url from './assets/generating-ipv4.png';
+import enableNetworkingUrl from './assets/enable-networking.png';
+
+# Adding A Virtual IP To Your Machine
+
+Adding a virtual IP address to your machine allows you to enhance network flexibility, manage traffic more effectively, and improve failover capabilities. This guide will provide you with the necessary steps to configure a virtual IP on your machine, ensuring seamless integration with your network environment.
+
+- **Overview**
+    
+    ### **Mecha Mesh Network**
+    
+    - **Overlay Network :**
+        
+        An overlay network is a computer network that is built on top of another network. Nodes (machines, devices, or servers) in the overlay network are connected through virtual or logical links, which can span across multiple underlying physical networks.
+        
+    - **Nodes:**
+        
+        Nodes in the Mecha Mesh Network are individual participants or machines that communicate with each other. 
+        
+    - **Noise Protocol Framework :**
+        
+        The Noise Protocol Framework to ensure secure, authenticated communication between nodes in a wide overlay network. By using mutual authentication, the network maintains a high level of security, ensuring that only legitimate nodes can participate in the network and that all communication is protected against interception and tampering.
+        
+    - **Network communication :**
+        
+        Only machines in the same network can communicate with each other
+        
+- **Preparing Your Environment**
+    1. **Initial setup steps**
+        - **Add/update network**
+        By default, your account comes with a network named **‘Default’**. This network will be pre-selected when you enable network. You can create a new one or customise the **‘Default’** network to fit your needs.
+            1. **Add network :**
+            Using below network you can add a network,
+            While adding network you can provide **isDefault = true** if you want to add the network as **default** one.
+            **networkName:** Provide a unique name for your network.
+                
+                **ipSubnet:** Provide a IP subnet with CIDR /24.
+                
+                **DNS Name:** Specify the DNS name for the network.
+                If **isNetworkKeyManaged** = **true,** then network key is managed by mecha for more details refer **Network key management.**
+                
+                **Reference : Bruno screenshot**
+                
+                <img src={addNetworkUrl} alt="Add network" />
+                
+            
+            2. **Update network:**
+            If you want to update network name, network’s DNS name or set network as default you can use update network API.
+            
+                **Reference : Bruno screenshot**
+                
+                <img src={updateNetworkUrl} alt="Update network" />
+                
+        - **Network key management**
+            
+            To ensure only nodes added to the network can discover and connect to each other, Mecha uses symmetric encryption key synchronized to all nodes.
+            
+            **Managed by Mecha:**
+            
+            - The encryption key is automatically generated and securely stored in an encrypted key store managed by Mecha.
+            - While adding network you can provide  **isNetworkKeyManaged** = **true, if encryption is managed by mecha.**
+            
+            **Bring Your Own Key (BYOK):**
+            
+            - You have the option to provide your own encryption key. This key is **not** stored in Mecha’s storage.
+            - And if you want to provide your own encryption key then you can provide the **networkKey** while adding the network and **isNetworkKeyManaged** = **false.**
+            
+            If you bring your own network key then while enabling networking you always need to provide the network key.
+            
+        - **Set network as default**
+        You can set network as default while adding or updating network also, but there is seperate API for this, in which you can provide networkId in API url.
+        ****
+            
+            **Reference : Bruno screenshot**
+            
+            <img src={defaultNetworkUrl} alt="Default network" />
+            
+- **Enabling and Configuring IPv4**
+    1. **Generating IPv4 Address** :
+    Before enabling networking you can generate the IPv4 Address, for a network by providing the networkId paramater.
+    Or if networkId is not provided, IPv4 address is generated for default network.
+        **Reference : Bruno screenshot**
+        
+        <img src={generatingIpv4Url} alt="Add network" />
+        
+    2. **Enable networking for machine within network**
+        
+        To enable networking for a machine, below API is used.
+        In which you can provide the machineId for which you want to enable networking, then the IPv4 address which is generated using generate IPv4 address API or if  IPv4 address is not provided then it can be generated internally using provided networkId or with default network.
+        
+        **Reference : Bruno screenshot**
+        
+        <img src={enableNetworkingUrl} alt="Add network" />
+        
+
+Once the virtual IP has been successfully added and configured, your machine is now better equipped to handle network demands, balancing load or providing redundancy as needed. Regularly monitor the IP configurations to ensure ongoing connectivity and optimal performance
