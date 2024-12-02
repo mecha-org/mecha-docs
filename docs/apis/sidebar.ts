@@ -2,9 +2,40 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 const sidebar: SidebarsConfig = {
   apisidebar: [
+    // {
+    "apis/first-request",
+    "apis/api-authentication",
+
+    
     {
-      type: "doc",
-      id: "apis/references/mecha-cloud-apis",
+      type: "category",
+      label: "How-to Guides",
+      collapsible: true,
+      collapsed: true,
+      items: [
+        "apis/how-to-guides/prov-machine",
+        "apis/how-to-guides/machine-logs-metrics",
+        "apis/how-to-guides/add-virtual-ip",
+        "apis/how-to-guides/generate-grafana-sso"
+      ],
+    },
+
+    // start APIS
+    // {
+    //   type: "doc",
+    //   id: "apis/references/mecha-cloud-apis",
+    // },
+    {
+      type: "category",
+      label: "Grafana Integration",
+      items: [
+        {
+          type: "doc",
+          id: "apis/references/get-sso-token",
+          label: "Get SSO token",
+          className: "api-method post",
+        },
+      ],
     },
     {
       type: "category",
@@ -104,18 +135,6 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "apis/references/download-ca-bundle",
           label: "Download CA-Bundle certificates",
-          className: "api-method get",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Machine Tags",
-      items: [
-        {
-          type: "doc",
-          id: "apis/references/get-machine-tags",
-          label: "Fetch machine tags list",
           className: "api-method get",
         },
       ],
@@ -224,43 +243,13 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "App services",
+      label: "App Service",
       items: [
-        {
-          type: "doc",
-          id: "apis/references/get-app-service-by-app-id",
-          label: "Fetch app service details",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "apis/references/update-app-service",
-          label: "Update app service details",
-          className: "api-method put",
-        },
-        {
-          type: "doc",
-          id: "apis/references/delete-app-service",
-          label: "Delete app service",
-          className: "api-method delete",
-        },
-        {
-          type: "doc",
-          id: "apis/references/get-app-services",
-          label: "Get app services",
-          className: "api-method get",
-        },
         {
           type: "doc",
           id: "apis/references/add-app-service",
           label: "Add app service",
           className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "apis/references/get-app-service-by-machine-id-or-alias",
-          label: "Fetch machine's app services",
-          className: "api-method get",
         },
         {
           type: "doc",
@@ -274,20 +263,42 @@ const sidebar: SidebarsConfig = {
           label: "Check app name in use for app services",
           className: "api-method get",
         },
-      ],
-    },
-    {
-      type: "category",
-      label: "Grafana Integration",
-      items: [
         {
           type: "doc",
-          id: "apis/references/get-sso-token",
-          label: "Get SSO token",
-          className: "api-method post",
+          id: "apis/references/delete-app-service",
+          label: "Delete app service",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "apis/references/get-app-service-by-app-id",
+          label: "Fetch app service details",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "apis/references/get-app-service-by-machine-id-or-alias",
+          label: "Fetch machine's app services",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "apis/references/get-app-services",
+          label: "Get app services",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "apis/references/update-app-service",
+          label: "Update app service details",
+          className: "api-method put",
         },
       ],
-    },
+    }, // end APIS
+
+    
+    // },
+    
   ],
 };
 

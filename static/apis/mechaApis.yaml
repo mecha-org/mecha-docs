@@ -10,65 +10,69 @@ info:
     url: ''
   version: 1.0.0
 servers:
-- url: https://cloud-api.sandbox.mecha.build
-  description: Generated server url
+  - url: 'https://cloud-api.sandbox-v1.mecha.build'
+    description: Generated server url
 tags:
-- name: accounts
-  description: Accounts related APIs
-  x-displayName: Accounts
-- name: api-keys
-  description: API keys related APIs
-  x-displayName: API keys
-- name: authentication
-  description: Authentication related APIs
-  x-displayName: Authentication
-- name: machines
-  description: Machines related APIs
-  x-displayName: Machines
-- name: machine-certificate
-  description: Machine certificates related APIs
-  x-displayName: Machine certificates
-- name: machine-tags
-  description: Machine-tags related APIs
-  x-displayName: Machine Tags
-- name: provision-request
-  description: Machine provisioning related APIs
-  x-displayName: Machine provision requests
-- name: ping
-  description: Ping controller
-  x-displayName: Ping API
-- name: network
-  description: Networking related APIs
-  x-displayName: Networking
-- name: SSH
-  description: SSH certificate related APIs
-  x-displayName: SSH
-- name: users
-  description: Users related APIs
-  x-displayName: Users
+  - name: accounts
+    description: Accounts related APIs
+    x-displayName: Accounts
+  - name: api-keys
+    description: API keys related APIs
+    x-displayName: API keys
+  - name: authentication
+    description: Authentication related APIs
+    x-displayName: Authentication
+  - name: machines
+    description: Machines related APIs
+    x-displayName: Machines
+  - name: machine-certificate
+    description: Machine certificates related APIs
+    x-displayName: Machine certificates
+  - name: machine-tags
+    description: Machine-tags related APIs
+    x-displayName: Machine Tags
+  - name: provision-request
+    description: Machine provisioning related APIs
+    x-displayName: Machine provision requests
+  - name: ping
+    description: Ping controller
+    x-displayName: Ping API
+  - name: network
+    description: Networking related APIs
+    x-displayName: Networking
+  - name: SSH
+    description: SSH certificate related APIs
+    x-displayName: SSH
+  - name: users
+    description: Users related APIs
+    x-displayName: Users
+  - name: app-services
+    description: App services related APIs
+    x-displayName: App services
 paths:
-  "/api/v1/networks/{networkId}":
+  '/api/v1/networks/{networkId}':
     get:
       tags:
-      - network
+        - network
       summary: Fetch network details
-      description: This API endpoint retrieve details of a network identified by the
+      description: >-
+        This API endpoint retrieve details of a network identified by the
         provided networkId, including network attributes and configurations.
       operationId: getNetworkByNetworkId
       parameters:
-      - name: networkId
-        in: path
-        description: The networkId - unique id of the network
-        required: true
-        schema:
-          type: string
+        - name: networkId
+          in: path
+          description: The networkId - unique id of the network
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseNetworks"
+                $ref: '#/components/schemas/StandardResponseNetworks'
               examples:
                 Network details example:
                   summary: Network details response example
@@ -80,39 +84,38 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       networkId: xxb63e2aaedx-pffc-123
                       provider: provider
                       ipSubnet: 10.0.0.0/24
-                      dnsName: test-dns
-                      dnsSuffix: mec.sh
                       networkName: test
                       isDefault: true
                       isNetworkKeyManaged: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
+        - apiKeyId: []
+          apiKeySecret: []
     put:
       tags:
-      - network
+        - network
       summary: Update network
-      description: This API endpoint update network details such as network name,
-        DNS name, and default status, excluding IP subnet configuration.
+      description: >-
+        This API endpoint update network details such as network name, DNS name,
+        and default status, excluding IP subnet configuration.
       operationId: updateNetwork
       parameters:
-      - name: networkId
-        in: path
-        description: The networkId - unique id of the network
-        required: true
-        schema:
-          type: string
+        - name: networkId
+          in: path
+          description: The networkId - unique id of the network
+          required: true
+          schema:
+            type: string
       requestBody:
         description: The request body containing the required details to update network
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateNetworksRequestType"
+              $ref: '#/components/schemas/UpdateNetworksRequestType'
         required: true
       responses:
         "200":
@@ -120,7 +123,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseNetworks"
+                $ref: '#/components/schemas/StandardResponseNetworks'
               examples:
                 Update network details example:
                   summary: Update network details response example
@@ -132,41 +135,40 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       networkId: xxb63e2aaedx-pffc-123
                       provider: provider
                       ipSubnet: 10.0.0.0/24
-                      dnsName: test-dns
-                      dnsSuffix: mec.sh
                       networkName: test
                       isDefault: true
                       isNetworkKeyManaged: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
+        - apiKeyId: []
+          apiKeySecret: []
     delete:
       tags:
-      - network
+        - network
       summary: Delete network
-      description: This API endpoint removes a network identified by the provided
-        networkId, provided it is not the default network and does not contain any
-        nodes. Once network node is deleted, it cannot be retrieved.
+      description: >-
+        This API endpoint removes a network identified by the provided
+        networkId, provided it is not the default network and does not contain
+        any nodes. Once network node is deleted, it cannot be retrieved.
       operationId: deleteNetwork
       parameters:
-      - name: networkId
-        in: path
-        description: The networkId - unique id of the network
-        required: true
-        schema:
-          type: string
+        - name: networkId
+          in: path
+          description: The networkId - unique id of the network
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseBoolean"
+                $ref: '#/components/schemas/StandardResponseBoolean'
               examples:
                 Delete network example:
                   summary: Delete network response example
@@ -178,35 +180,36 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/networks/{networkId}/set-default":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/networks/{networkId}/set-default':
     put:
       tags:
-      - network
+        - network
       summary: Set default network
-      description: This API endpoint set a network as the default for the specified
-        network identified by the provided networkId. The default network will be
-        used when no specific networkId is provided, for tasks such as enabling networking
-        or generating IPv4 addresses
+      description: >-
+        This API endpoint set a network as the default for the specified network
+        identified by the provided networkId. The default network will be used
+        when no specific networkId is provided, for tasks such as enabling
+        networking or generating IPv4 addresses
       operationId: setNetworkAsDefault
       parameters:
-      - name: networkId
-        in: path
-        description: The networkId - unique id of the network
-        required: true
-        schema:
-          type: string
+        - name: networkId
+          in: path
+          description: The networkId - unique id of the network
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseBoolean"
+                $ref: '#/components/schemas/StandardResponseBoolean'
               examples:
                 Set default network example:
                   summary: Set default network response example
@@ -218,33 +221,35 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/update":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/update':
     put:
       tags:
-      - machines
+        - machines
       summary: Update machine details
-      description: This API endpoint update the name, alias, tags, and icon of the
-        machine identified by the provided machineId or machine alias.
+      description: >-
+        This API endpoint update the name, alias, tags, and icon of the machine
+        identified by the provided machineId or machine alias.
       operationId: updateMachine
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: The request body containing the required details to update machine
+        description: >-
+          The request body containing the required details to update machine
           details
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateMachineRequestType"
+              $ref: '#/components/schemas/UpdateMachineRequestType'
         required: true
       responses:
         "200":
@@ -252,7 +257,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseBoolean"
+                $ref: '#/components/schemas/StandardResponseBoolean'
               examples:
                 Update machine details example:
                   summary: Update machine details response example
@@ -264,36 +269,88 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/users/{machineIdOrAlias}/ssh/certificate":
-    post:
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/app-services/{appId}':
+    get:
       tags:
-      - SSH
-      summary: Issue SSH certificate
-      description: This API endpoint issues an SSH certificate for the machine identified
-        by the provided machineId or machine alias. A SSH certificate is a digital
-        certificate used to authenticate and secure connections in the SSH (Secure
-        Shell) protocol, which is commonly used for secure remote access to servers
-        and systems.
-      operationId: issueSSHCertificate
+        - app-services
+      summary: Fetch app service details
+      description: >-
+        This API endpoint retrieve details of an app service identified by the
+        provided appId, including port mapping attributes and configurations.
+      operationId: getAppServiceByAppId
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: appId
+          in: path
+          description: The appId - unique id of the app service
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponseAppServicesResponseType'
+              examples:
+                App service details example:
+                  summary: App service details response example
+                  description: App service details example
+                  value:
+                    success: true
+                    message: App service details fetched successfully
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload:
+                      appId: 4dff4ea340f0-bqja-217
+                      appName: test-app
+                      dnsName: fOTQEAx0KMq4fUrJrvwNFva7EvBArDuU.app.mec.sh
+                      portMappings:
+                        - targetPort: 3000
+                          localPort: 3001
+                          protocol: HTTP
+                          description: test
+                        - targetPort: 3002
+                          localPort: 3003
+                          protocol: HTTP
+                          description: null
+                      machineIds:
+                        - 29b63e2aaed8-ultp-846
+                        - 9e31fad197cf-orxd-138
+      security:
+        - apiKeyId: []
+          apiKeySecret: []
+    put:
+      tags:
+        - app-services
+      summary: Update app service details
+      description: >-
+        This API endpoint update the app name, DNS name, port mapping, and
+        assigned machines of the app service identified by the provided appId
+      operationId: updateAppService
+      parameters:
+        - name: appId
+          in: path
+          description: The appId - unique id of the app service
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: The request body containing the required details to issue SSH
-          certificate
+        description: >-
+          The request body containing the required details to update app service
+          details
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/IssueSSHCertificateRequestType"
+              $ref: '#/components/schemas/UpsertAppServiceRequestType'
         required: true
       responses:
         "200":
@@ -301,7 +358,98 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseIssueSSHCertificateResponseType"
+                $ref: '#/components/schemas/StandardResponseBoolean'
+              examples:
+                Update app service details example:
+                  summary: Update app service details response example
+                  description: Update app service details example
+                  value:
+                    success: true
+                    message: App service updated successfully
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload: true
+      security:
+        - apiKeyId: []
+          apiKeySecret: []
+    delete:
+      tags:
+        - app-services
+      summary: Delete app service
+      description: >-
+        This API endpoint remove the app service identified by the provided
+        appId. This operation also removes data associated with app service such
+        as, app service port mappings.
+      operationId: deleteAppService
+      parameters:
+        - name: appId
+          in: path
+          description: The appId - unique id of the app service
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponseBoolean'
+              examples:
+                Remove app service example:
+                  summary: Remove app service response example
+                  description: Remove app service example
+                  value:
+                    success: true
+                    message: App service deleted successfully
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload: true
+      security:
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/users/{machineIdOrAlias}/ssh/certificate':
+    post:
+      tags:
+        - SSH
+      summary: Issue SSH certificate
+      description: >-
+        This API endpoint issues an SSH certificate for the machine identified
+        by the provided machineId or machine alias. A SSH certificate is a
+        digital certificate used to authenticate and secure connections in the
+        SSH (Secure Shell) protocol, which is commonly used for secure remote
+        access to servers and systems.
+      operationId: issueSSHCertificate
+      parameters:
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: >-
+          The request body containing the required details to issue SSH
+          certificate
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueSSHCertificateRequestType'
+        required: true
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/StandardResponseIssueSSHCertificateResponseType
               examples:
                 Issue SSH certificate example:
                   summary: Issue SSH certificate response example
@@ -313,37 +461,39 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       signedKey: ssh-rsa-cert-v01@openssh.com AAAAHHNzaC1y...
                       serialNumber: a34b3660efeb55b
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/networks":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/networks:
     get:
       tags:
-      - network
+        - network
       summary: Fetch list of networks
-      description: This API endpoint retrieve a paginated list of networks with detailed
-        information for each network, including network attributes and configurations.
+      description: >-
+        This API endpoint retrieve a paginated list of networks with detailed
+        information for each network, including network attributes and
+        configurations.
       operationId: getNetworks
       parameters:
-      - name: allParams
-        in: query
-        description: allParams - pageNo, pageSize, sortBy, sortDirection, etc.
-        required: true
-        schema:
-          type: object
-          additionalProperties:
-            type: string
+        - name: allParams
+          in: query
+          description: 'allParams - pageNo, pageSize, sortBy, sortDirection, etc.'
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponsePaginatedResponseNetworks"
+                $ref: '#/components/schemas/StandardResponsePaginatedResponseNetworks'
               examples:
                 Fetch networks list example:
                   summary: Fetch networks list response example
@@ -355,37 +505,36 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       content:
-                      - networkId: xxb63e2aaedx-pffc-123
-                        provider: provider
-                        ipSubnet: 10.0.0.0/24
-                        dnsName: test-dns
-                        dnsSuffix: mec.sh
-                        networkName: test
-                        isDefault: true
-                        isNetworkKeyManaged: true
+                        - networkId: xxb63e2aaedx-pffc-123
+                          provider: provider
+                          ipSubnet: 10.0.0.0/24
+                          networkName: test
+                          isDefault: true
+                          isNetworkKeyManaged: true
                       totalPages: 2
                       totalRecordCount: 2
                       pageSize: 1
       security:
-      - apiKeyId: []
-        apiKeySecret: []
+        - apiKeyId: []
+          apiKeySecret: []
     post:
       tags:
-      - network
+        - network
       summary: Add network
-      description: This API endpoint add a network to an account. You can specify
-        details during the addition process, including a network key managed by Mecha
-        or providing your own key.
+      description: >-
+        This API endpoint add a network to an account. You can specify details
+        during the addition process, including a network key managed by Mecha or
+        providing your own key.
       operationId: addNetwork
       requestBody:
         description: The request body containing the required details to add network
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AddNetworkRequestType"
+              $ref: '#/components/schemas/AddNetworkRequestType'
         required: true
       responses:
         "200":
@@ -393,7 +542,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseNetworks"
+                $ref: '#/components/schemas/StandardResponseNetworks'
               examples:
                 Create network details example:
                   summary: Create network details response example
@@ -405,42 +554,42 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       networkId: xxb63e2aaedx-pffc-123
                       provider: provider
                       ipSubnet: 10.0.0.0/24
-                      dnsName: test-dns
-                      dnsSuffix: mec.sh
                       networkName: test
                       isDefault: true
                       isNetworkKeyManaged: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/telemetry":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/telemetry':
     post:
       tags:
-      - machines
+        - machines
       summary: Add or update machine telemetry
-      description: This API endpoint add or update telemetry data for the machine
-        identified by the provided machineId or machine alias. This includes enabling
-        or disabling logs and metrics collection.
+      description: >-
+        This API endpoint add or update telemetry data for the machine
+        identified by the provided machineId or machine alias. This includes
+        enabling or disabling logs and metrics collection.
       operationId: machineTelemetry
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: The request body containing the required details to add or update
+        description: >-
+          The request body containing the required details to add or update
           machine telemetry
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MachineTelemetryAddUpdateRequestType"
+              $ref: '#/components/schemas/MachineTelemetryAddUpdateRequestType'
         required: true
       responses:
         "200":
@@ -448,7 +597,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseBoolean"
+                $ref: '#/components/schemas/StandardResponseBoolean'
               examples:
                 Add or update machine telemetry example:
                   summary: Add or update machine telemetry response example
@@ -460,33 +609,35 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/logs/streams":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/logs/streams':
     post:
       tags:
-      - machines
+        - machines
       summary: Fetch machine logs stream data
-      description: This API endpoint retrieve streams data of logs data for the machine
+      description: >-
+        This API endpoint retrieve streams data of logs data for the machine
         identified by the provided machineId or machine alias.
       operationId: getMachineLogsStreams
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: The request body containing the required details to get machine
-          logs streams
+        description: >-
+          The request body containing the required details to get machine logs
+          streams
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MachineLogsStreamsRequestType"
+              $ref: '#/components/schemas/MachineLogsStreamsRequestType'
         required: true
       responses:
         "200":
@@ -494,7 +645,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseTelemetryLogsStreamsResponseType"
+                $ref: >-
+                  #/components/schemas/StandardResponseTelemetryLogsStreamsResponseType
               examples:
                 Fetch machine logs stream example:
                   summary: Fetch machine logs stream response example
@@ -506,39 +658,39 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       status: success
                       data:
-                      - log_stream
+                        - log_stream
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/logs/query":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/logs/query':
     post:
       tags:
-      - machines
+        - machines
       summary: Fetch machine logs data
-      description: This API endpoint retrieve logs data for the machine identified
-        by the provided machineId or machine alias.Note that logs data is only collected
-        if logs collection is enabled in machine telemetry. Machine logs are records
-        of events and messages generated by the operating system, applications, and
-        services running on a machine.
+      description: >-
+        This API endpoint retrieve logs data for the machine identified by the
+        provided machineId or machine alias.Note that logs data is only
+        collected if logs collection is enabled in machine telemetry. Machine
+        logs are records of events and messages generated by the operating
+        system, applications, and services running on a machine.
       operationId: getMachineLogs
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: The request body containing the required details to get machine
-          logs
+        description: The request body containing the required details to get machine logs
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MachineLogsRequestType"
+              $ref: '#/components/schemas/MachineLogsRequestType'
         required: true
       responses:
         "200":
@@ -546,7 +698,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseTelemetryLogsDataResponseType"
+                $ref: >-
+                  #/components/schemas/StandardResponseTelemetryLogsDataResponseType
               examples:
                 Fetch machine logs data example:
                   summary: Fetch machine logs data response example
@@ -558,46 +711,52 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       status: success
                       data:
                         resultType: streams
                         result:
-                        - stream:
-                            exporter: OTLP
-                            machine_id: xxb63e2aaedx-xxxx-123
-                            stream_name: log_stream
-                          values:
-                          - - '1717750055593212998'
-                            - '{"body":"metrics sent successfully","severity":"INFO","attributes":{"func":"export","package":"grpc-server"},"resources":{"service.name":"mecha-agent-service"},"instrumentation_scope":{"name":"opentelemetry-appender-tracing","version":"0.2.0"}}'
-                          - - '1717750055474976269'
-                            - '{"body":"status message published!","severity":"INFO","attributes":{"func":"send_status","package":"status"},"resources":{"service.name":"mecha-agent-service"},"instrumentation_scope":{"name":"opentelemetry-appender-tracing","version":"0.2.0"}}'
+                          - stream:
+                              exporter: OTLP
+                              machine_id: xxb63e2aaedx-xxxx-123
+                              stream_name: log_stream
+                            values:
+                              - - '1717750055593212998'
+                                - >-
+                                  {"body":"metrics sent
+                                  successfully","severity":"INFO","attributes":{"func":"export","package":"grpc-server"},"resources":{"service.name":"mecha-agent-service"},"instrumentation_scope":{"name":"opentelemetry-appender-tracing","version":"0.2.0"}}
+                              - - '1717750055474976269'
+                                - >-
+                                  {"body":"status message
+                                  published!","severity":"INFO","attributes":{"func":"send_status","package":"status"},"resources":{"service.name":"mecha-agent-service"},"instrumentation_scope":{"name":"opentelemetry-appender-tracing","version":"0.2.0"}}
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/logs/export":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/logs/export':
     post:
       tags:
-      - machines
+        - machines
       summary: Export machine logs data
-      description: This API endpoint export logs data (e.g., download .logs file)
-        for the machine identified by the provided machineId or machine alias.
+      description: >-
+        This API endpoint export logs data (e.g., download .logs file) for the
+        machine identified by the provided machineId or machine alias.
       operationId: exportMachineLogs
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: The request body containing the required details to export machine
+        description: >-
+          The request body containing the required details to export machine
           logs
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MachineLogsExportRequestType"
+              $ref: '#/components/schemas/MachineLogsExportRequestType'
         required: true
       responses:
         "200":
@@ -605,7 +764,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseFileExportResponseType"
+                $ref: '#/components/schemas/StandardResponseFileExportResponseType'
               examples:
                 Export machine logs example:
                   summary: Export machine logs response example
@@ -617,34 +776,35 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
-                      filePath: http://example.com
+                      filePath: 'http://example.com'
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/provision-requests/status":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/machines/provision-requests/status:
     post:
       tags:
-      - provision-request
+        - provision-request
       summary: Fetch machine provision request status
       description: This API endpoint retrieve the status of a machine provision request.
       operationId: getStatus
       parameters:
-      - name: id
-        in: query
-        description: The id - unique id of the provision request
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: query
+          description: The id - unique id of the provision request
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseMachineProvisionRequestStatusResponseType"
+                $ref: >-
+                  #/components/schemas/StandardResponseMachineProvisionRequestStatusResponseType
               examples:
                 Fetch machine provision request status example:
                   summary: Fetch machine provision request status response example
@@ -656,28 +816,30 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       statusCode: PENDING
                       status: 0
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/provision-requests/new":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/machines/provision-requests/new:
     post:
       tags:
-      - provision-request
+        - provision-request
       summary: Add machine provision request
-      description: This API endpoint add a machine provision request with the provided
+      description: >-
+        This API endpoint add a machine provision request with the provided
         provision code to add a new machine for an account.
       operationId: addMachineProvisionRequest
       requestBody:
-        description: The request body containing the required details to add machine
+        description: >-
+          The request body containing the required details to add machine
           provision request
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AddMachineProvisionRequestType"
+              $ref: '#/components/schemas/AddMachineProvisionRequestType'
         required: true
       responses:
         "200":
@@ -685,7 +847,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseAddMachineProvisionRequestResponseType"
+                $ref: >-
+                  #/components/schemas/StandardResponseAddMachineProvisionRequestResponseType
               examples:
                 Add machine provision request example:
                   summary: Add machine provision request response example
@@ -697,28 +860,29 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       requestId: 1
                       machineId: xxb63e2aaedx-xxxx-123
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/networks/enable":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/machines/networks/enable:
     post:
       tags:
-      - network
+        - network
       summary: Enable network
-      description: This API endpoint enables networking for the specified machine
-        using the provided machineId. This action allows the machine to connect to
-        the network and perform network-related operations.
+      description: >-
+        This API endpoint enables networking for the specified machine using the
+        provided machineId. This action allows the machine to connect to the
+        network and perform network-related operations.
       operationId: enableNode
       requestBody:
         description: The request body containing the required details to enable networking
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EnableNetworkingRequestType"
+              $ref: '#/components/schemas/EnableNetworkingRequestType'
         required: true
       responses:
         "200":
@@ -726,7 +890,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseNetworkNodesResponseType"
+                $ref: '#/components/schemas/StandardResponseNetworkNodesResponseType'
               examples:
                 Enable network example:
                   summary: Enable network response example
@@ -738,10 +902,9 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       nodeId: f32552de-903f-48a0-bb2d-4b39b016b3ef
-                      dnsName: test-dns
                       ipv4Address: 100.64.0.1
                       ipv6Address: string
                       networkId: xxb63e2aaedx-pffc-123
@@ -750,8 +913,6 @@ paths:
                         networkId: xxb63e2aaedx-pffc-123
                         provider: provider
                         ipSubnet: 10.0.0.0/24
-                        dnsName: test-dns
-                        dnsSuffix: mec.sh
                         networkName: test
                         isDefault: true
                         isNetworkKeyManaged: true
@@ -762,26 +923,29 @@ paths:
                         name: Test machine
                         lastActiveAt: '2024-06-06T05:42:20.278Z'
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/metrics":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/machines/metrics:
     post:
       tags:
-      - machines
+        - machines
       summary: Fetch machine metrics data
-      description: This API endpoint retrieve metrics data for the machine identified
-        by the provided machineId or machine alias, filtered by the specified metrics
-        label. Note that metrics data is only collected if metrics collection is enabled
-        in machine telemetry. Machine metrics refer to quantitative data points that
-        provide insight into the performance, health, and utilization of a machine.
+      description: >-
+        This API endpoint retrieve metrics data for the machine identified by
+        the provided machineId or machine alias, filtered by the specified
+        metrics label. Note that metrics data is only collected if metrics
+        collection is enabled in machine telemetry. Machine metrics refer to
+        quantitative data points that provide insight into the performance,
+        health, and utilization of a machine.
       operationId: getMachineMetrics
       requestBody:
-        description: The request body containing the required details to get machine
+        description: >-
+          The request body containing the required details to get machine
           metrics
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MachineMetricsRequestType"
+              $ref: '#/components/schemas/MachineMetricsRequestType'
         required: true
       responses:
         "200":
@@ -789,7 +953,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseTelemetryDataResponseType"
+                $ref: '#/components/schemas/StandardResponseTelemetryDataResponseType'
               examples:
                 Fetch machine metrics data example:
                   summary: Fetch machine metrics data response example
@@ -801,44 +965,46 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       status: success
                       data:
                         resultType: matrix
                         result:
-                        - metric:
-                            state: 
-                            device: eth0
-                            machine_id: xxb63e2aaedx-xxxx-123
-                            direction: receive
-                            type: 
-                            system_cpu_logical_number: 
-                          values:
-                          - - 1717747560
-                            - '7'
-                          - - 1717747620
-                            - '8'
+                          - metric:
+                              state: null
+                              device: eth0
+                              machine_id: xxb63e2aaedx-xxxx-123
+                              direction: receive
+                              type: null
+                              system_cpu_logical_number: null
+                            values:
+                              - - 1717747560
+                                - '7'
+                              - - 1717747620
+                                - '8'
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/list":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/machines/list:
     post:
       tags:
-      - machines
+        - machines
       summary: Fetch machines list
-      description: This API endpoint retrieve a paginated list of machines with detailed
-        information, including basic details, networking, telemetry, and system information.
+      description: >-
+        This API endpoint retrieve a paginated list of machines with detailed
+        information, including basic details, networking, telemetry, and system
+        information.
       operationId: getMachines
       parameters:
-      - name: allParams
-        in: query
-        description: allParams - pageNo, pageSize, sortBy, sortDirection, etc.
-        required: true
-        schema:
-          type: object
-          additionalProperties:
-            type: string
+        - name: allParams
+          in: query
+          description: 'allParams - pageNo, pageSize, sortBy, sortDirection, etc.'
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
       requestBody:
         description: The request body containing tag's key value to search
         content:
@@ -856,7 +1022,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponsePaginatedResponseMachines"
+                $ref: '#/components/schemas/StandardResponsePaginatedResponseMachines'
               examples:
                 Fetch machines list example:
                   summary: Fetch machines list response example
@@ -868,68 +1034,69 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       content:
-                      - machineId: xxb63e2aaedx-xxxx-123
-                        name: Test machine
-                        displayIconMediaPath: http://example.com
-                        alias: test-alias
-                        tags:
-                        - key: test
-                          value: testValue
-                        telemetry:
-                          status: 0
-                          isMetricsEnabled: true
-                          isLogsEnabled: true
-                        lastActiveAt: '2024-06-07T07:56:57.244Z'
-                        networking:
-                          fullDNSName: test.test-network.mec.sh
-                          ipv4Address: 100.64.0.1
-                          networkIpSubnet: 100.64.0.0/24
-                          networkId: xxxx3e2aaed8-xxxx-123
-                          nodeId: cf7db4ff-4ce6-4e4c-b752-16602067c354
-                          networkName: test-network
-                        sysInfo:
-                          hostname: 12343c771234
-                          osName: linux
-                          osVersion: 5.15.98-fly
-                          osBuild: string
-                          platform: string
-                          platformRelease: 5.15.98-fly
-                          arch: x86-64
-                          agentVersion: 1.0.0
-                          agentName: mecha-agent
-                          updatedAt: '2024-06-07T07:56:57.244Z'
+                        - machineId: xxb63e2aaedx-xxxx-123
+                          name: Test machine
+                          displayIconMediaPath: 'http://example.com'
+                          alias: test-alias
+                          tags:
+                            - key: test
+                              value: testValue
+                          telemetry:
+                            status: 0
+                            isMetricsEnabled: true
+                            isLogsEnabled: true
+                          lastActiveAt: '2024-06-07T07:56:57.244Z'
+                          networking:
+                            fullDNSName: test.test-network.mec.sh
+                            ipv4Address: 100.64.0.1
+                            networkIpSubnet: 100.64.0.0/24
+                            networkId: xxxx3e2aaed8-xxxx-123
+                            nodeId: cf7db4ff-4ce6-4e4c-b752-16602067c354
+                            networkName: test-network
+                          sysInfo:
+                            hostname: 12343c771234
+                            osName: linux
+                            osVersion: 5.15.98-fly
+                            osBuild: string
+                            platform: string
+                            platformRelease: 5.15.98-fly
+                            arch: x86-64
+                            agentVersion: 1.0.0
+                            agentName: mecha-agent
+                            updatedAt: '2024-06-07T07:56:57.244Z'
                       totalPages: 2
                       totalRecordCount: 2
                       pageSize: 1
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/certificate/re-issue/{machineIdOrAlias}":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/certificate/re-issue/{machineIdOrAlias}':
     post:
       tags:
-      - machine-certificate
+        - machine-certificate
       summary: Re-Issue certificate
-      description: This API endpoint re-issues machine certificate if the old certificate
-        has not expired and the machine is not offline. The machine identified by
-        the provided machineId or machine alias.
+      description: >-
+        This API endpoint re-issues machine certificate if the old certificate
+        has not expired and the machine is not offline. The machine identified
+        by the provided machineId or machine alias.
       operationId: reIssueCertificate
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseBoolean"
+                $ref: '#/components/schemas/StandardResponseBoolean'
               examples:
                 Re-Issue certificate example:
                   summary: Re-Issue certificate response example
@@ -941,27 +1108,30 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/auth/grafana/sso":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/auth/grafana/sso:
     post:
       tags:
-      - authentication
+        - grafana-integration
       summary: Get SSO token
-      description: This API endpoint generates a Single Sign-On (SSO) token for Grafana
-        login. Additionally, provides the appropriate explore URL based on the specified
-        data source, enabling direct access to Grafana's exploration features.
+      description: >-
+        This API endpoint generates a Single Sign-On (SSO) token for Grafana
+        login. Additionally, provides the appropriate explore URL based on the
+        specified data source, enabling direct access to Grafana's exploration
+        features.
       operationId: getSsoToken
       requestBody:
-        description: The request body containing the required details to get SSO token
-          and explore URL
+        description: >-
+          The request body containing the required details to get SSO token and
+          explore URL
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GetSSOTokenRequestType"
+              $ref: '#/components/schemas/GetSSOTokenRequestType'
         required: true
       responses:
         "200":
@@ -969,7 +1139,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseGrafanaSSOTokenResponseType"
+                $ref: >-
+                  #/components/schemas/StandardResponseGrafanaSSOTokenResponseType
               examples:
                 Get SSO token example:
                   summary: Get SSO token response example
@@ -981,45 +1152,159 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
-                      url: https://grafana.sandbox.mecha.build
-                      token: eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoibmV3dXNlcjEiLCJlbWFpbCI6InRlc3RhdXRvQG1lY2hhc3lzdGVtcy5jb20iLCJzdWIiOiI4MT....
-                      exploreUrl: "/d/xxi43y9itdxxxx/machine-metrics"
+                      url: 'https://grafana.sandbox.mecha.build'
+                      token: >-
+                        eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoibmV3dXNlcjEiLCJlbWFpbCI6InRlc3RhdXRvQG1lY2hhc3lzdGVtcy5jb20iLCJzdWIiOiI4MT....
+                      exploreUrl: /d/xxi43y9itdxxxx/machine-metrics
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/networks/{networkId}/nodes":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/app-services:
     get:
       tags:
-      - network
-      summary: Fetch network nodes
-      description: This API endpoint retrieve a list of network nodes within the network
-        identified by the provided networkId. This includes details about each node
-        and its associated network, machine information.
-      operationId: getNetworkNodes
+        - app-services
+      summary: Get app services
+      description: >-
+        This API endpoint fetch app services. This API endpoint retrieve a
+        paginated list of app services with detailed information for each app
+        service, including mapped ports attributes and configurations.
+      operationId: getAppServices
       parameters:
-      - name: allParams
-        in: query
-        description: allParams - pageNo, pageSize, sortBy, sortDirection, etc.
-        required: true
-        schema:
-          type: object
-          additionalProperties:
-            type: string
-      - name: networkId
-        in: path
-        description: The networkId - unique id of the network
-        required: true
-        schema:
-          type: string
+        - name: allParams
+          in: query
+          description: 'allParams - pageNo, pageSize, sortBy, sortDirection, etc.'
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponsePaginatedResponseNetworkNodes"
+                $ref: >-
+                  #/components/schemas/StandardResponsePaginatedResponseAppServicesResponseType
+              examples:
+                Fetch app services list example:
+                  summary: Fetch app services list response example
+                  description: Fetch app services list example
+                  value:
+                    success: true
+                    message: App services fetched successfully
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload:
+                      content:
+                        - appId: 4dff4ea340f0-aayq-171
+                          appName: test-app
+                          dnsName: test-dns.app.mec.sh
+                          portMappings:
+                            - targetPort: 3000
+                              localPort: 3001
+                              protocol: HTTP
+                              description: test
+                            - targetPort: 3002
+                              localPort: 3003
+                              protocol: HTTP
+                              description: null
+                          machineIds:
+                            - 29b63e2aaed8-ultp-846
+                            - 9e31fad197cf-orxd-138
+                      totalPages: 1
+                      totalRecordCount: 1
+                      pageSize: 1
+      security:
+        - apiKeyId: []
+          apiKeySecret: []
+    post:
+      tags:
+        - app-services
+      summary: Add app service
+      description: >-
+        This API endpoint add an app service. You can specify details during the
+        addition process, including a app name, target port, local port, etc.
+      operationId: addAppService
+      requestBody:
+        description: The request body containing the required details to add app service
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertAppServiceRequestType'
+        required: true
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponseAppServicesResponseType'
+              examples:
+                Create app service example:
+                  summary: Create app service response example
+                  description: Create app service example
+                  value:
+                    success: true
+                    message: App service added successfully
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload:
+                      appId: 4dff4ea340f0-asdr-444
+                      appName: test-app8
+                      dnsName: sEQuBMjlbUORxOJgrXD3VVi0R2q6oZgQ.app.mec.sh
+                      portMappings:
+                        - targetPort: 3001
+                          localPort: 3001
+                          protocol: HTTP
+                          description: test ports
+                      machineIds:
+                        - 29b63e2aaed8-ultp-846
+                        - 9e31fad197cf-orxd-138
+      security:
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/networks/{networkId}/nodes':
+    get:
+      tags:
+        - network
+      summary: Fetch network nodes
+      description: >-
+        This API endpoint retrieve a list of network nodes within the network
+        identified by the provided networkId. This includes details about each
+        node and its associated network, machine information.
+      operationId: getNetworkNodes
+      parameters:
+        - name: allParams
+          in: query
+          description: 'allParams - pageNo, pageSize, sortBy, sortDirection, etc.'
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+        - name: networkId
+          in: path
+          description: The networkId - unique id of the network
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/StandardResponsePaginatedResponseNetworkNodes
               examples:
                 Network nodes list example:
                   summary: Network nodes list response example
@@ -1031,59 +1316,57 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       content:
-                      - nodeId: f32552de-903f-48a0-bb2d-4b39b016b3ef
-                        dnsName: test-dns
-                        ipv4Address: 100.64.0.1
-                        ipv6Address: string
-                        networkId: xxb63e2aaedx-pffc-123
-                        createdAt: '2024-06-17T08:01:52.134Z'
-                        networks:
+                        - nodeId: f32552de-903f-48a0-bb2d-4b39b016b3ef
+                          ipv4Address: 100.64.0.1
+                          ipv6Address: string
                           networkId: xxb63e2aaedx-pffc-123
-                          provider: provider
-                          ipSubnet: 10.0.0.0/24
-                          dnsName: test-dns
-                          dnsSuffix: mec.sh
-                          networkName: test
-                          isDefault: true
-                          isNetworkKeyManaged: true
-                        machineData:
-                          machineId: xxb63e2aaedx-xxxx-123
-                          displayIconMediaPath: string
-                          alias: test-alias
-                          name: Test machine
-                          lastActiveAt: '2024-06-06T05:42:20.278Z'
+                          createdAt: '2024-06-17T08:01:52.134Z'
+                          networks:
+                            networkId: xxb63e2aaedx-pffc-123
+                            provider: provider
+                            ipSubnet: 10.0.0.0/24
+                            networkName: test
+                            isDefault: true
+                            isNetworkKeyManaged: true
+                          machineData:
+                            machineId: xxb63e2aaedx-xxxx-123
+                            displayIconMediaPath: string
+                            alias: test-alias
+                            name: Test machine
+                            lastActiveAt: '2024-06-06T05:42:20.278Z'
                       totalPages: 2
                       totalRecordCount: 2
                       pageSize: 1
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/networks/nodes/{nodeId}":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/networks/nodes/{nodeId}':
     get:
       tags:
-      - network
+        - network
       summary: Fetch network node details
-      description: This API endpoint retrieve details of a network node identified
-        by the provided nodeId. This includes details about node and its associated
+      description: >-
+        This API endpoint retrieve details of a network node identified by the
+        provided nodeId. This includes details about node and its associated
         network, machine information.
       operationId: getNetworkNode
       parameters:
-      - name: nodeId
-        in: path
-        description: The nodeId - uuid of the network node
-        required: true
-        schema:
-          type: string
+        - name: nodeId
+          in: path
+          description: The nodeId - uuid of the network node
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseNetworkNodesResponseType"
+                $ref: '#/components/schemas/StandardResponseNetworkNodesResponseType'
               examples:
                 Network node details example:
                   summary: Network node details response example
@@ -1095,10 +1378,9 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       nodeId: f32552de-903f-48a0-bb2d-4b39b016b3ef
-                      dnsName: test-dns
                       ipv4Address: 100.64.0.1
                       ipv6Address: string
                       networkId: xxb63e2aaedx-pffc-123
@@ -1107,8 +1389,6 @@ paths:
                         networkId: xxb63e2aaedx-pffc-123
                         provider: provider
                         ipSubnet: 10.0.0.0/24
-                        dnsName: test-dns
-                        dnsSuffix: mec.sh
                         networkName: test
                         isDefault: true
                         isNetworkKeyManaged: true
@@ -1119,30 +1399,31 @@ paths:
                         name: Test machine
                         lastActiveAt: '2024-06-06T05:42:20.278Z'
       security:
-      - apiKeyId: []
-        apiKeySecret: []
+        - apiKeyId: []
+          apiKeySecret: []
     delete:
       tags:
-      - network
+        - network
       summary: Delete network node
-      description: This API endpoint removes a network node identified by the provided
-        nodeId. Once network node is deleted, it cannot be retrieved. This operation
-        does not affect other data related to network, machine.
+      description: >-
+        This API endpoint removes a network node identified by the provided
+        nodeId. Once network node is deleted, it cannot be retrieved. This
+        operation does not affect other data related to network, machine.
       operationId: deleteNetworkNode
       parameters:
-      - name: nodeId
-        in: path
-        description: The nodeId - uuid of the network node
-        required: true
-        schema:
-          type: string
+        - name: nodeId
+          in: path
+          description: The nodeId - uuid of the network node
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseBoolean"
+                $ref: '#/components/schemas/StandardResponseBoolean'
               examples:
                 Delete network node example:
                   summary: Delete network node response example
@@ -1154,81 +1435,39 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/networks/nodes/check-dns-name-inuse":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/networks/generate-ipv4:
     get:
       tags:
-      - network
-      summary: Check DNS name in use for network nodes
-      description: This API endpoint checks if a DNS name is available or already
-        in use within a network nodes for the specified network identified by the
-        provided networkId.
-      operationId: checkNetworksNodeDnsName
-      parameters:
-      - name: dnsName
-        in: query
-        description: The dnsName - Network node DNS name
-        required: true
-        schema:
-          type: string
-      - name: networkId
-        in: query
-        description: The networkId - unique id of the network
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Success response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StandardResponseString"
-              examples:
-                Check DNS name in use example:
-                  summary: Check DNS name in use response example
-                  description: Check DNS name in use example
-                  value:
-                    success: true
-                    message: DNS name available for further processing
-                    status: OK
-                    statusCode: 200
-                    errorCode: ''
-                    subErrors:
-                    - {}
-                    payload: 
-      security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/networks/generate-ipv4":
-    get:
-      tags:
-      - network
+        - network
       summary: Generate IPv4 address
-      description: This API endpoint generates an IPv4 address within given IPSubnet
-        of network if networkId provided else generate with default network's IPSubnet.
-        This generated IPv4 address can be used while enabling networking API.
+      description: >-
+        This API endpoint generates an IPv4 address within given IPSubnet of
+        network if networkId provided else generate with default network's
+        IPSubnet. This generated IPv4 address can be used while enabling
+        networking API.
       operationId: generateIpv4Address
       parameters:
-      - name: allParams
-        in: query
-        description: 'allParams - networkId : the unique id of network'
-        required: true
-        schema:
-          type: object
-          additionalProperties:
-            type: string
+        - name: allParams
+          in: query
+          description: 'allParams - networkId : the unique id of network'
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseGenerateIpv4AddressResponseType"
+                $ref: >-
+                  #/components/schemas/StandardResponseGenerateIpv4AddressResponseType
               examples:
                 Generate IPv4 address example:
                   summary: Generate IPv4 address response example
@@ -1240,73 +1479,36 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       ipv4Address: 100.64.0.1
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/networks/check-dns-name-inuse":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}':
     get:
       tags:
-      - network
-      summary: Check DNS name in use for networks
-      description: This API endpoint checks if a DNS name is available or already
-        in use within the networks
-      operationId: checkNetworksDnsName
-      parameters:
-      - name: dnsName
-        in: query
-        description: The dnsName - Network DNS name
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Success response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StandardResponseString"
-              examples:
-                Check DNS name in use example:
-                  summary: Check DNS name in use response example
-                  description: Check DNS name in use example
-                  value:
-                    success: true
-                    message: DNS name available for further processing
-                    status: OK
-                    statusCode: 200
-                    errorCode: ''
-                    subErrors:
-                    - {}
-                    payload: 
-      security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}":
-    get:
-      tags:
-      - machines
+        - machines
       summary: Fetch machine details
-      description: This API endpoint retrieve detailed information of a machine, including
-        basic details, networking, telemetry, and system information. identified by
-        the provided machineId or machine alias.
+      description: >-
+        This API endpoint retrieve detailed information of a machine, including
+        basic details, networking, telemetry, and system information. identified
+        by the provided machineId or machine alias.
       operationId: getMachineDetails
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseMachinesModelMapper"
+                $ref: '#/components/schemas/StandardResponseMachinesModelMapper'
               examples:
                 Fetch machine details example:
                   summary: Fetch machine details response example
@@ -1318,15 +1520,15 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       machineId: xxb63e2aaedx-xxxx-123
                       name: Test machine
-                      displayIconMediaPath: http://example.com
+                      displayIconMediaPath: 'http://example.com'
                       alias: test-alias
                       tags:
-                      - key: test
-                        value: testValue
+                        - key: test
+                          value: testValue
                       telemetry:
                         status: 0
                         isMetricsEnabled: true
@@ -1351,31 +1553,32 @@ paths:
                         agentName: mecha-agent
                         updatedAt: '2024-06-07T07:56:57.244Z'
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/revoked/certificate":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/revoked/certificate':
     get:
       tags:
-      - machine-certificate
+        - machine-certificate
       summary: Fetch previously signed certificates
-      description: This API endpoint retrieve a list of previously signed certificates
-        associated with the machine identified by the provided machineId or machine
-        alias.
+      description: >-
+        This API endpoint retrieve a list of previously signed certificates
+        associated with the machine identified by the provided machineId or
+        machine alias.
       operationId: getPreviouslySignedCertificates
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseMachineCertificatesList"
+                $ref: '#/components/schemas/StandardResponseMachineCertificatesList'
               examples:
                 Fetch previously signed certificates example:
                   summary: Fetch previously signed certificates response example
@@ -1387,53 +1590,55 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
-                    - machineId: xxb63e2aaedx-xxxx-123
-                      privateKeyAlgo: RSA
-                      privateKeySize: '2048'
-                      pubSignAlgo: SHA256
-                      certSerialNumber: 65:19:2e:a6:cd:18:09:49:ab:49:11:ea:b6:3e:c7:c0...
-                      certFingerprint: "[2e, d1, ea, e, cf, bc, 21, 6, e7, fa, 93,
-                        7d, e9, 20, a2, 4d, ...]"
-                      certPkiName: string
-                      certCreatedAt: '2024-06-07T06:22:58.118Z'
-                      certExpiresAt: '2024-06-07T06:22:58.118Z'
-                      certCommonName: xxb63e2aaedx-xxxx-123
-                      certIssuingUrl: string
-                      certCrlUrl: string
-                      issuingCaSerialNumber: string
-                      issuingCaCommonName: string
-                      issuingCaExpiresAt: '2024-06-07T06:22:58.118Z'
-                      rootCaCommonName: string
-                      rootCaExpiresAt: '2024-06-07T06:22:58.118Z'
-                      isRevoked: true
+                      - machineId: xxb63e2aaedx-xxxx-123
+                        privateKeyAlgo: RSA
+                        privateKeySize: '2048'
+                        pubSignAlgo: SHA256
+                        certSerialNumber: '65:19:2e:a6:cd:18:09:49:ab:49:11:ea:b6:3e:c7:c0...'
+                        certFingerprint: >-
+                          [2e, d1, ea, e, cf, bc, 21, 6, e7, fa, 93, 7d, e9, 20,
+                          a2, 4d, ...]
+                        certPkiName: string
+                        certCreatedAt: '2024-06-07T06:22:58.118Z'
+                        certExpiresAt: '2024-06-07T06:22:58.118Z'
+                        certCommonName: xxb63e2aaedx-xxxx-123
+                        certIssuingUrl: string
+                        certCrlUrl: string
+                        issuingCaSerialNumber: string
+                        issuingCaCommonName: string
+                        issuingCaExpiresAt: '2024-06-07T06:22:58.118Z'
+                        rootCaCommonName: string
+                        rootCaExpiresAt: '2024-06-07T06:22:58.118Z'
+                        isRevoked: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/certificate":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/certificate':
     get:
       tags:
-      - machine-certificate
+        - machine-certificate
       summary: Fetch active certificate details
-      description: This API endpoint retrieve details of currently active certificate
-        associated with the machine identified by the provided machineId or machine
-        alias.
+      description: >-
+        This API endpoint retrieve details of currently active certificate
+        associated with the machine identified by the provided machineId or
+        machine alias.
       operationId: getCertificate
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseMachineCertificates"
+                $ref: '#/components/schemas/StandardResponseMachineCertificates'
               examples:
                 Fetch active certificate details example:
                   summary: Fetch active certificate details response example
@@ -1445,15 +1650,16 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload:
                       machineId: xxb63e2aaedx-xxxx-123
                       privateKeyAlgo: RSA
                       privateKeySize: '2048'
                       pubSignAlgo: SHA256
-                      certSerialNumber: 65:19:2e:a6:cd:18:09:49:ab:49:11:ea:b6:3e:c7:c0...
-                      certFingerprint: "[2e, d1, ea, e, cf, bc, 21, 6, e7, fa, 93,
-                        7d, e9, 20, a2, 4d, ...]"
+                      certSerialNumber: '65:19:2e:a6:cd:18:09:49:ab:49:11:ea:b6:3e:c7:c0...'
+                      certFingerprint: >-
+                        [2e, d1, ea, e, cf, bc, 21, 6, e7, fa, 93, 7d, e9, 20,
+                        a2, 4d, ...]
                       certPkiName: string
                       certCreatedAt: '2024-06-07T06:22:58.118Z'
                       certExpiresAt: '2024-06-07T06:22:58.118Z'
@@ -1467,23 +1673,24 @@ paths:
                       rootCaExpiresAt: '2024-06-07T06:22:58.118Z'
                       isRevoked: false
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/certificate/download":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/certificate/download':
     get:
       tags:
-      - machine-certificate
+        - machine-certificate
       summary: Download certificate
-      description: This API endpoint download the active certificate associated with
-        the machine identified by the provided machineId or machine alias.
+      description: >-
+        This API endpoint download the active certificate associated with the
+        machine identified by the provided machineId or machine alias.
       operationId: downloadCertificate
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
@@ -1500,25 +1707,27 @@ paths:
                     certificate data....
                     -----END CERTIFICATE-----
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/{machineIdOrAlias}/certificate/ca-bundle/download":
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/{machineIdOrAlias}/certificate/ca-bundle/download':
     get:
       tags:
-      - machine-certificate
+        - machine-certificate
       summary: Download CA-Bundle certificates
-      description: This API download CA-Bundle certificates associated with the machine
-        identified by the provided machineId or machine alias.CA-Bundle certificates
-        refer to a collection of intermediate and root certificates that form the
-        complete certificate chain required for SSL/TLS authentication
+      description: >-
+        This API download CA-Bundle certificates associated with the machine
+        identified by the provided machineId or machine alias.CA-Bundle
+        certificates refer to a collection of intermediate and root certificates
+        that form the complete certificate chain required for SSL/TLS
+        authentication
       operationId: downloadCaBundle
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
@@ -1538,30 +1747,31 @@ paths:
                     certificate data....
                     -----END CERTIFICATE-----
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/check-alias-inuse":
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/machines/check-alias-inuse:
     get:
       tags:
-      - machines
+        - machines
       summary: Check alias is already used or not
-      description: This API endpoint checks if the provided alias is already in use
-        within a machine for an account or is available to use.
+      description: >-
+        This API endpoint checks if the provided alias is already in use within
+        a machine for an account or is available to use.
       operationId: checkAliasInUse
       parameters:
-      - name: alias
-        in: query
-        description: The alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: alias
+          in: query
+          description: The alias - machine alias
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseBoolean"
+                $ref: '#/components/schemas/StandardResponseBoolean'
               examples:
                 Check alias in use example:
                   summary: Check alias in use response example
@@ -1573,35 +1783,212 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
-  "/api/v1/machines/remove/{machineIdOrAlias}":
-    delete:
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/app-services/{machineIdOrAlias}':
+    get:
       tags:
-      - machines
-      summary: Remove machine
-      description: This API endpoint remove the machine identified by the provided
-        machineId or machine alias. This operation also removes data associated with
-        machine such as, telemetry, tags, certificates, etc. The machine cannot be
-        deleted if it contains an active networking node.
-      operationId: removeMachine
+        - app-services
+      summary: Fetch machine's app services
+      description: >-
+        This API endpoint retrieve list of app services identified by the
+        provided machine ID or alias, including port mapping attributes and
+        configurations.
+      operationId: getAppServiceByMachineIdOrAlias
       parameters:
-      - name: machineIdOrAlias
-        in: path
-        description: The machineId - unique id of the machine, alias - machine alias
-        required: true
-        schema:
-          type: string
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponseBoolean"
+                $ref: '#/components/schemas/StandardResponseSetAppServices'
+              examples:
+                Machine's app services example:
+                  summary: Machine's app services response example
+                  description: Machine's app services example
+                  value:
+                    success: true
+                    message: App services fetched successfully
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload:
+                      - appId: 4dff4ea340f0-aayq-171
+                        appName: test-app4
+                        dnsName: test-dns.app.mec.sh
+                        portMappings:
+                          - targetPort: 3000
+                            localPort: 3001
+                            protocol: HTTP
+                            description: test
+                          - targetPort: 3002
+                            localPort: 3003
+                            protocol: HTTP
+                            description: null
+      security:
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/machine-tags:
+    get:
+      tags:
+        - machine-tags
+      summary: Fetch machine tags list
+      description: >-
+        This API endpoint retrieve a list of tags associated with machines for
+        an account.
+      operationId: getMachineTags
+      parameters:
+        - name: allParams
+          in: query
+          description: 'allParams - pageNo, pageSize, sortBy, sortDirection, key, value etc.'
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/StandardResponsePaginatedResponseMachineTags
+              examples:
+                Fetch machine tags list example:
+                  summary: Fetch machine tags list response example
+                  description: Fetch machine tags list example
+                  value:
+                    success: true
+                    message: Machine tags fetched successfully
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload:
+                      content:
+                        - machineId: xxb63e2aaedx-xxxx-123
+                          key: test
+                          value: testValue
+                      totalPages: 2
+                      totalRecordCount: 2
+                      pageSize: 1
+  /api/v1/app-services/check-dns-name-inuse:
+    get:
+      tags:
+        - app-services
+      summary: Check DNS name in use for app services
+      description: >-
+        This API endpoint checks if a DNS name is available or already in use
+        within the app service
+      operationId: checkAppServicesDnsName
+      parameters:
+        - name: dnsName
+          in: query
+          description: The dnsName - App service DNS name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponseString'
+              examples:
+                Check DNS name in use example:
+                  summary: Check DNS name in use response example
+                  description: Check DNS name in use example
+                  value:
+                    success: true
+                    message: DNS name available for further processing
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload: null
+      security:
+        - apiKeyId: []
+          apiKeySecret: []
+  /api/v1/app-services/check-app-name-inuse:
+    get:
+      tags:
+        - app-services
+      summary: Check app name in use for app services
+      description: >-
+        This API endpoint checks if app name is available or already in use
+        within the app service in account.
+      operationId: checkAppServicesName
+      parameters:
+        - name: appName
+          in: query
+          description: The appName - App service name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponseString'
+              examples:
+                Check app name in use example:
+                  summary: Check app name in use response example
+                  description: Check app name in use example
+                  value:
+                    success: true
+                    message: App name available for further processing
+                    status: OK
+                    statusCode: 200
+                    errorCode: ''
+                    subErrors:
+                      - {}
+                    payload: null
+      security:
+        - apiKeyId: []
+          apiKeySecret: []
+  '/api/v1/machines/remove/{machineIdOrAlias}':
+    delete:
+      tags:
+        - machines
+      summary: Remove machine
+      description: >-
+        This API endpoint remove the machine identified by the provided
+        machineId or machine alias. This operation also removes data associated
+        with machine such as, telemetry, tags, certificates, etc. The machine
+        cannot be deleted if it contains an active networking node.
+      operationId: removeMachine
+      parameters:
+        - name: machineIdOrAlias
+          in: path
+          description: 'The machineId - unique id of the machine, alias - machine alias'
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponseBoolean'
               examples:
                 Remove machine example:
                   summary: Remove machine response example
@@ -1613,11 +2000,11 @@ paths:
                     statusCode: 200
                     errorCode: ''
                     subErrors:
-                    - {}
+                      - {}
                     payload: true
       security:
-      - apiKeyId: []
-        apiKeySecret: []
+        - apiKeyId: []
+          apiKeySecret: []
 components:
   schemas:
     Networks:
@@ -1628,10 +2015,6 @@ components:
         provider:
           type: string
         ipSubnet:
-          type: string
-        dnsName:
-          type: string
-        dnsSuffix:
           type: string
         networkName:
           type: string
@@ -1659,14 +2042,12 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/Networks"
+          $ref: '#/components/schemas/Networks'
       description: Standard response wrapping a Network
     UpdateNetworksRequestType:
       type: object
       properties:
         networkName:
-          type: string
-        dnsName:
           type: string
         isDefault:
           type: boolean
@@ -1710,12 +2091,44 @@ components:
         tags:
           type: array
           items:
-            $ref: "#/components/schemas/MachineTagsRequestType"
+            $ref: '#/components/schemas/MachineTagsRequestType'
         fileName:
           type: string
         pictureBase64:
           type: string
       description: Schema for update machines
+    PortMappingsRequestType:
+      type: object
+      properties:
+        targetPort:
+          maximum: 65535
+          minimum: 1
+          type: integer
+          format: int32
+        localPort:
+          maximum: 65535
+          minimum: 1
+          type: integer
+          format: int32
+        description:
+          type: string
+      description: Schema for port mappings
+    UpsertAppServiceRequestType:
+      type: object
+      properties:
+        appName:
+          type: string
+        dnsName:
+          type: string
+        portMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/PortMappingsRequestType'
+        machineIdOrAliasList:
+          type: array
+          items:
+            type: string
+      description: Schema for upsert app service request type
     IssueSSHCertificateResponseType:
       type: object
       properties:
@@ -1743,12 +2156,12 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/IssueSSHCertificateResponseType"
+          $ref: '#/components/schemas/IssueSSHCertificateResponseType'
       description: Standard response wrapping a IssueSSHCertificateResponseType
     IssueSSHCertificateRequestType:
       required:
-      - principals
-      - publicKey
+        - principals
+        - publicKey
       type: object
       properties:
         principals:
@@ -1760,17 +2173,14 @@ components:
       description: Schema for issue SSH certificate
     AddNetworkRequestType:
       required:
-      - dnsName
-      - ipSubnet
-      - networkName
+        - ipSubnet
+        - networkName
       type: object
       properties:
         ipSubnet:
           type: string
           description: Allowed with CIDR /24
         networkName:
-          type: string
-        dnsName:
           type: string
         networkKey:
           type: string
@@ -1806,7 +2216,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/TelemetryLogsStreamsResponseType"
+          $ref: '#/components/schemas/TelemetryLogsStreamsResponseType'
       description: Standard response wrapping a TelemetryLogsStreamsResponseType
     TelemetryLogsStreamsResponseType:
       type: object
@@ -1838,13 +2248,13 @@ components:
         result:
           type: array
           items:
-            $ref: "#/components/schemas/LogsResult"
+            $ref: '#/components/schemas/LogsResult'
       description: Schema for telemetry machine logs data
     LogsResult:
       type: object
       properties:
         stream:
-          $ref: "#/components/schemas/Stream"
+          $ref: '#/components/schemas/Stream'
         values:
           type: array
           items:
@@ -1871,7 +2281,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/TelemetryLogsDataResponseType"
+          $ref: '#/components/schemas/TelemetryLogsDataResponseType'
       description: Standard response wrapping a TelemetryLogsDataResponseType
     Stream:
       type: object
@@ -1889,11 +2299,11 @@ components:
         status:
           type: string
         data:
-          $ref: "#/components/schemas/LogsData"
+          $ref: '#/components/schemas/LogsData'
       description: Schema for machine logs response
     MachineLogsRequestType:
       required:
-      - stream
+        - stream
       type: object
       properties:
         search:
@@ -1938,11 +2348,11 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/FileExportResponseType"
+          $ref: '#/components/schemas/FileExportResponseType'
       description: Standard response wrapping a TelemetryLogsStreamsResponseType
     MachineLogsExportRequestType:
       required:
-      - stream
+        - stream
       type: object
       properties:
         search:
@@ -1986,7 +2396,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/MachineProvisionRequestStatusResponseType"
+          $ref: '#/components/schemas/MachineProvisionRequestStatusResponseType'
       description: Standard response wrapping a MachineProvisionRequestStatusResponseType
     AddMachineProvisionRequestResponseType:
       type: object
@@ -2016,7 +2426,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/AddMachineProvisionRequestResponseType"
+          $ref: '#/components/schemas/AddMachineProvisionRequestResponseType'
       description: Standard response wrapping a AddMachineProvisionRequestResponseType
     AddMachineProvisionRequestType:
       type: object
@@ -2046,8 +2456,6 @@ components:
       properties:
         nodeId:
           type: string
-        dnsName:
-          type: string
         ipv4Address:
           type: string
         ipv6Address:
@@ -2058,9 +2466,9 @@ components:
           type: string
           format: date-time
         networks:
-          $ref: "#/components/schemas/Networks"
+          $ref: '#/components/schemas/Networks'
         machineData:
-          $ref: "#/components/schemas/MachineData"
+          $ref: '#/components/schemas/MachineData'
       description: Schema for network node response
     StandardResponseNetworkNodesResponseType:
       type: object
@@ -2081,12 +2489,11 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/NetworkNodesResponseType"
+          $ref: '#/components/schemas/NetworkNodesResponseType'
       description: Standard response wrapping a NetworkNodesResponseType
     EnableNetworkingRequestType:
       required:
-      - dnsName
-      - machineId
+        - machineId
       type: object
       properties:
         machineId:
@@ -2094,8 +2501,6 @@ components:
         ipv4Address:
           type: string
         networkId:
-          type: string
-        dnsName:
           type: string
         networkKey:
           type: string
@@ -2108,7 +2513,7 @@ components:
         result:
           type: array
           items:
-            $ref: "#/components/schemas/Result"
+            $ref: '#/components/schemas/Result'
       description: Schema for telemetry data
     Metric:
       type: object
@@ -2130,7 +2535,7 @@ components:
       type: object
       properties:
         metric:
-          $ref: "#/components/schemas/Metric"
+          $ref: '#/components/schemas/Metric'
         values:
           type: array
           items:
@@ -2157,7 +2562,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/TelemetryDataResponseType"
+          $ref: '#/components/schemas/TelemetryDataResponseType'
       description: Standard response wrapping a TelemetryDataResponseType
     TelemetryDataResponseType:
       type: object
@@ -2165,26 +2570,26 @@ components:
         status:
           type: string
         data:
-          $ref: "#/components/schemas/Data"
+          $ref: '#/components/schemas/Data'
       description: Schema for telemetry data response type
     MachineMetricsRequestType:
       required:
-      - end
-      - machineIdOrAlias
-      - metricsLabel
-      - start
-      - timeInterval
+        - end
+        - machineIdOrAlias
+        - metricsLabel
+        - start
+        - timeInterval
       type: object
       properties:
         metricsLabel:
           type: string
           enum:
-          - SYSTEM_CPU_UTILIZATION
-          - SYSTEM_MEMORY_USAGE
-          - SYSTEM_CPU_LOAD_AVERAGE_15M
-          - SYSTEM_NETWORK_IO
-          - SYSTEM_DISK_IO
-          - SYSTEM_FILESYSTEMS_USAGE
+            - SYSTEM_CPU_UTILIZATION
+            - SYSTEM_MEMORY_USAGE
+            - SYSTEM_CPU_LOAD_AVERAGE_15M
+            - SYSTEM_NETWORK_IO
+            - SYSTEM_DISK_IO
+            - SYSTEM_FILESYSTEMS_USAGE
         start:
           type: integer
           description: Timestamp in epoch seconds
@@ -2212,16 +2617,16 @@ components:
         tags:
           type: array
           items:
-            $ref: "#/components/schemas/TagsModelMapper"
+            $ref: '#/components/schemas/TagsModelMapper'
         telemetry:
-          $ref: "#/components/schemas/TelemetryData"
+          $ref: '#/components/schemas/TelemetryData'
         lastActiveAt:
           type: string
           format: date-time
         networking:
-          $ref: "#/components/schemas/NodeData"
+          $ref: '#/components/schemas/NodeData'
         sysInfo:
-          $ref: "#/components/schemas/SystemInfoData"
+          $ref: '#/components/schemas/SystemInfoData'
       description: Schema for machines response type
     NodeData:
       type: object
@@ -2245,7 +2650,7 @@ components:
         content:
           type: array
           items:
-            $ref: "#/components/schemas/MachinesModelMapper"
+            $ref: '#/components/schemas/MachinesModelMapper'
         totalPages:
           type: integer
           format: int32
@@ -2275,7 +2680,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/PaginatedResponseListMachinesModelMapper"
+          $ref: '#/components/schemas/PaginatedResponseListMachinesModelMapper'
       description: Standard response wrapping a PaginatedResponse for machines
     SystemInfoData:
       type: object
@@ -2350,7 +2755,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/GrafanaSSOTokenResponseType"
+          $ref: '#/components/schemas/GrafanaSSOTokenResponseType'
       description: Standard response wrapping a GrafanaSSOTokenResponseType
     GetSSOTokenRequestType:
       type: object
@@ -2377,13 +2782,65 @@ components:
         logSearch:
           type: string
       description: Schema for get SSO token request
+    AppServicePortMapping:
+      type: object
+      properties:
+        targetPort:
+          type: integer
+          format: int32
+        localPort:
+          type: integer
+          format: int32
+        protocol:
+          type: string
+        description:
+          type: string
+    AppServicesResponseType:
+      type: object
+      properties:
+        appId:
+          type: string
+        appName:
+          type: string
+        dnsName:
+          type: string
+        portMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppServicePortMapping'
+        machineIdOrAliasList:
+          type: array
+          items:
+            type: string
+      description: Schema for app services response
+    StandardResponseAppServicesResponseType:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        status:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        subErrors:
+          type: array
+          items:
+            type: object
+        payload:
+          $ref: '#/components/schemas/AppServicesResponseType'
+      description: Standard response wrapping an AppServicesResponseType
     PaginatedResponseListNetworks:
       type: object
       properties:
         content:
           type: array
           items:
-            $ref: "#/components/schemas/Networks"
+            $ref: '#/components/schemas/Networks'
         totalPages:
           type: integer
           format: int32
@@ -2413,7 +2870,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/PaginatedResponseListNetworks"
+          $ref: '#/components/schemas/PaginatedResponseListNetworks'
       description: Standard response wrapping a PaginatedResponse for networks
     PaginatedResponseListNetworkNodesResponseType:
       type: object
@@ -2421,7 +2878,7 @@ components:
         content:
           type: array
           items:
-            $ref: "#/components/schemas/NetworkNodesResponseType"
+            $ref: '#/components/schemas/NetworkNodesResponseType'
         totalPages:
           type: integer
           format: int32
@@ -2451,29 +2908,8 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/PaginatedResponseListNetworkNodesResponseType"
+          $ref: '#/components/schemas/PaginatedResponseListNetworkNodesResponseType'
       description: Standard response wrapping a PaginatedResponse for network nodes
-    StandardResponseString:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        status:
-          type: string
-        statusCode:
-          type: integer
-          format: int32
-        errorCode:
-          type: string
-        subErrors:
-          type: array
-          items:
-            type: object
-        payload:
-          type: string
-      description: Standard response wrapping a string response
     GenerateIpv4AddressResponseType:
       type: object
       properties:
@@ -2499,7 +2935,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/GenerateIpv4AddressResponseType"
+          $ref: '#/components/schemas/GenerateIpv4AddressResponseType'
       description: Standard response wrapping a GenerateIpv4AddressResponseType
     StandardResponseMachinesModelMapper:
       type: object
@@ -2520,7 +2956,7 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/MachinesModelMapper"
+          $ref: '#/components/schemas/MachinesModelMapper'
       description: Standard response wrapping a machines response
     MachineCertificates:
       type: object
@@ -2587,7 +3023,7 @@ components:
         payload:
           type: array
           items:
-            $ref: "#/components/schemas/MachineCertificates"
+            $ref: '#/components/schemas/MachineCertificates'
       description: Standard response wrapping MachineCertificates list
     StandardResponseMachineCertificates:
       type: object
@@ -2608,8 +3044,154 @@ components:
           items:
             type: object
         payload:
-          $ref: "#/components/schemas/MachineCertificates"
+          $ref: '#/components/schemas/MachineCertificates'
       description: Standard response wrapping a MachineCertificate
+    AppServices:
+      type: object
+      properties:
+        appId:
+          type: string
+        dnsName:
+          type: string
+        portMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppServicePortMapping'
+        appName:
+          type: string
+    StandardResponseSetAppServices:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        status:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        subErrors:
+          type: array
+          items:
+            type: object
+        payload:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/AppServices'
+      description: Standard response wrapping a set of AppServices
+    MachineTags:
+      type: object
+      properties:
+        machineId:
+          type: string
+        key:
+          type: string
+        value:
+          type: string
+      description: Machine tags schema
+    PaginatedResponseListMachineTags:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/MachineTags'
+        totalPages:
+          type: integer
+          format: int32
+        totalRecordCount:
+          type: integer
+          format: int64
+        pageSize:
+          type: integer
+          format: int32
+      description: Schema for paginated response
+    StandardResponsePaginatedResponseMachineTags:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        status:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        subErrors:
+          type: array
+          items:
+            type: object
+        payload:
+          $ref: '#/components/schemas/PaginatedResponseListMachineTags'
+      description: Standard response wrapping a PaginatedResponse for machine tags
+    PaginatedResponseListAppServicesResponseType:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppServicesResponseType'
+        totalPages:
+          type: integer
+          format: int32
+        totalRecordCount:
+          type: integer
+          format: int64
+        pageSize:
+          type: integer
+          format: int32
+      description: Schema for paginated response
+    StandardResponsePaginatedResponseAppServicesResponseType:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        status:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        subErrors:
+          type: array
+          items:
+            type: object
+        payload:
+          $ref: '#/components/schemas/PaginatedResponseListAppServicesResponseType'
+      description: >-
+        Standard response wrapping a PaginatedResponse for
+        AppServicesResponseType
+    StandardResponseString:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        status:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        subErrors:
+          type: array
+          items:
+            type: object
+        payload:
+          type: string
+      description: Standard response wrapping a string response
   securitySchemes:
     apiKeySecret:
       type: apiKey
@@ -2620,24 +3202,25 @@ components:
       name: X-Api-Key-Id
       in: header
 x-tagGroups:
-- name: Authentication
-  tags:
-  - authentication
-  - api-keys
-- name: Machines
-  tags:
-  - provision-request
-  - machines
-  - machine-tags
-  - machine-certificate
-- name: User Management
-  tags:
-  - accounts
-  - users
-- name: Networking
-  tags:
-  - network
-  - SSH
-- name: Ping
-  tags:
-  - ping
+  - name: Authentication
+    tags:
+      - authentication
+      - api-keys
+  - name: Machines
+    tags:
+      - provision-request
+      - machines
+      - machine-tags
+      - machine-certificate
+      - app-services
+  - name: User Management
+    tags:
+      - accounts
+      - users
+  - name: Networking
+    tags:
+      - network
+      - SSH
+  - name: Ping
+    tags:
+      - ping
