@@ -63,6 +63,10 @@ const config = {
 
   themeConfig: {
     image: "img/docusaurus-social-card.jpg",
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
+    },
     navbar: {
       hideOnScroll: true,
       logo: {
@@ -80,23 +84,16 @@ const config = {
         },
         // {
         //   type: "docSidebar",
-        //   sidebarId: "hardwareSidebar",
+        //   sidebarId: "mechanixSidebar",
         //   position: "left",
-        //   label: "Mecha Comet",
+        //   label: "Mechanix OS",
         // },
-        {
-          type: "docSidebar",
-          sidebarId: "mechanixSidebar",
-          position: "left",
-          label: "Mechanix OS",
-        },
         {
           type: "docSidebar",
           sidebarId: "mechaCloudSidebar",
           position: "left",
           label: "Mecha Cloud",
         },
-        
         // {
         //   type: "docSidebar",
         //   sidebarId: "mechaApiSidebar",
