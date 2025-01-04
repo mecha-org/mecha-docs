@@ -63,6 +63,10 @@ const config = {
 
   themeConfig: {
     image: "img/docusaurus-social-card.jpg",
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
+    },
     navbar: {
       hideOnScroll: true,
       logo: {
@@ -76,26 +80,26 @@ const config = {
           type: "docSidebar",
           sidebarId: "hardwareSidebar",
           position: "left",
-          label: "Comet-M",
+          label: "Mecha Comet",
         },
-        {
-          type: "docSidebar",
-          sidebarId: "mechanixSidebar",
-          position: "left",
-          label: "Mechanix OS",
-        },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "mechanixSidebar",
+        //   position: "left",
+        //   label: "Mechanix OS",
+        // },
         {
           type: "docSidebar",
           sidebarId: "mechaCloudSidebar",
           position: "left",
           label: "Mecha Cloud",
         },
-        {
-          type: "docSidebar",
-          sidebarId: "mechaApiSidebar",
-          position: "left",
-          label: "API",
-        },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "mechaApiSidebar",
+        //   position: "left",
+        //   label: "API",
+        // },
         {
           to: "https://github.com/mecha-org/mecha-docs",
           label: "GitHub",
