@@ -76,7 +76,7 @@ const config = {
           type: "docSidebar",
           sidebarId: "hardwareSidebar",
           position: "left",
-          label: "Comet-M",
+          label: "Mecha Comet",
         },
         {
           type: "docSidebar",
@@ -90,12 +90,13 @@ const config = {
           position: "left",
           label: "Mecha Cloud",
         },
-        {
-          type: "docSidebar",
-          sidebarId: "mechaApiSidebar",
-          position: "left",
-          label: "API",
-        },
+        
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "mechaApiSidebar",
+        //   position: "left",
+        //   label: "API",
+        // },
         {
           to: "https://github.com/mecha-org/mecha-docs",
           label: "GitHub",
