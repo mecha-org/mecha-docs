@@ -31,6 +31,13 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Development",
+      items: [
+        "hardware/development/setting-up-environment/rust",
+      ],
+    },
+    {
+      type: "category",
       label: "Bootloader",
       items: [
         "hardware/bootloader/basics-in-bootloader",
