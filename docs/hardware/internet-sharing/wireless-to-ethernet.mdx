@@ -1,0 +1,132 @@
+---
+title: Wireless Internet to Ethernet
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps";
+
+The purpose of this setup is to share a wireless internet connection over an Ethernet connection, enabling other devices to access the internet via the Ethernet network created on Comet.
+
+This guide explains how to set up an Ethernet connection on Mecha Comet using:
+
+- `nmcli` (NetworkManager Command Line Interface)
+- Configuring Network Address Translation (NAT) using `nftables`.
+
+## Prerequisites
+
+- Ensure you have `nmcli` and `nftables` installed on your system.
+- You need `sudo` privileges to execute the commands.
+- Replace `wlan0` and `end0` with your actual Wireless interface and outbound network interface names.
+- Ensure your Wireless interface is connected to the internet.
+
+## Steps to Set Up Ethernet Sharing
+
+<S>
+<br />
+
+### 1. Connect Comet to a Device with an Ethernet Port
+
+Physically connect the Comet to another device (e.g., a laptop or desktop) using an Ethernet cable. Ensure the Ethernet port is functional on both devices.
+
+### 2. Check Existing Network Connections
+
+Run the following command to list the available network connections:
+
+```bash
+nmcli connection show
+```
+
+Identify the name of the Ethernet connection you want to modify (e.g., `Wired connection 1`).
+
+### 3. Configure IPv4 Method to Shared
+
+Modify the Ethernet connection to use a shared IPv4 method:
+
+```bash
+sudo nmcli connection modify "<connection-name>" ipv4.method shared
+```
+
+**Example:**
+
+```bash
+sudo nmcli connection modify "Wired connection 1" ipv4.method shared
+```
+
+### 4. Bring Up the Ethernet Connection
+
+Activate the Ethernet connection:
+
+```bash
+sudo nmcli connection up "<connection-name>"
+```
+
+**Example:**
+
+```bash
+sudo nmcli connection up "Wired connection 1"
+```
+
+### 5. Configure NAT with nftables
+
+#### 5.1 Create a NAT Table
+
+Add a new NAT table:
+
+```bash
+sudo nft add table ip nat
+```
+
+#### 5.2 Add a NAT Chain
+
+Create a chain for postrouting in the NAT table:
+
+```bash
+sudo nft add chain ip nat POSTROUTING { type nat hook postrouting priority 100 \; }
+```
+
+#### 5.3 Add a Masquerade Rule
+
+Add a masquerade rule for outgoing traffic through the Wireless interface:
+
+```bash
+sudo nft add rule ip nat POSTROUTING oif "wlan0" masquerade
+```
+
+- Replace `wlan0` with your Wireless interface name.
+
+</S>
+
+## Verification
+
+### Check the Ethernet Connection Status
+
+Use the following command to verify the Ethernet connection status:
+
+```bash
+nmcli device status
+```
+
+### Verify nftables Rules
+
+Check the NAT table rules to confirm the configuration:
+
+```bash
+sudo nft list table ip nat
+```
+
+### Test Internet Connectivity on the Connected Device
+
+Ensure the device connected via Ethernet can access the internet. Open a browser or run a ping command to verify connectivity.
+
+## Notes
+
+- Ensure your Ethernet adapter is functional and properly connected.
+- Replace interface names as needed for your specific setup.
+
+## Troubleshooting
+
+- If the Ethernet connection fails to start, ensure the cable is securely connected.
+- Verify that `nftables` is enabled and properly configured.
+
+By following these steps, the connected device should now have internet access via the Ethernet connection.
+

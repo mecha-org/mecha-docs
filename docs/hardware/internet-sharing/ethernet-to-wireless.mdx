@@ -1,0 +1,138 @@
+---
+title: Ethernet to Wireless Hotspot
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps";
+
+The purpose of this setup is to share an Ethernet internet connection over a wireless hotspot, enabling other devices to access the internet via the Wireless hotspot created on Comet.
+
+This guide explains how to set up a wireless hotspot on Mecha Comet using:
+
+- `nmcli` (NetworkManager Command Line Interface)
+- Configuring Network Address Translation (NAT) using `nftables`.
+
+## Prerequisites
+
+- Ensure you have `nmcli` and `nftables` installed on your system.
+- You need `sudo` privileges to execute the commands.
+- Replace `wlan0` and `end0` with your actual Wireless interface and outbound network interface names.
+- Ensure you are connected to the Ethernet network.
+
+## Steps to Set Up the Hotspot
+
+<S>
+<br />
+### 1. Create a Wireless Hotspot
+
+Run the following command to create a Wireless hotspot:
+
+```bash
+sudo nmcli device wifi hotspot ifname <wireless-interface> con-name <connection-name> ssid <ssid-name> password "<password>"
+```
+
+- Replace `<wireless-interface>` with your Wireless interface name.
+- Replace `<connection-name>` with the desired connection name.
+- Replace `<ssid-name>` with your desired hotspot name.
+- Replace `<password>` with your desired password.
+
+**Example:**
+
+```bash
+sudo nmcli device wifi hotspot ifname wlan0 con-name comet-hotspot ssid CometHotspot password "mechacomet"
+```
+
+- **ifname wlan0**: Specifies the Wireless interface (replace `wlan0` with your Wireless interface name).
+- **con-name comet-hotspot**: Sets the connection name as `comet-hotspot`.
+- **ssid CometHotspot**: Sets the SSID of the hotspot to `CometHotspot`.
+- **password "mechacomet"**: Sets the password for the hotspot.
+
+### 2. Configure IPv4 Method to Shared
+
+Modify the hotspot connection to use a shared IPv4 method:
+
+```bash
+sudo nmcli connection modify con-name ipv4.method shared
+```
+
+**Example:**
+
+```bash
+sudo nmcli connection modify "comet-hotspot" ipv4.method shared
+```
+
+### 3. Bring Up the Hotspot Connection
+
+Activate the hotspot connection:
+
+```bash
+sudo nmcli connection up con-name
+```
+
+**Example:**
+
+```bash
+sudo nmcli connection up "comet-hotspot"
+```
+
+### 4. Configure NAT with nftables
+
+#### 4.1 Create a NAT Table
+
+Add a new NAT table:
+
+```bash
+sudo nft add table ip nat
+```
+
+#### 4.2 Add a NAT Chain
+
+Create a chain for postrouting in the NAT table:
+
+```bash
+sudo nft add chain ip nat POSTROUTING { type nat hook postrouting priority 100 \; }
+```
+
+#### 4.3 Add a Masquerade Rule
+
+Add a masquerade rule for outgoing traffic through the outbound interface:
+
+```bash
+sudo nft add rule ip nat POSTROUTING oif "end0" masquerade
+```
+
+- Replace `end0` with your outbound network interface name.
+
+</S>
+
+## Verification
+
+### Check the Hotspot Status
+
+Use the following command to verify the hotspot status:
+
+```bash
+nmcli device status
+```
+
+### Verify nftables Rules
+
+Check the NAT table rules to confirm the configuration:
+
+```bash
+sudo nft list table ip nat
+```
+
+## Notes
+
+- Ensure your Wireless adapter supports Access Point (AP) mode.
+- Replace interface names as needed for your specific setup.
+- This setup assumes the system's outbound interface is `end0`. Adjust accordingly.
+
+## Troubleshooting
+
+- If the hotspot fails to start, ensure the Wireless adapter is not connected to another network.
+- Verify that `nftables` is enabled and properly configured.
+
+By following these steps, you should have a functioning Wireless hotspot with NAT configured.
+

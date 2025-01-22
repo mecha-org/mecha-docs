@@ -89,6 +89,14 @@ const sidebars = {
         "hardware/labs/cortex-m4",
       ],
     },
+    {
+      type: "category",
+      label: "Internet sharing",
+      items: [
+        "hardware/internet-sharing/ethernet-to-wireless",
+        "hardware/internet-sharing/wireless-to-ethernet",
+      ],
+    },
   ],
   mechanixSidebar: [
     {
@@ -96,6 +104,7 @@ const sidebars = {
       label: "Using the GUI",
       items: [
         "mechanix/using-the-gui/mechanix-shell",
+        "mechanix/using-the-gui/launcher",
         "mechanix/using-the-gui/settings-app",
       ],
     },
