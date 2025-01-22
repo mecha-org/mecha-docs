@@ -34,6 +34,10 @@ const sidebars = {
       label: "Development",
       items: [
         "hardware/development/setting-up-environment/rust",
+        "hardware/development/setting-up-environment/ruby",
+        "hardware/development/setting-up-environment/python",
+        "hardware/development/setting-up-environment/go",
+        "hardware/development/setting-up-environment/java",
       ],
     },
     {
