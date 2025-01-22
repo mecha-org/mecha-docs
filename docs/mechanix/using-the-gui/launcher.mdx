@@ -1,0 +1,151 @@
+---
+title: Launcher
+hide_table_of_contents: false
+---
+
+# Launcher
+
+This launcher app is built using **MCTK**, our own GUI library in **Rust**. It provides an intuitive interface for interacting with system settings, installed apps, and system monitoring tools.
+
+## Homescreen
+
+The **homescreen** serves as the main interface for the user, displaying essential system information and providing access to different functionalities. The following elements are visible:
+
+- **Clock**: Shows the current time.
+- **Wireless Signal**: Displays the current wireless network status.
+- **Bluetooth Status**: Indicates whether Bluetooth is enabled or disabled.
+- **Battery Status**: Displays battery percentage and charging status.
+- **Device Name**: Shows the name of the device.
+- **IP Address**: Displays the device’s current IP address.
+- **Network Status**: Indicates whether the device is online or offline.
+- **CPU Usage**: Displays the current CPU usage percentage.
+- **Memory Usage**: Displays the current memory usage.
+
+Additionally, the homescreen provides:
+
+- **Link to Settings App**: Access the system settings with a quick tap.
+- **Pinned Apps**: Users can pin their favorite apps for quick access.
+
+## App Drawer
+
+By sliding up on the homescreen, the **App Drawer** appears, showing a list of all installed apps. Users can manage apps through the following methods:
+
+- **App Installation**: 
+  - Install apps via terminal using commands like `sudo apt install`, `snap`, or `flatpak`.
+  
+- **App Details**: 
+  - Long-pressing an app icon brings up the **App Details** screen, where users can:
+    - Launch the app.
+    - Check system usage.
+    - Delete the app if needed.
+
+## Settings Panel
+
+By sliding down on the homescreen, the **Settings Panel** is displayed with the following toggles and controls:
+
+- **Wireless**: Turn the wireless network on/off.
+- **Bluetooth**: Enable or disable Bluetooth functionality.
+- **Rotation**: Toggle screen rotation settings.
+- **Terminal Button**: Quick access to a terminal window.
+- **Power Options**: Access the power settings like restart, shutdown, etc.
+- **Sound Status/Update**: Adjust the sound volume or toggle mute.
+- **Brightness Status/Update**: Adjust screen brightness by sliding.
+
+## Power Options
+
+Clicking on the **Power Button** opens the **Power Options Screen**, where users can:
+
+- Power off the device.
+- Restart the device.
+
+## Running Apps
+
+Long-pressing the **Home Button** brings up a list of all running apps. Users can:
+
+- **Close Running Apps**: Drag any app up toward the top of the screen to close it.
+- **Click on Running App**: Clicking on a running app will bring that app onto the screen.
+
+## Status Bar
+
+The **Status Bar** is visible at the top of the screen when any app is running. It provides essential information and quick access to key functionalities, including:
+
+- **Time**: Current time for easy reference.
+- **Wireless Status**: Shows whether Wireless is enabled or disabled.
+- **Bluetooth Status**: Shows whether Bluetooth is enabled or disabled.
+- **Battery Status**: Displays the remaining battery percentage and charging status.
+
+This status bar provides a constant overview of critical system information while ensuring users can quickly access or interact with key elements of the device without leaving the app they are using.
+
+## Local Setup
+
+To set up the Launcher app locally, follow these steps:
+
+### Prerequisites
+
+Ensure you have **Rust** installed on your system. Follow the installation guide for your platform at [Rust Installation Guide](https://www.rust-lang.org/tools/install).
+
+### Installation Steps
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mecha-org/mechanix-gui.git
+   ```
+
+2. Navigate into the launcher directory:
+   ```bash
+   cd mechanix-gui/shell/launcher
+   ```
+
+3. Copy and Update settings.yml:
+   - Before running the Launcher app, you need to set up the settings.yml file in the Launcher directory.
+   - The settings.yml file is used for configuring various settings and assets for the Launcher app. You can modify this file to customize the app’s appearance, behavior, and system integrations.
+   - Copy the settings.yml.example file to settings.yml in the same directory.
+
+   ```bash
+   cp settings.yml.example settings.yml
+   ```
+   - After copying, open `settings.yml` and update the paths accordingly (such as font paths, icon paths, and other resources).
+   
+   <br />
+   ### Example Path Update:
+    If the path in `settings.yml` is:
+    ```plaintext
+    /usr/share/mechanix/shell/launcher/assets/icons/terminal_icon.png
+    ```
+    You should change it to something like:
+    ```plaintext
+    ./src/assets/icons/terminal_icon.png
+    ```
+   - This is necessary to ensure that the paths are relative to your project's directory structure.
+
+4. Run the app:
+   ```bash
+   cargo run
+   ```
+
+5. Build the app:
+   ```bash
+   cargo build --release
+   ```
+
+### Pinned Apps
+In the settings.yml file, the pinned_apps section allows you to specify the app IDs of the apps you want to display directly on the homescreen. 
+These are the apps that will be immediately visible for quick access without opening the app drawer.
+
+#### Example:
+   ```yml
+   pinned_apps:
+   - org.mecha.connect
+   - Alacritty
+   - chromium
+   ```
+In this example, the following apps will be pinned to the homescreen:
+- org.mecha.connect
+- Alacritty
+- chromium
+
+Each app is identified by its app ID, which is a unique identifier for the app. You can modify this list to add or remove apps based on which ones you want to appear on the homescreen.
+
+
+
+
