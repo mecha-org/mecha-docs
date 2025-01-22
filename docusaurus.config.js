@@ -74,10 +74,16 @@ const config = {
       items: [
         {
           type: "docSidebar",
-          sidebarId: "hardwareSidebar",
+          sidebarId: "cometSidebar",
           position: "left",
           label: "Mecha Comet",
         },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "hardwareSidebar",
+        //   position: "left",
+        //   label: "Mecha Comet",
+        // },
         {
           type: "docSidebar",
           sidebarId: "mechanixSidebar",
