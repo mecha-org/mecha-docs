@@ -38,6 +38,9 @@ const sidebars = {
         "hardware/development/setting-up-environment/python",
         "hardware/development/setting-up-environment/go",
         "hardware/development/setting-up-environment/java",
+        "hardware/development/setting-up-environment/cpp",
+        "hardware/development/setting-up-environment/nodejs",
+        "hardware/development/setting-up-environment/php",
       ],
     },
     {
