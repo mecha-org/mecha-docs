@@ -10,6 +10,16 @@ const sidebars = {
         "comet/getting-started/using-gui",
         "comet/getting-started/connecting-to-internet",
         "comet/getting-started/things-to-do",
+        
+      ],
+    },
+    {
+      type: "category",
+      label: "Remote Access",
+      items: [
+        "comet/remote-access/via-ssh",
+        "comet/remote-access/configure-ssh-without-password",
+        "comet/remote-access/using-putty-on-windows",
       ],
     },
     // {
@@ -22,7 +32,7 @@ const sidebars = {
     //     "comet/extensions/connecting-to-internet",
     //   ],
     // },
-    "comet/connect-to-ssh",
+    // "comet/connect-to-ssh",
   ],
   hardwareSidebar: [
     {
@@ -31,16 +41,6 @@ const sidebars = {
       items: [
         "hardware/gettingstarted/quickstart",
         "hardware/gettingstarted/specifications",
-      ],
-    },
-    {
-      type: "category",
-      label: "Connectivity",
-      items: [
-        "hardware/connectivity/connecting-via-ssh",
-        "hardware/connectivity/via-serial-console",
-        "hardware/connectivity/using-public-key-auth",
-        "hardware/connectivity/using-putty-on-windows",
       ],
     },
     {
