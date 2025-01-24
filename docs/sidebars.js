@@ -19,10 +19,17 @@ const sidebars = {
       items: [
         "comet/remote-access/introduction-to-remote-access",
         "comet/remote-access/find-ip-address",
-        "comet/remote-access/access-remote-terminal-with-ssh",
-        "comet/remote-access/via-ssh",
-        "comet/remote-access/configure-ssh-without-password",
-        "comet/remote-access/using-putty-on-windows",
+        {
+          type: "category",
+          label: "Access a remote terminal with SSH",
+          items: [
+            "comet/remote-access/access-remote-terminal-with-ssh/connect-to-an-ssh-server",
+            "comet/remote-access/access-remote-terminal-with-ssh/configure-ssh-without-password",
+          ],
+        },,
+        "comet/remote-access/screen-share-with-vnc",
+        "comet/remote-access/share-files-with-scp",
+        "comet/remote-access/share-files-with-kde-connect",
       ],
     },
     // {
