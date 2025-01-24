@@ -1,19 +1,18 @@
 ---
-title: Wireless & BT
+title: Wireless
 hide_table_of_contents: true
 ---
 
+import S from "@site/components/Steps";
 
-## WiFi
+Connect to Wireless network on Mecha device
 
-Connect to WiFi network on Mecha device
-
-You're having WiFi that supports 2.5/5 ghz bandwidth
+You're having Wireless that supports 2.5/5 ghz bandwidth
 
 You're using nmcli to interact with network wifi device onboard
 
 ### 1. List Available Device Interfaces
-To see all available WiFi networks:
+To see all available Wireless networks:
 
 ```
 nmcli device status
@@ -29,20 +28,20 @@ To get status of wifi device:
 nmcli radio wifi
 ```
 
-To turn WiFi on:
+To turn Wireless on:
 
 ```
 nmcli radio wifi on
 ```
 
-To turn WiFi off:
+To turn Wireless off:
 
 ```
 nmcli radio wifi off
 ```
 
-### 2. List Available WiFi Networks
-To see all available WiFi networks:
+### 2. List Available Wireless Networks
+To see all available Wireless networks:
 
 ```
 nmcli device wifi list
@@ -50,8 +49,8 @@ nmcli device wifi list
 ![Image](./wifilist.png)
 
 
-### 3. Connect to a WiFi Network (may require sudo)
-To connect to a WiFi network:
+### 3. Connect to a Wireless Network (may require sudo)
+To connect to a Wireless network:
 
 ```
 nmcli device wifi connect SSID-Name password wireless-password
@@ -65,15 +64,15 @@ Alternatively, if you don't want to write out your password onscreen, you can us
 nmcli --ask dev wifi connect network-ssid
 ```
 
-### 4. Connect to a Hidden WiFi Network
+### 4. Connect to a Hidden Wireless Network
 For hidden networks:
 
 ```
 nmcli device wifi connect SSID-Name password wireless-password hidden yes
 ```
 
-### 5. Disconnect from WiFi
-To disconnect the current WiFi connection:
+### 5. Disconnect from Wireless
+To disconnect the current Wireless connection:
 
 ```
 nmcli device disconnect wlan0
@@ -131,97 +130,289 @@ To refresh the list of available networks:
 nmcli device wifi rescan
 ```
 
-## Bluetooth
+### 13. Wireless Internet to Ethernet
 
-### 1. Checking Bluetooth Status
-Before you can add Bluetooth devices, the Bluetooth service on your computer must be up and running. You can check it with the help of the systemctl command.
+The purpose of this setup is to share a wireless internet connection over an Ethernet connection, enabling other devices to access the internet via the Ethernet network created on Mecha Comet.
 
-```
-sudo systemctl status bluetooth
-```
+This guide explains how to set up an Ethernet connection on Mecha Comet using:
 
-![Image](./btstatus.png)
+- `nmcli` (NetworkManager Command Line Interface)
+- Configuring Network Address Translation (NAT) using `nftables`.
 
-If the Bluetooth service status is not active you will have to enable it first. Then start the service so it launches automatically whenever you boot your computer.
+    ### Preview
 
-```
-sudo systemctl enable bluetooth
-sudo systemctl start bluetooth
-```
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+    <video controls autoPlay loop muted width="340" height="340">
+        <source src="https://web-assets.mecha.so/developers-v1/peripherals/wireless/wireless-to-ethernet.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+    </div>
 
-### 2. Scanning for Nearby Devices
-To actively search for Bluetooth devices that you can connect to, use the scan command as follows:
+    ### Prerequisites
 
-```
-bluetoothctl scan on
-```
+    - Ensure you have `nmcli` and `nftables` installed on your system.
+    - You need `sudo` privileges to execute the commands.
+    - Replace `wlan0` and `end0` with your actual Wireless interface and outbound network interface names.
+    - Ensure your Wireless interface is connected to the internet.
 
-![Image](./scanning.png)
+    <br />
+    ### Steps to Set Up Ethernet Sharing
 
+    <S>
+    <br />
 
-Note: If you can't find the Bluetooth device you are looking for, make sure that your system Bluetooth is discoverable.
+    #### 1. Connect Mecha Comet to a Device with an Ethernet Port
 
-To make your Bluetooth adaptor discoverable to other devices, use the following command:
+    Physically connect the Mecha Comet to another device (e.g., a laptop or desktop) using an Ethernet cable. Ensure the Ethernet port is functional on both devices.
 
-```
-bluetoothctl discoverable on
-```
+    #### 2. Check Existing Network Connections
 
+    Run the following command to list the available network connections:
 
+    ```bash
+    nmcli connection show
+    ```
 
-You can also list devices that are within the Bluetooth range of your computer using the command below:
+    Identify the name of the Ethernet connection you want to modify (e.g., `Wired connection 1`).
 
-```
-bluetoothctl devices
-```
+    #### 3. Configure IPv4 Method to Shared
 
-![Image](./btdevices.png)
+    Modify the Ethernet connection to use a shared IPv4 method:
 
-### 3. Connecting to Your Device
-Now that you have a list of Bluetooth devices you can connect to, use the MAC address to connect to a particular device.
+    ```bash
+    sudo nmcli connection modify "<connection-name>" ipv4.method shared
+    ```
 
-The simplest way to connect with a Bluetooth device is to pair it with your PC using the pair command.
+    **Example:**
 
-```
-bluetoothctl pair 90:A8:22:8E:A7:7D
-```
+    ```bash
+    sudo nmcli connection modify "Wired connection 1" ipv4.method shared
+    ```
 
-Note: Remember to replace the MAC address 90:A8:22:8E:A7:7D used in this guide with the respective MAC address of your device.
+    #### 4. Bring Up the Ethernet Connection
 
-### 4. Trusting Paired Devices
-In addition to pairing with a Bluetooth device, you can also choose to trust certain devices so that you easily connect to them in the future.
+    Activate the Ethernet connection:
 
-To trust a Bluetooth device:
+    ```bash
+    sudo nmcli connection up "<connection-name>"
+    ```
 
-```
-bluetoothctl trust 90:A8:22:8E:A7:7D
-```
+    **Example:**
 
-You can untrust a device by issuing the following command:
+    ```bash
+    sudo nmcli connection up "Wired connection 1"
+    ```
 
-```
-bluetoothctl untrust 90:A8:22:8E:A7:7D
-```
+    #### 5. Configure NAT with nftables
 
-### 5. Connect to a Device
-```
-bluetoothctl connect [MAC address]
-```
+    #### 5.1 Create a NAT Table
 
-### 6. Disconnect from a Device
-```
-bluetoothctl disconnect [MAC address]
-```
+    Add a new NAT table:
 
-### 7. Remove a Paired Device
-```
-bluetoothctl remove [MAC address]
-```
+    ```bash
+    sudo nft add table ip nat
+    ```
 
-### 8. Get Device Info
-```
-bluetoothctl info [MAC address]
-```
-![Image](./btinfo.png)
+    #### 5.2 Add a NAT Chain
 
-This guide should help you get started with using wifi and bluetooth devices on Mecha Device or any Debian based linux system.
+    Create a chain for postrouting in the NAT table:
+
+    ```bash
+    sudo nft add chain ip nat POSTROUTING { type nat hook postrouting priority 100 \; }
+    ```
+
+    #### 5.3 Add a Masquerade Rule
+
+    Add a masquerade rule for outgoing traffic through the Wireless interface:
+
+    ```bash
+    sudo nft add rule ip nat POSTROUTING oif "wlan0" masquerade
+    ```
+
+    - Replace `wlan0` with your Wireless interface name.
+
+    <br />
+    </S>
+    <br />
+    
+    ### Verification
+
+    ### Check the Ethernet Connection Status
+
+    Use the following command to verify the Ethernet connection status:
+
+    ```bash
+    nmcli device status
+    ```
+
+    ### Verify nftables Rules
+
+    Check the NAT table rules to confirm the configuration:
+
+    ```bash
+    sudo nft list table ip nat
+    ```
+
+    ### Test Internet Connectivity on the Connected Device
+
+    Ensure the device connected via Ethernet can access the internet. Open a browser or run a ping command to verify connectivity.
+
+    ### Notes
+
+    - Ensure your Ethernet adapter is functional and properly connected.
+    - Replace interface names as needed for your specific setup.
+
+    <br />
+    ### Troubleshooting
+
+    - If the Ethernet connection fails to start, ensure the cable is securely connected.
+    - Verify that `nftables` is enabled and properly configured.
+
+    By following these steps, the connected device should now have internet access via the Ethernet connection.
+
+### 14. Ethernet to Wireless Hotspot
+
+The purpose of this setup is to share an Ethernet internet connection over a wireless hotspot, enabling other devices to access the internet via the Wireless hotspot created on Mecha Comet.
+
+This guide explains how to set up a wireless hotspot on Mecha Comet using:
+
+- `nmcli` (NetworkManager Command Line Interface)
+- Configuring Network Address Translation (NAT) using `nftables`.
+
+    ### Preview
+
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+    <video controls autoPlay loop muted width="340" height="340">
+        <source src="https://web-assets.mecha.so/developers-v1/peripherals/wireless/ethernet-to-wireless.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+    </div>
+
+    ### Prerequisites
+
+    - Ensure you have `nmcli` and `nftables` installed on your system.
+    - You need `sudo` privileges to execute the commands.
+    - Replace `wlan0` and `end0` with your actual Wireless interface and outbound network interface names.
+    - Ensure you are connected to the Ethernet network.
+
+    <br />
+    ### Steps to Set Up the Hotspot
+
+    <S>
+    <br />
+    #### 1. Create a Wireless Hotspot
+
+    Run the following command to create a Wireless hotspot:
+
+    ```bash
+    sudo nmcli device wifi hotspot ifname <wireless-interface> con-name <connection-name> ssid <ssid-name> password "<password>"
+    ```
+
+    - Replace `<wireless-interface>` with your Wireless interface name.
+    - Replace `<connection-name>` with the desired connection name.
+    - Replace `<ssid-name>` with your desired hotspot name.
+    - Replace `<password>` with your desired password.
+
+    **Example:**
+
+    ```bash
+    sudo nmcli device wifi hotspot ifname wlan0 con-name comet-hotspot ssid CometHotspot password "mechacomet"
+    ```
+
+    - **ifname wlan0**: Specifies the Wireless interface (replace `wlan0` with your Wireless interface name).
+    - **con-name comet-hotspot**: Sets the connection name as `comet-hotspot`.
+    - **ssid CometHotspot**: Sets the SSID of the hotspot to `CometHotspot`.
+    - **password "mechacomet"**: Sets the password for the hotspot.
+
+    <br />
+    #### 2. Configure IPv4 Method to Shared
+
+    Modify the hotspot connection to use a shared IPv4 method:
+
+    ```bash
+    sudo nmcli connection modify con-name ipv4.method shared
+    ```
+
+    **Example:**
+
+    ```bash
+    sudo nmcli connection modify "comet-hotspot" ipv4.method shared
+    ```
+
+    #### 3. Bring Up the Hotspot Connection
+
+    Activate the hotspot connection:
+
+    ```bash
+    sudo nmcli connection up con-name
+    ```
+
+    **Example:**
+
+    ```bash
+    sudo nmcli connection up "comet-hotspot"
+    ```
+
+    #### 4. Configure NAT with nftables
+
+    #### 4.1 Create a NAT Table
+
+    Add a new NAT table:
+
+    ```bash
+    sudo nft add table ip nat
+    ```
+
+    #### 4.2 Add a NAT Chain
+
+    Create a chain for postrouting in the NAT table:
+
+    ```bash
+    sudo nft add chain ip nat POSTROUTING { type nat hook postrouting priority 100 \; }
+    ```
+
+    #### 4.3 Add a Masquerade Rule
+
+    Add a masquerade rule for outgoing traffic through the outbound interface:
+
+    ```bash
+    sudo nft add rule ip nat POSTROUTING oif "end0" masquerade
+    ```
+
+    - Replace `end0` with your outbound network interface name.
+
+    <br />
+    </S>
+    <br />
+
+    ### Verification
+
+    ### Check the Hotspot Status
+
+    Use the following command to verify the hotspot status:
+
+    ```bash
+    nmcli device status
+    ```
+
+    ### Verify nftables Rules
+
+    Check the NAT table rules to confirm the configuration:
+
+    ```bash
+    sudo nft list table ip nat
+    ```
+
+    ### Notes
+
+    - Ensure your Wireless adapter supports Access Point (AP) mode.
+    - Replace interface names as needed for your specific setup.
+    - This setup assumes the system's outbound interface is `end0`. Adjust accordingly.
+
+    <br />
+    ### Troubleshooting
+
+    - If the hotspot fails to start, ensure the Wireless adapter is not connected to another network.
+    - Verify that `nftables` is enabled and properly configured.
+
+    By following these steps, you should have a functioning Wireless hotspot with NAT configured.
