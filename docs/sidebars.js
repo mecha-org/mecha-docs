@@ -17,6 +17,9 @@ const sidebars = {
       type: "category",
       label: "Remote Access",
       items: [
+        "comet/remote-access/introduction-to-remote-access",
+        "comet/remote-access/find-ip-address",
+        "comet/remote-access/access-remote-terminal-with-ssh",
         "comet/remote-access/via-ssh",
         "comet/remote-access/configure-ssh-without-password",
         "comet/remote-access/using-putty-on-windows",
