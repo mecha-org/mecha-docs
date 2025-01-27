@@ -121,6 +121,8 @@ const sidebars = {
       items: [
         "mechanix/using-the-gui/mechanix-shell",
         "mechanix/using-the-gui/settings-app",
+        "mechanix/using-the-gui/file-manager",
+        "mechanix/using-the-gui/camera",
       ],
     },
     {
