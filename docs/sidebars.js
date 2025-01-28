@@ -148,6 +148,8 @@ const sidebars = {
         "mechanix/using-the-gui/launcher",
         "mechanix/using-the-gui/keyboard",
         "mechanix/using-the-gui/settings-app",
+        "mechanix/using-the-gui/file-manager",
+        "mechanix/using-the-gui/camera",
       ],
     },
     {
