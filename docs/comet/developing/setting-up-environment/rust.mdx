@@ -1,0 +1,60 @@
+---
+title: Rust
+hide_table_of_contents: true
+---
+
+Rust is a systems programming language that emphasizes performance, reliability, and productivity. It provides memory safety without garbage collection and supports concurrent programming without data races. Rust is particularly well-suited for developing system tools, embedded systems, and performance-critical applications.
+
+## Install using rustup
+
+Rustup is the official installer and version management tool for Rust. To install Rust:
+
+```bash
+# Download and run the rustup installer script
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Load Rust environment variables into current shell session
+. "$HOME/.cargo/env"
+```
+
+## Verify Installation
+
+After installation, verify that Rust is properly installed:
+
+```
+rustc --version
+cargo --version
+```
+
+## Hello World Example
+
+Let's create a simple Hello World program to test the installation:
+
+**Create a new directory for your project**
+
+```bash
+mkdir hello_rust
+cd hello_rust
+```
+
+**Create a new Rust file**
+
+```bash
+echo 'fn main() {
+    println!("Hello, Rust!");
+}' > hello.rs
+```
+
+**Compile and run the program**
+
+```
+rustc hello.rs
+./hello
+```
+## Uninstalling Rust
+
+If you need to remove Rust from your system:
+```
+rustup self uninstall
+```
+This command will completely remove Rust and all its components from your system.

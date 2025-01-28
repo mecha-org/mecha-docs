@@ -34,6 +34,20 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Developing",
+      items: [
+        "comet/developing/setting-up-environment/rust",
+        "comet/developing/setting-up-environment/ruby",
+        "comet/developing/setting-up-environment/python",
+        "comet/developing/setting-up-environment/go",
+        "comet/developing/setting-up-environment/java",
+        "comet/developing/setting-up-environment/cpp",
+        "comet/developing/setting-up-environment/nodejs",
+        "comet/developing/setting-up-environment/php",
+      ],
+    },
+    {
+      type: "category",
       label: "Peripherals",
       items: [
         "comet/peripherals/soc",
@@ -83,6 +97,20 @@ const sidebars = {
   //       "hardware/kernel/device-tree",
   //       "hardware/kernel/working-with-kernel",
   //       "hardware/kernel/build-from-source",
+  //     ],
+  //   },
+  //   {
+  //     type: "category",
+  //     label: "Development",
+  //     items: [
+  //       "hardware/development/setting-up-environment/rust",
+  //       "hardware/development/setting-up-environment/ruby",
+  //       "hardware/development/setting-up-environment/python",
+  //       "hardware/development/setting-up-environment/go",
+  //       "hardware/development/setting-up-environment/java",
+  //       "hardware/development/setting-up-environment/cpp",
+  //       "hardware/development/setting-up-environment/nodejs",
+  //       "hardware/development/setting-up-environment/php",
   //     ],
   //   },
   //   {
