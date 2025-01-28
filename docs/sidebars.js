@@ -10,6 +10,26 @@ const sidebars = {
         "comet/getting-started/using-gui",
         "comet/getting-started/connecting-to-internet",
         "comet/getting-started/things-to-do",
+        
+      ],
+    },
+    {
+      type: "category",
+      label: "Remote Access",
+      items: [
+        "comet/remote-access/introduction-to-remote-access",
+        "comet/remote-access/find-ip-address",
+        {
+          type: "category",
+          label: "Access a remote terminal with SSH",
+          items: [
+            "comet/remote-access/access-remote-terminal-with-ssh/connect-to-an-ssh-server",
+            "comet/remote-access/access-remote-terminal-with-ssh/configure-ssh-without-password",
+          ],
+        },,
+        "comet/remote-access/screen-share-with-vnc",
+        "comet/remote-access/share-files-with-scp",
+        "comet/remote-access/share-files-with-kde-connect",
       ],
     },
     // {
@@ -22,7 +42,7 @@ const sidebars = {
     //     "comet/extensions/connecting-to-internet",
     //   ],
     // },
-    "comet/connect-to-ssh",
+    // "comet/connect-to-ssh",
   ],
   hardwareSidebar: [
     {
@@ -31,16 +51,6 @@ const sidebars = {
       items: [
         "hardware/gettingstarted/quickstart",
         "hardware/gettingstarted/specifications",
-      ],
-    },
-    {
-      type: "category",
-      label: "Connectivity",
-      items: [
-        "hardware/connectivity/connecting-via-ssh",
-        "hardware/connectivity/via-serial-console",
-        "hardware/connectivity/using-public-key-auth",
-        "hardware/connectivity/using-putty-on-windows",
       ],
     },
     {
