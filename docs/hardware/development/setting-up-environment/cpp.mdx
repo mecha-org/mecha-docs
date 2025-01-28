@@ -1,0 +1,115 @@
+---
+title: C / C++
+hide_table_of_contents: true
+---
+
+C and C++ are powerful programming languages commonly used for system-level programming, embedded systems, and performance-critical applications. Both languages can be compiled using GCC (GNU Compiler Collection) or Clang (LLVM-based compiler).
+
+## Install using apt
+
+To set up a development environment for C and C++, you can choose either GCC or Clang. Both compilers support compiling C and C++ code.
+
+---
+
+### **Option 1: Install GCC**
+
+**Step 1: Update the package list**
+
+```bash
+sudo apt update
+```
+
+**Step 2: Install GCC**
+
+```
+sudo apt install -y build-essential
+```
+This installs GCC along with common tools like make and libraries required for compilation.
+
+## Verify GCC Installation
+
+```
+gcc --version
+g++ --version
+```
+### Option 2: Install Clang
+**Step 1: Update the package list**
+
+```
+sudo apt update
+```
+**Step 2: Install Clang**
+
+```
+sudo apt install -y clang
+```
+## Verify Clang Installation
+
+```
+clang --version
+clang++ --version
+```
+## Hello World Example
+Let's create a simple "Hello, World!" program to test the installation for both compilers.
+
+**Step 1: Create a new directory**
+
+```
+mkdir hello_c
+cd hello_c
+```
+**Step 2: Create a new C file**
+
+```
+echo '#include <stdio.h>
+
+int main() {
+    printf("Hello, C!\n");
+    return 0;
+}' > hello.c
+```
+**Step 3: Compile and run the program**
+
+Using GCC:
+
+```
+gcc hello.c -o hello_gcc
+./hello_gcc
+```
+Using Clang:
+
+```
+clang hello.c -o hello_clang
+./hello_clang
+```
+### For C++:
+
+**Step 1: Create a new directory**
+
+```
+mkdir hello_cpp
+cd hello_cpp
+```
+**Step 2: Create a new C++ file**
+
+```
+echo '#include <iostream>
+
+int main() {
+    std::cout << "Hello, C++!" << std::endl;
+    return 0;
+}' > hello.cpp
+```
+**Step 3: Compile and run the program**
+
+Using GCC:
+```
+g++ hello.cpp -o hello_gpp
+./hello_gpp
+```
+Using Clang:
+
+```
+clang++ hello.cpp -o hello_clangpp
+./hello_clangpp
+```
