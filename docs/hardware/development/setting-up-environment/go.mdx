@@ -1,0 +1,47 @@
+---
+title: Go
+hide_table_of_contents: true
+---
+
+## Install Go
+
+The following commands to install Go using the `apt` package manager:
+
+```bash
+sudo apt update
+sudo apt install golang
+```
+
+## Verify Installation
+
+After installation, verify that Go is properly installed:
+
+```
+go version
+```
+## Hello World Example
+Let's create a simple "Hello, Go!" program to test the installation:
+
+**Create a new directory**
+
+```
+mkdir hello_go
+cd hello_go
+```
+**Create a Go file**
+
+```
+echo 'package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, Go!")
+}' > hello.go
+```
+
+**Run the program**
+
+```
+go run hello.go
+```
