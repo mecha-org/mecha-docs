@@ -204,6 +204,8 @@ const sidebars = {
       items: [
         "mechanix/installing-apps/package-manager",
         "mechanix/installing-apps/using-flatpak",
+        "mechanix/installing-apps/using-snap",
+        "mechanix/installing-apps/adding-source",
       ],
     },
   ],

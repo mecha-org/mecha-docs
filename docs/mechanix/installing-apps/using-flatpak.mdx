@@ -1,4 +1,153 @@
 ---
-title: Using Flatpak
-hide_table_of_contents: true
+title: Flatpak Setup Guide
+hide_table_of_contents: false
 ---
+
+The purpose of this guide is to explain how to install, configure, and manage applications using **Flatpak**, a platform for distributing and running sandboxed desktop applications.
+
+## Prerequisites
+
+- You need `sudo` privileges to install Flatpak.
+- A working internet connection is required to download Flatpak packages.
+
+<br />
+
+### 1. Install Flatpak
+
+Install Flatpak on your system. Use the package manager for your distribution.
+
+#### **For Debian/Ubuntu-based distributions:**
+
+```bash
+sudo apt install flatpak
+```
+
+#### **For Fedora distributions:**
+
+```bash
+sudo dnf install flatpak
+```
+
+#### **For Arch-based distributions:**
+
+```bash
+sudo pacman -S flatpak
+```
+
+#### **For openSUSE distributions:**
+
+```bash
+sudo zypper install flatpak
+```
+
+<br />
+
+### 2. Add the Flathub repository
+
+Flathub is the default repository for Flatpak applications. Add the Flathub repository to your system.
+
+```bash
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+```
+
+<br />
+
+### 3. Search for applications
+
+You can search for applications available on Flathub using the following command:
+
+```bash
+flatpak search <application-name>
+```
+
+For example, to search for the VLC media player, run:
+
+```bash
+flatpak search VLC
+```
+
+<br />
+
+### 4. Install applications
+
+To install an application, use the following command:
+
+```bash
+flatpak install flathub <application-name>
+```
+
+For example, to install the VLC media player, run:
+
+```bash
+flatpak install flathub org.videolan.VLC
+```
+
+<br />
+
+### 5. Run applications
+
+To run an application, use the following command:
+
+```bash
+flatpak run <application-name>
+```
+
+For example, to run the VLC media player, run:
+
+```bash
+flatpak run org.videolan.VLC
+```
+
+<br />
+
+### 6. Update applications
+
+To update an application, use the following command:
+
+```bash
+flatpak update <application-name>
+```
+
+For example, to update the VLC media player, run:
+
+```bash
+flatpak update org.videolan.VLC
+```
+
+<br />
+
+### 7. Uninstall applications
+
+To uninstall an application, use the following command:
+
+```bash
+flatpak uninstall <application-name>
+```
+
+For example, to uninstall the VLC media player, run:
+
+```bash
+flatpak uninstall org.videolan.VLC
+```
+
+<br />
+
+### 8. List installed applications
+
+To list all installed applications, use the following command:
+
+```bash
+flatpak list
+```
+
+<br />
+
+### 9. Troubleshooting
+
+If you encounter any issues while using Flatpak, you can refer to the [Flatpak documentation](https://docs.flatpak.org/en/latest/).
+
+<br />
+
+You have successfully installed and configured Flatpak on your system. You can now install, manage, and run sandboxed desktop applications using Flatpak.
+
+For more information on Flatpak, refer to the [Flatpak website](https://flatpak.org/).
