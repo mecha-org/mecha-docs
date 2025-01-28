@@ -1,0 +1,80 @@
+---
+title: TensorFlow on Comet - Reference
+description: A quick reference guide for setting up and using TensorFlow on Mecha Comet.
+hide_table_of_contents: false
+---
+
+TensorFlow is a powerful open-source library for numerical computation and machine learning. This reference guide provides quick and practical instructions for setting up and using TensorFlow on the Mecha Comet platform.
+
+## Installing TensorFlow on Comet
+
+To install TensorFlow on your Comet device, follow these steps:
+
+### Prerequisites
+Ensure your device is ready with the following:
+- Python installed via [pyenv](./working-with-pyenv).
+- Virtual environment set up using `pyenv virtualenv`.
+
+### Steps
+1. Activate your Python virtual environment:
+
+2. Install TensorFlow via pip:
+
+```bash
+$ pip install tensorflow
+```
+
+3. Verify the installation:
+
+```bash
+$ python -c "import tensorflow as tf; print(tf.__version__)"
+```
+
+You should see the installed TensorFlow version printed.
+
+---
+
+## Common TensorFlow Use Cases
+
+### Running TensorFlow Models
+You can use TensorFlow for:
+
+- Training machine learning models on datasets.
+- Deploying pre-trained models.
+- Performing data preprocessing and feature extraction.
+
+### Example: Loading and Running a Pre-Trained Model
+
+```python
+import tensorflow as tf
+
+# Load a pre-trained model
+model = tf.keras.applications.MobileNetV2(weights='imagenet')
+
+# Prepare a sample input
+import numpy as np
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input, decode_predictions
+
+data = np.random.random((1, 224, 224, 3))
+data = preprocess_input(data)
+
+# Run inference
+predictions = model(data)
+print(decode_predictions(predictions.numpy(), top=3))
+```
+
+---
+
+## Where to Use TensorFlow on Comet
+
+TensorFlow can be effectively used in the following scenarios on Mecha Comet:
+
+- **Model Training:** Utilize Comet's processing power to train models locally.
+- **Edge Deployment:** Run inference for TensorFlow models on the device for real-time predictions.
+- **Data Experimentation:** Use TensorFlow tools to preprocess and analyze datasets directly on Comet.
+
+For detailed tutorials, check the [Getting Started with TensorFlow on Comet](./getting-started-tensorflow) guide.
+
+---
+
+For further assistance or advanced use cases, visit the [TensorFlow Documentation](https://www.tensorflow.org/) or refer to [Mecha Comet Documentation](../).
