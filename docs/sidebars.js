@@ -78,6 +78,7 @@ const sidebars = {
       items: [
         "hardware/peripherals/soc",
         "hardware/peripherals/wireless",
+        "hardware/peripherals/bluetooth",
         "hardware/peripherals/camera",
         "hardware/peripherals/audio",
         "hardware/peripherals/display",
@@ -120,6 +121,8 @@ const sidebars = {
       label: "Using the GUI",
       items: [
         "mechanix/using-the-gui/mechanix-shell",
+        "mechanix/using-the-gui/launcher",
+        "mechanix/using-the-gui/keyboard",
         "mechanix/using-the-gui/settings-app",
       ],
     },
