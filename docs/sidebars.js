@@ -32,110 +32,31 @@ const sidebars = {
         "comet/remote-access/share-files-with-kde-connect",
       ],
     },
-    // {
-    //   type: "category",
-    //   label: "Extensions",
-    //   items: [
-    //     "comet/extensions/quick-start",
-    //     "comet/extensions/form-factor",
-    //     "comet/extensions/using-gui",
-    //     "comet/extensions/connecting-to-internet",
-    //   ],
-    // },
-    // "comet/connect-to-ssh",
-  ],
-  hardwareSidebar: [
     {
       type: "category",
-      label: "Getting Started",
+      label: "Developing",
       items: [
-        "hardware/gettingstarted/quickstart",
-        "hardware/gettingstarted/specifications",
-      ],
-    },
-    {
-      type: "category",
-      label: "Kernel",
-      items: [
-        "hardware/kernel/connecting-basics",
-        "hardware/kernel/device-tree",
-        "hardware/kernel/working-with-kernel",
-        "hardware/kernel/build-from-source",
-      ],
-    },
-    {
-      type: "category",
-      label: "Development",
-      items: [
-        "hardware/development/setting-up-environment/rust",
-        "hardware/development/setting-up-environment/ruby",
-        "hardware/development/setting-up-environment/python",
-        "hardware/development/setting-up-environment/go",
-        "hardware/development/setting-up-environment/java",
-        "hardware/development/setting-up-environment/cpp",
-        "hardware/development/setting-up-environment/nodejs",
-        "hardware/development/setting-up-environment/php",
-      ],
-    },
-    {
-      type: "category",
-      label: "Bootloader",
-      items: [
-        "hardware/bootloader/basics-in-bootloader",
         {
           type: "category",
-          label: "Working with U-Boot",
+          label: "Environment Setup",
           items: [
-            "hardware/bootloader/working-with-u-boot/u-boot-commands",
-            "hardware/bootloader/working-with-u-boot/mount-usb-storage",
-            "hardware/bootloader/working-with-u-boot/working-with-variables",
-            "hardware/bootloader/working-with-u-boot/change-boot-logo",
-          ],
-        },
-        "hardware/bootloader/debugging-u-boot",
-        "hardware/bootloader/build-from-source-bootloader",
-      ],
-    },
-    {
-      type: "category",
-      label: "Peripherals",
-      items: [
-        "hardware/peripherals/soc",
-        "hardware/peripherals/wireless",
-        "hardware/peripherals/bluetooth",
-        "hardware/peripherals/camera",
-        "hardware/peripherals/audio",
-        "hardware/peripherals/display",
-        "hardware/peripherals/pcle",
-        "hardware/peripherals/motion",
-        "hardware/peripherals/rgb",
-        "hardware/peripherals/rtc",
-        "hardware/peripherals/security",
-        "hardware/peripherals/power",
-        "hardware/peripherals/ethernet",
-        "hardware/peripherals/usb",
-        "hardware/peripherals/gpio",
-        "hardware/peripherals/mikrobus",
-      ],
-    },
-    {
-      type: "category",
-      label: "Mechanicals",
-      items: [
-        "hardware/mechanicals/3d-drawings",
-        "hardware/mechanicals/schematics",
-        "hardware/mechanicals/extensions",
-        "hardware/mechanicals/mounting-system",
-        "hardware/mechanicals/revisions",
-      ],
-    },
-    {
-      type: "category",
-      label: "Labs",
-      items: [
-        "hardware/labs/yocto",
-        "hardware/labs/android",
-        "hardware/labs/cortex-m4",
+            "comet/developing/setting-up-environment/cpp",
+            "comet/developing/setting-up-environment/go",
+            "comet/developing/setting-up-environment/java",
+            "comet/developing/setting-up-environment/nodejs",
+            "comet/developing/setting-up-environment/php",
+            "comet/developing/setting-up-environment/python",
+            "comet/developing/setting-up-environment/ruby",
+            "comet/developing/setting-up-environment/rust",            
+          ]
+        },{
+          type: "category",
+          label: "Machine Learning",
+          items: [
+            "comet/developing/machine-learning/running-tensorflow",
+            "comet/developing/machine-learning/setting-up-pyenv",          
+          ]
+        }
       ],
     },
   ],
@@ -273,8 +194,6 @@ const sidebars = {
     // {
     "apis/first-request",
     "apis/api-authentication",
-
-    
     {
       type: "category",
       label: "How-to Guides",

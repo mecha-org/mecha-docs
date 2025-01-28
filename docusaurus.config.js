@@ -82,12 +82,12 @@ const config = {
           position: "left",
           label: "Mecha Comet",
         },
-        // {
-        //   type: "docSidebar",
-        //   sidebarId: "mechanixSidebar",
-        //   position: "left",
-        //   label: "Mechanix OS",
-        // },
+        {
+          type: "docSidebar",
+          sidebarId: "mechanixSidebar",
+          position: "left",
+          label: "Mechanix OS",
+        },
         {
           type: "docSidebar",
           sidebarId: "mechaCloudSidebar",
