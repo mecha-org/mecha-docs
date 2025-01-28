@@ -1,4 +1,131 @@
 ---
-title: Package Manger
-hide_table_of_contents: true
+title: APT Package Manager Guide
+hide_table_of_contents: false
 ---
+
+The purpose of this guide is to explain how to use **APT (Advanced Package Tool)**, a package manager for Debian-based distributions, to install, update, and manage software packages.
+
+## Prerequisites
+
+- You need `sudo` privileges to install or remove software using APT.
+- A working internet connection is required to download and update packages.
+
+<br />
+
+### 1. Update the package list
+
+Before installing or updating software, update the local package list to ensure you have the latest information:
+
+```bash
+sudo apt update
+```
+
+### 2. Install software packages
+
+To install a software package, use the `apt install` command followed by the package name.
+
+```bash
+sudo apt install <package-name>
+```
+
+For example, to install the `htop` package:
+
+```bash
+sudo apt install htop
+```
+
+### 3. Remove software packages
+
+To remove a software package, use the `apt remove` command followed by the package name.
+
+```bash
+sudo apt remove <package-name>
+```
+
+For example, to remove the `htop` package:
+
+```bash
+sudo apt remove htop
+```
+
+To remove a package along with its configuration files, use the `apt purge` command:
+
+```bash
+sudo apt purge <package-name>
+```
+
+For example, to purge the `htop` package:
+
+```bash
+sudo apt purge htop
+```
+
+### 4. Upgrade installed packages
+
+To upgrade all installed packages to their latest versions, use the `apt upgrade` command:
+
+```bash
+sudo apt upgrade
+```
+
+### 5. Search for software packages
+
+You can search for software packages using the `apt search` command followed by a keyword.
+
+```bash
+apt search <package-name>
+```
+
+For example, to search for packages related to Python:
+
+```bash
+apt search python
+```
+
+### 6. List installed packages
+
+To list all installed packages on your system, use the `apt list --installed` command:
+
+```bash
+apt list --installed
+```
+
+### 7. Clean up package cache
+
+To free up disk space by removing downloaded package files that are no longer needed, use the `apt clean` command:
+
+```bash
+sudo apt clean
+```
+
+### 8. Autoremove unused packages
+
+To remove packages that were automatically installed to satisfy dependencies for other packages but are no longer needed, use the `apt autoremove` command:
+
+```bash
+sudo apt autoremove
+```
+
+### 9. Check package dependencies
+
+To check the dependencies of a package before installing it, use the `apt depends` command followed by the package name.
+
+```bash
+apt depends <package-name>
+```
+
+For example, to check the dependencies of the `htop` package:
+
+```bash
+apt depends htop
+```
+
+### 10. Troubleshooting
+
+If you encounter any issues while using APT, Here are some common issues and their solutions:
+
+- **Package not found**: If you get an error saying the package is not found, make sure you have the correct package name and that the package is available in the repositories.
+- **Dependency issues**: If you encounter dependency issues, try running `sudo apt install -f` to fix broken dependencies.
+- **Connection issues**: If you have connection issues, check your internet connection and try running `sudo apt update` to refresh the package list.
+
+If you still encounter any issues while using APT, you can refer to the [APT documentation](https://manpages.debian.org/stretch/apt/apt.8.en.html).
