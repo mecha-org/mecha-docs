@@ -2,6 +2,10 @@ import mechaApiRefSidebar from "./apis/references/sidebar"
 const sidebars = {
   hardwareSidebar: [
     {
+      type:"html",
+      value:"Mecha Comet documentation"
+    },
+    {
       type: "category",
       label: "Getting Started",
       items: [

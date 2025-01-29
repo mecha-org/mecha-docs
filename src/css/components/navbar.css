@@ -11,12 +11,12 @@
 
 .navbar__logo,
 aside img {
-  width: 98px;
-  height: 26px;
+  width: 108px;
+  height: 36px;
 }
 
 .navbar__link {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--ifm-color-primary-dark);
 }
 
@@ -25,4 +25,12 @@ aside img {
 }
 .navbar-sidebar__back {
   display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar__logo,
+  aside img {
+    width: 98px;
+    height: 26px;
+  }
 }

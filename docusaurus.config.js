@@ -79,7 +79,7 @@ const config = {
         {
           type: "docSidebar",
           sidebarId: "hardwareSidebar",
-          position: "left",
+          position: "right",
           label: "Mecha Comet",
         },
         // {
@@ -91,7 +91,7 @@ const config = {
         {
           type: "docSidebar",
           sidebarId: "mechaCloudSidebar",
-          position: "left",
+          position: "right",
           label: "Mecha Cloud",
         },
         // {
@@ -101,8 +101,13 @@ const config = {
         //   label: "API",
         // },
         {
+          to: "https://forum.mecha.so",
+          label: "Forum",
+          position: "right",
+        },
+        {
           to: "https://github.com/mecha-org/mecha-docs",
-          label: "GitHub",
+          label: "Github",
           position: "right",
         },
       ],

@@ -56,7 +56,7 @@
   --ifm-color-secondary: var(--gray3);
 
   --app-metadata-link-color: #0d6ef7; /* Border brand subdued */
-  --highlight: #056dff;
+  --highlight: #338AE4;
 }
 
 html[data-theme="dark"] {
@@ -114,5 +114,4 @@ html[data-theme="dark"] {
 
   --app-metadata-link-color: #0d6ef7; /* Border brand subdued */
 
-  --highlight: #056dff;
 }
