@@ -47,6 +47,10 @@
   font-weight: var(--ifm-font-weight-semibold);
 }
 
+.menu__list-item-collapsible .menu__link {
+  font-weight: 600;
+}
+
 .theme-doc-sidebar-item-link-level-2 .menu__link--active {
   border-radius: 0;
   border-left: solid 1px var(--highlight);
