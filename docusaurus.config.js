@@ -63,6 +63,12 @@ const config = {
 
   themeConfig: {
     image: "img/docusaurus-social-card.jpg",
+    algolia: {
+      appId: "P1Y4DTZUZN", // cspell: disable-line
+      apiKey: "021901243603f49a626be6b7435a2a8d",
+      indexName: "saleor",
+      placeholder: "Search Saleor Documentation",
+    },
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,
@@ -97,7 +103,7 @@ const config = {
         {
           type: "docSidebar",
           sidebarId: "mechaCloudSidebar",
-          position: "right",
+          position: "left",
           label: "Mecha Cloud",
         },
         // {
@@ -109,6 +115,10 @@ const config = {
         {
           to: "https://forum.mecha.so",
           label: "Forum",
+          position: "left",
+        },
+        {
+          type: "search",
           position: "right",
         },
         {
