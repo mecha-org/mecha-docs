@@ -1,0 +1,165 @@
+---
+title: RGB LED
+hide_table_of_contents: true
+---
+
+## Controlling LED Colors on Linux Using sysfs
+
+This guide explains how to control RGB LED colors on a Linux system by writing values to specific sysfs files. By manipulating the brightness of red, green, and blue LEDs, you can create various color combinations for different use cases.
+
+### 1. Introduction
+
+Linux systems provide a way to control RGB LEDs via the sysfs interface. By setting the brightness levels of red, green, and blue LEDs to either 0 (off) or 1 (on), you can generate a wide range of colors. This method is commonly used for status indicators or visual effects on devices with integrated RGB LEDs.
+
+### 2. Prerequisites
+
+- **Linux System**: Ensure you have a Linux system where the LEDs are exposed via sysfs.
+- **Root Permissions**: Controlling the LED states typically requires root access. Use sudo as necessary.
+
+### 3. LED Paths
+
+The sysfs paths to control the individual LEDs are as follows:
+
+- Red LED: `/sys/class/leds/red-led/brightness`
+- Green LED: `/sys/class/leds/green-led/brightness`
+- Blue LED: `/sys/class/leds/blue-led/brightness`
+
+### 4. Setting LED Colors
+
+You can control the LED color by setting the brightness of each LED to either 0 (off) or 1 (on).
+
+#### 4.1 Turning LEDs On and Off
+
+Here's how you can turn each LED on or off:
+
+**Turn On Red LED:**
+
+```bash
+echo 1 | sudo tee /sys/class/leds/red-led/brightness
+```
+
+**Turn Off Red LED:**
+
+```bash
+echo 0 | sudo tee /sys/class/leds/red-led/brightness
+```
+
+**Turn On Green LED:**
+
+```bash
+echo 1 | sudo tee /sys/class/leds/green-led/brightness
+```
+
+**Turn Off Green LED:**
+
+```bash
+echo 0 | sudo tee /sys/class/leds/green-led/brightness
+```
+
+**Turn On Blue LED:**
+
+```bash
+echo 1 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+**Turn Off Blue LED:**
+
+```bash
+echo 0 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+#### 4.2 Producing Colors
+
+By combining the brightness states of the red, green, and blue LEDs, you can produce various colors:
+
+**Red**: Only the red LED is on.
+
+```bash
+echo 1 | sudo tee /sys/class/leds/red-led/brightness
+echo 0 | sudo tee /sys/class/leds/green-led/brightness
+echo 0 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+**Green**: Only the green LED is on.
+
+```bash
+echo 0 | sudo tee /sys/class/leds/red-led/brightness
+echo 1 | sudo tee /sys/class/leds/green-led/brightness
+echo 0 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+**Blue**: Only the blue LED is on.
+
+```bash
+echo 0 | sudo tee /sys/class/leds/red-led/brightness
+echo 0 | sudo tee /sys/class/leds/green-led/brightness
+echo 1 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+**Yellow**: Both the red and green LEDs are on.
+
+```bash
+echo 1 | sudo tee /sys/class/leds/red-led/brightness
+echo 1 | sudo tee /sys/class/leds/green-led/brightness
+echo 0 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+**Cyan**: Both the green and blue LEDs are on.
+
+```bash
+echo 0 | sudo tee /sys/class/leds/red-led/brightness
+echo 1 | sudo tee /sys/class/leds/green-led/brightness
+echo 1 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+**Magenta**: Both the red and blue LEDs are on.
+
+```bash
+echo 1 | sudo tee /sys/class/leds/red-led/brightness
+echo 0 | sudo tee /sys/class/leds/green-led/brightness
+echo 1 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+**White**: All three LEDs are on.
+
+```bash
+echo 1 | sudo tee /sys/class/leds/red-led/brightness
+echo 1 | sudo tee /sys/class/leds/green-led/brightness
+echo 1 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+**Turn Off All LEDs (Clear LED):**
+
+```bash
+echo 0 | sudo tee /sys/class/leds/red-led/brightness
+echo 0 | sudo tee /sys/class/leds/green-led/brightness
+echo 0 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+### 5. Automating LED Control
+
+To simplify LED control, you can create shell scripts to automate the process of setting LED colors.
+
+**Example Script to Set LEDs to Yellow**
+
+Here's an example script to set the LEDs to yellow:
+
+```bash
+#!/bin/bash
+
+# Set Red and Green LEDs for Yellow
+echo 1 | sudo tee /sys/class/leds/red-led/brightness
+echo 1 | sudo tee /sys/class/leds/green-led/brightness
+echo 0 | sudo tee /sys/class/leds/blue-led/brightness
+```
+
+Save the script as `set_yellow.sh`, make it executable, and run it:
+
+```bash
+chmod +x set_yellow.sh
+./set_yellow.sh
+```
+
+## Conclusion
+
+This guide demonstrates how to control RGB LEDs on a Linux system using the sysfs interface. By adjusting the brightness of the red, green, and blue LEDs, you can create various color outputs to suit your needs. Automating these settings with scripts can streamline your workflow and ensure consistent results across different use cases.

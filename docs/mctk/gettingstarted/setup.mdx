@@ -1,0 +1,74 @@
+---
+title: Setup
+hide_table_of_contents: true
+---
+
+This guide will help you set up and run an example MCTK project. Follow the steps below in order:
+
+## Step 1: Install Dependencies
+
+Run the following command to install all necessary dependencies (Debian/Ubuntu):
+
+```bash
+sudo apt install -y --no-install-recommends \
+    g++ \
+    libc6-dev \
+    libssl-dev \
+    libwebkit2gtk-4.0-dev \
+    build-essential \
+    curl \
+    wget \
+    libgtk-3-dev \
+    patchelf \
+    librsvg2-dev \
+    pkg-config
+```
+
+## Step 2: Install Sway
+
+Install the Sway window manager. On Ubuntu, you can use the following command:
+
+```bash
+sudo apt install -y sway
+```
+
+## Step 3: Run Sway
+
+Start Sway in another terminal or run it in the background using:
+
+```bash
+sway &
+```
+
+## Step 4: Set the WAYLAND_DISPLAY Variable
+
+Set the `WAYLAND_DISPLAY` environment variable to `wayland-1`:
+
+```bash
+export WAYLAND_DISPLAY=wayland-1
+```
+
+## Step 5: Clone the Repository
+
+Clone the MCTK repository from GitHub:
+
+```bash
+git clone https://github.com/mecha-org/mctk.git
+```
+
+## Step 6: Navigate to the Kitchen Example
+
+Change your current directory to the `examples/kitchen` folder:
+
+```bash
+cd mctk/examples/kitchen
+```
+
+## Step 7: Run the Project
+
+Use Cargo to run the example:
+
+```bash
+cargo run
+```
+

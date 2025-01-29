@@ -1,0 +1,105 @@
+---
+title: Ethernet
+hide_table_of_contents: true
+---
+
+## Setting Up and Managing an Ethernet Interface on a Linux Machine
+Configuring the Ethernet interface on a Linux machine is an essential task, especially when setting up a server or a network-connected device. This guide will walk you through the steps to check your Ethernet interface, assign an IP address (static or dynamic), apply the configuration, and verify that your network is functioning correctly. Additionally, we'll cover how to manage network connections using `nmcli` if you're using NetworkManager and troubleshoot common issues.
+### 1. Check the Ethernet Interface
+* Start by listing all network interfaces:
+
+```
+ip link show
+```
+
+* Look for the interface that typically starts with `eth`, like `eth0`.
+### 2. Assign an IP Address​
+* Static IP: To assign a static IP, edit the network interfaces file:
+
+```
+sudo nano /etc/network/interfaces
+
+```
+Add or modify the following:
+```
+
+auto eth0
+iface eth0 inet static
+    address 192.168.1.100
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+    dns-nameservers 8.8.8.8 8.8.4.4
+```
+
+Save and exit (`Ctrl+X`, `Y`, `Enter`).
+* DHCP (Dynamic IP): For dynamic IP assignment, the configuration would be:
+```
+auto eth0
+iface eth0 inet dhcp
+```
+
+### 3. Apply the Network Configuration​
+After editing the configuration, restart the networking service:
+```
+sudo systemctl restart networking
+```
+
+Or bring the interface down and up:
+
+```
+sudo ifdown eth0 && sudo ifup eth0
+```
+
+### 4. Verify the Network Configuration​
+* Check the IP address:
+
+```
+ip addr show eth0
+```
+
+* Test connectivity:
+
+```
+ping google.com
+```
+
+### 5. Manage Network with `nmcli` (NetworkManager)​
+If you are using NetworkManager, you can manage Ethernet connections with `nmcli`.
+* List connections:
+
+```
+nmcli connection show
+```
+
+* Add a new Ethernet connection with a static IP:
+
+```
+nmcli connection add type ethernet ifname eth0 con-name MyConnection ipv4.addresses 192.168.1.100/24 ipv4.gateway 192.168.1.1 ipv4.dns "8.8.8.8 8.8.4.4" ipv4.method manual
+```
+
+* Activate the connection:
+
+```
+nmcli connection up MyConnection
+```
+
+### 6. Troubleshooting​
+* Check Interface Status:
+
+```
+sudo ethtool eth0
+```
+
+* Review Network Logs:
+
+```
+sudo journalctl -u networking
+```
+
+* Restart NetworkManager (if using):
+
+```
+sudo systemctl restart NetworkManager
+```
+
+By following these steps, you should be able to successfully set up and manage your Ethernet interface on a Linux machine. Whether you choose to assign a static or dynamic IP, the methods provided will ensure your network configuration is robust and reliable. If you encounter any issues, the troubleshooting tips will help you diagnose and resolve common problems.

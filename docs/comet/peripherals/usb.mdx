@@ -1,0 +1,90 @@
+---
+title: USB
+hide_table_of_contents: true
+---
+
+### 1. Plug in the USB Device
+* Insert the USB device into a USB port on your Linux machine.
+### 2. Check if the USB Device is Detecte
+* Open a terminal and type the following command to list all connected storage devices:
+
+```
+lsblk
+```
+
+This will display a list of all block devices. Look for your USB device, typically labeled as `/dev/sdX` (where `X` is a letter like `a`, `b`, etc.). You can also use:
+
+```
+dmesg | tail
+```
+
+This will show the latest kernel messages, which should include information about the connected USB device.
+### 3. Create a Mount Point (if necessary)
+* Create a directory where you can mount the USB device, for example:
+
+```
+sudo mkdir /mnt/usb
+```
+
+### 4. Mount the USB Devie​
+* Mount the USB drive to the directory you just created. Replace `/dev/sdX1` with the correct partition (e.g., `/dev/sdb1`):
+
+```
+sudo mount /dev/sdX1 /mnt/usb
+```
+
+* After mounting, you can access the files on the USB drive using:
+
+```
+cd /mnt/usb
+ls
+```
+
+### 5. Access and Manage Files
+* You can now copy, move, delete, or edit files on the USB drive using standard Linux commands like `cp`, `mv`, `rm`, etc.
+Example:
+
+```
+cp /path/to/file /mnt/usb/
+```
+
+### 6. Safely Unmount the USB Device
+* Before removing the USB device, unmount it to ensure that all data is properly written and to avoid file system corruption:
+
+```
+sudo umount /mnt/usb
+```
+
+* If you get a "device is busy" error, it means some process is still using the USB device. You can use the `lsof` command to find out what is using the device:
+
+```
+lsof +f -- /mnt/usb
+```
+
+After resolving the issue, try unmounting again.
+### 7. Remove the USB Device​
+* Once unmounted, you can safely remove the USB device from the port.
+### 8. Additional Tips​
+* **Formatting the USB Drive:** If you need to format the USB drive, you can use `mkfs` for various file systems like FAT32, NTFS, or ext4:
+
+```
+sudo mkfs.vfat /dev/sdX1    # For FAT32
+sudo mkfs.ntfs /dev/sdX1    # For NTFS
+sudo mkfs.ext4 /dev/sdX1    # For ext4
+```
+
+* **Checking Disk Usage:** To see how much space is used or free on the USB drive:
+
+```
+df -h /mnt/usb
+```
+
+### 9. Auto-mount USB Devices
+* Most modern Linux distributions automatically mount USB devices when plugged in. If this doesn't happen, you can add an entry to the `/etc/fstab` file for auto-mounting.
+Example entry in `/etc/fstab`:
+
+```
+/dev/sdX1 /mnt/usb <vfat> defaults 0 0
+```
+
+This guide should help you get started with using USB devices on a Linux system, whether you're accessing files, managing partitions, or safely removing the device.

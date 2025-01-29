@@ -1,0 +1,30 @@
+.landing-page-image {
+    height: 500px;
+}
+.landing-page-heading {
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+.landing-page-description {
+    font-size: 20px;
+    max-width: 900px;
+    text-align: center;
+}
+@media (max-width: 768px) {
+    .landing-page-image {
+        height: 250px;
+    }
+    .landing-page-heading {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    .landing-page-description {
+        font-size: 16px;
+        text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        
+    }
+}
