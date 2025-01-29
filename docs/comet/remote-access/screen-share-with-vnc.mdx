@@ -1,0 +1,79 @@
+---
+title: Screen share with VNC
+hide_table_of_contents: false
+---
+
+Access your Mecha Comet remotely via the VNC protocol using `wayvnc` for wayland.
+
+## Installing Wayvnc
+
+- Run the following command to install wayvnc.
+    
+    ```bash
+    $ sudo apt install wayvnc
+    ```
+    
+- Connect to the device via SSH
+    
+    ```bash
+    $ ssh mecha@mecha-comet.local
+    ```
+    
+- Run the `wayvnc` application listening on your all interfaces on the port 5900
+    
+    ```bash
+    $ export WAYLAND_DISPLAY=wayland-1
+    $ wayvnc 0.0.0.0
+    ```
+    
+    > ⚠️  Binding to the 0.0.0.0 interface exposes VNC on all your network interfaces creating a security risk, better idea is to bind to 127.0.0.1 and using Tunneling via SSH for remote access.
+    > 
+- That’s it, you now have a VNC server running on the Mecha Comet
+
+## Installing a VNC Client
+
+### Linux
+
+To install a VNC client on Linux, you can use the `vncviewer` command from the TigerVNC suite. Here are the steps:
+
+- First, open your terminal application.
+- Update your package lists with the following command:
+    
+    ```bash
+    $ sudo apt update
+    ```
+    
+- Next, install the `TigerVNC` viewer by typing:
+    
+    ```bash
+    $ sudo apt install tigervnc-viewer
+    ```
+    
+- Once the installation is complete, you can start the VNC viewer by running:
+    
+    ```bash
+    $ vncviewer
+    ```
+    
+- In the VNC viewer, enter the Mecha Comet address and port number, then press Enter. After that, you should be connected to your VNC server.
+
+### MacOS
+
+- Open the App Store on your MacOS device.
+- In the search bar, type `VNC Viewer` and press Enter.
+- Click on `Get` and then `Install` next to the VNC Viewer application.
+- Once the installation is complete, open the VNC Viewer application.
+- In the VNC Viewer, enter the Mecha Comet address and port number, then press Enter.
+- After that, you should be connected to your VNC server.
+
+### Windows
+
+- Open your preferred web browser.
+- Search for `VNC Viewer` and navigate to the official RealVNC site.
+- Click on `Download VNC Viewer`.
+- Select the `.exe` file suitable for your Windows version (32-bit or 64-bit).
+- Once the file is downloaded, navigate to the download location and double-click on it.
+- Follow the on-screen instructions to install the VNC Viewer application.
+- After the installation is complete, open the VNC Viewer application.
+- In the VNC Viewer, enter the Mecha Comet address and port number, then press Enter.
+- After that, you should be connected to your VNC server.
