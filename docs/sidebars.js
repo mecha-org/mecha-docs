@@ -1,5 +1,17 @@
 import mechaApiRefSidebar from "./apis/references/sidebar"
 const sidebars = {
+  mctkSidebar: [
+    "mctk/introduction",
+    {
+      type: "category",
+      label: "Getting Started",
+      items: [
+        "mctk/gettingstarted/setup",
+        "mctk/gettingstarted/first-app",
+      ],
+    },
+    // "mctk/architecture",
+  ],
   cometSidebar: [
     "comet/intro",
     {
@@ -95,6 +107,16 @@ const sidebars = {
         "mechanix/installing-apps/using-flatpak",
         "mechanix/installing-apps/using-snap",
         "mechanix/installing-apps/adding-source",
+      ],
+    },
+    {
+      type: "category",
+      label: "Services",
+      items: [
+        "mechanix/services/system/server",
+        "mechanix/services/system/client",
+        "mechanix/services/desktop/server",
+        "mechanix/services/desktop/client",
       ],
     },
   ],

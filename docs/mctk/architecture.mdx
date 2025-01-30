@@ -1,0 +1,245 @@
+---
+title: App Architecture
+hide_table_of_contents: true
+---
+
+## Messages
+
+All the events in the application are going to be handled by sending messages. These messages are going to be handled in the update function of the component.
+
+```rust
+// App Messages
+#[derive(Debug)]
+pub enum AppMessage {
+    Exit,
+}
+```
+The update function of the Component trait is going to receive a mutable reference to self.
+```rust
+impl Component for App { 
+    ...
+    fn update(&mut self, message: Message) -> Vec<Message> {
+        match message.downcast_ref::<HelloEvent>() {
+            Some(HelloEvent::Exit) => {}
+            _ => (),
+        }
+        vec![]
+    }
+    ...
+}
+```
+
+## State
+
+Every component has a state. If it's state or a child's is updated then and only then will the component bother to re-render. 
+
+```rust
+#[derive(Debug, Default)]
+pub struct AppState {
+    window_sender: Option<Sender<XdgWindowMessage>>,
+    app_channel: Option<Sender<AppMessage>>,
+}
+```
+
+## Components
+
+You can create components using the component macro. The UI is created using nodes where each node has a component
+
+```rust
+#[component(State = "AppState")]
+#[derive(Debug, Default)]
+pub struct App {}
+```
+
+The node is created using the `node!()` macro and can have child nodes.
+
+```rust
+ node!(
+      Div::new().bg(Color::rgb(0., 0., 0.)),
+      lay![
+          size: size_pct!(100.0),
+          direction: Direction::Column
+      ]
+  )
+  .push(node!(Text::new(txt!("Hello, Mecha!")))),
+```
+
+The root component does not have parent components and the node tree emerges from this component. 
+
+```rust
+impl RootComponent<AppParams> for App {
+    fn root(&mut self, w: &dyn std::any::Any, app_params: &dyn Any) {
+      // Called while RootComponent is initialized
+      ...
+    }
+}
+```
+
+
+## Example Application
+
+```rust
+use mctk_core::prelude::*;
+use mctk_core::reexports::smithay_client_toolkit::{
+    reexports::calloop::{self, channel::Event},
+    shell::wlr_layer,
+};
+use mctk_smithay::layer_shell::layer_surface::LayerOptions;
+use mctk_smithay::layer_shell::layer_window::{LayerWindow, LayerWindowParams};
+use mctk_smithay::xdg_shell::xdg_window::{self, XdgWindowMessage, XdgWindowParams};
+use mctk_smithay::{WindowInfo, WindowMessage, WindowOptions};
+use smithay_client_toolkit::reexports::calloop::channel::Sender;
+use std::any::Any;
+use std::collections::HashMap;
+use widgets::Text;
+
+// App level channel
+#[derive(Debug)]
+pub enum AppMessage {
+    Exit,
+}
+
+#[derive(Debug, Clone)]
+pub struct AppParams {
+    app_channel: Option<calloop::channel::Sender<AppMessage>>,
+}
+
+#[derive(Debug, Default)]
+pub struct AppState {
+    window_sender: Option<Sender<XdgWindowMessage>>,
+    app_channel: Option<Sender<AppMessage>>,
+}
+
+#[derive(Debug, Clone)]
+enum HelloEvent {
+    Exit,
+}
+
+#[component(State = "AppState")]
+#[derive(Debug, Default)]
+pub struct App {}
+
+#[state_component_impl(AppState)]
+impl Component for App {
+    fn init(&mut self) {
+        self.state = Some(AppState {
+            window_sender: None,
+            app_channel: None,
+        })
+    }
+
+    fn view(&self) -> Option<Node> {
+        Some(
+            node!(
+                Div::new().bg(Color::rgb(0., 0., 0.)),
+                lay![
+                    size: size_pct!(100.0),
+                    direction: Direction::Column
+                ]
+            )
+            .push(node!(Text::new(txt!("Hello, Mecha!")))),
+        )
+    }
+
+    fn update(&mut self, message: Message) -> Vec<Message> {
+        match message.downcast_ref::<HelloEvent>() {
+            Some(HelloEvent::Exit) => {}
+            _ => (),
+        }
+        vec![]
+    }
+}
+
+// Layer Surface App
+#[tokio::main]
+async fn main() {
+    let id = 1;
+    let ui_t = std::thread::spawn(move || {
+        let _ = launch_ui(id);
+    });
+    ui_t.join().unwrap();
+}
+
+impl RootComponent<AppParams> for App {
+    fn root(&mut self, w: &dyn std::any::Any, app_params: &dyn Any) {
+        println!("root initialized");
+        let app_params = app_params.downcast_ref::<AppParams>().unwrap();
+        self.state_mut().app_channel = app_params.app_channel.clone();
+    }
+}
+
+fn launch_ui(id: i32) -> anyhow::Result<()> {
+    let assets: HashMap<String, AssetParams> = HashMap::new();
+    let mut svgs: HashMap<String, String> = HashMap::new();
+
+    let mut fonts = cosmic_text::fontdb::Database::new();
+    fonts.load_system_fonts();
+
+    fonts.load_font_data(include_bytes!("assets/fonts/SpaceGrotesk-Regular.ttf").into());
+
+    let window_opts = WindowOptions {
+        height: 300 as u32,
+        width: 350 as u32,
+        scale_factor: 1.0,
+    };
+
+    println!("id: {id:?}");
+    let window_info = WindowInfo {
+        id: format!("{:?}{:?}", "mctk.examples.hello-world".to_string(), id),
+        title: format!("{:?}{:?}", "mctk.examples.hello-world".to_string(), id),
+        namespace: format!("{:?}{:?}", "mctk.examples.hello-world".to_string(), id),
+    };
+    let layer_shell_opts = LayerOptions {
+        anchor: wlr_layer::Anchor::LEFT | wlr_layer::Anchor::RIGHT | wlr_layer::Anchor::TOP,
+        layer: wlr_layer::Layer::Top,
+        keyboard_interactivity: wlr_layer::KeyboardInteractivity::Exclusive,
+        namespace: Some(window_info.namespace.clone()),
+        zone: 0 as i32,
+    };
+
+    let (app_channel_tx, app_channel_rx) = calloop::channel::channel();
+    let (mut app, mut event_loop, window_tx) = LayerWindow::open_blocking::<App, AppParams>(
+        LayerWindowParams {
+            window_info,
+            window_opts,
+            fonts,
+            assets,
+            layer_shell_opts,
+            svgs,
+            ..Default::default()
+        },
+        AppParams {
+            app_channel: Some(app_channel_tx),
+        },
+    );
+    let handle = event_loop.handle();
+    let window_tx_2 = window_tx.clone();
+
+    let _ = handle.insert_source(app_channel_rx, move |event: Event<AppMessage>, _, app| {
+        let _ = match event {
+            // calloop::channel::Event::Msg(msg) => app.app.push_message(msg),
+            calloop::channel::Event::Msg(msg) => match msg {
+                AppMessage::Exit => {
+                    println!("app channel message {:?}", AppMessage::Exit);
+                    let _ = window_tx_2.send(WindowMessage::WindowEvent {
+                        event: mctk_smithay::WindowEvent::CloseRequested,
+                    });
+                }
+            },
+            calloop::channel::Event::Closed => {
+                println!("calloop::event::closed");
+            }
+        };
+    });
+
+    loop {
+        let _ = event_loop.dispatch(None, &mut app);
+
+        if app.is_exited {
+            break;
+        }
+    }
+
+    Ok(())
+}
+```

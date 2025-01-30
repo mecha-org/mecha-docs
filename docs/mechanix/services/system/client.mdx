@@ -1,0 +1,193 @@
+---
+title: System D-Bus Client
+hide_table_of_contents: false
+---
+
+# **Mechanix System D-Bus Client**
+
+The `mechanix_system_dbus_client` is a Rust library that provides an easy-to-use client interface for interacting with the Mechanix OS System D-Bus server. It simplifies communication with system services like Bluetooth, Display, and Hardware Buttons using the `zbus` rust crate.
+
+---
+
+## **Overview**
+
+This library contains the following components:
+
+1. **Proxies for Mechanix System D-Bus services**:
+   - Provides Rust abstractions for D-Bus methods, signals, and interfaces.
+   - Includes functionality for the `Bluetooth`, `Display`, and `Hardware Buttons` services.
+
+2. **Service modules**:
+   - Each service module exposes user-friendly APIs that wrap the underlying D-Bus proxies.
+
+3. **Modules**:
+   - **`Bluetooth`**: Bluetooth-related operations.
+   - **`Display`**: Display-related operations.
+   - **`Hardware Buttons`**: Power and Home button event handling.
+
+---
+
+## **Proxies and their functions**
+
+### **Bluetooth**
+This proxy provides a client API for interacting with the Bluetooth service. It allows you to manage Bluetooth adapters, connections, and notifications.
+
+#### Functions:
+1. #### **`is_connected()`**
+    This method is used to check the Bluetooth connection status (connected or disconnected).
+    ##### Returns: 
+    - `1` (connected)  
+    - `0` (disconnected)  
+    - On failure, an error message is returned.
+
+2. #### **`status()`**
+    This method is used to check the Bluetooth adapter status.
+    ##### Returns: 
+    - `1` (enabled)  
+    - `0` (disabled)  
+    - On failure, an error message is returned.
+
+3. #### **`enable_bluetooth()`**
+    This method is used to enable the Bluetooth adapter.
+    ##### Returns: 
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+4. #### **`disable_bluetooth()`**
+    This method is used to disable the Bluetooth adapter.
+    ##### Returns: 
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+5. #### **`get_notification_stream()`**
+    This method is used to subscribe to a Bluetooth notifications stream, which emits events like device connected, disconnected, enabled, or disabled.
+    ##### Returns: 
+    - A stream of Bluetooth notification events.
+
+---
+
+### **Display**
+This proxy provides a client API for interacting with the Display service. This module provides an API for display-related D-Bus operations.
+
+#### Functions:
+1. #### **`set_brightness(value)`**
+    This method is used to set the display brightness.
+    ##### Parameters:
+    - `value`: Brightness level (0-254).
+    ##### Returns: 
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+2. #### **`get_brightness()`**
+    This method is used to retrieve the current display brightness.
+    ##### Returns: 
+    - Current brightness level (0-254).  
+    - On failure, an error message is returned.
+
+3. #### **`enable_backlight()`**
+    This method is used to turn the display backlight on.
+    ##### Returns: 
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+4. #### **`disable_backlight()`**
+    This method is used to turn the display backlight off.
+    ##### Returns: 
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+### **Hardware Buttons**
+This proxy provides a client API for interacting with Home and Power Buttons event stream returned by hardware button interface of Mechanix System D-Bus server.
+
+#### Functions:
+1. #### **`get_notification_stream(path)`**
+    This method is used to subscribe to a Home and Power button notification stream.
+    ##### Parameters:
+    - `path`: Path to the button interface (e.g., `/org/mechanix/services/HwButton/Power` to get event stream of Power Button).
+    ##### Returns: 
+    - A stream for button events.
+
+---
+
+## **How to Use**
+1. Add `mechanix_system_dbus_client` as a dependency in your Rust project.
+2. Use the appropriate module (e.g., `bluetooth`) to perform actions.
+
+**Example**:
+```rust
+use mechanix_system_dbus_client::bluetooth::BluetoothService;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Enable Bluetooth
+    BluetoothService::enable_bluetooth().await?;
+
+    // Get the current Bluetooth status
+    let status = BluetoothService::status().await?;
+    println!("Bluetooth status: {}", status);
+
+    Ok(())
+}
+```
+
+**Stream subscribe Example for Power button**:
+```rust
+use mechanix_system_dbus_client::hardware_buttons::{HwButton, Key, KeyEvent};
+use std::time::Instant;
+use futures::StreamExt;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Subscribe to the power button event stream
+    if let Ok(mut stream) = HwButton::get_notification_stream("/org/mechanix/services/HwButton/Power".to_string()).await {
+        let mut pressed_at: Option<Instant> = None;
+        const MIN_TIME_LONG_PRESS: u64 = 2; // Long press threshold in seconds
+
+        while let Some(signal) = stream.next().await {
+            if let Ok(args) = signal.args() {
+                let event = args.event;
+                match event {
+                    KeyEvent::Pressed(Key::Power) => {
+                        // Record the time when the button is pressed
+                        pressed_at = Some(Instant::now());
+                    }
+                    KeyEvent::Released(Key::Power) => {
+                        if let Some(press_time) = pressed_at {
+                            // Calculate how long the button was pressed
+                            let power_button_pressed_for = (Instant::now() - press_time).as_secs();
+                            println!("Power button pressed for {:?} seconds", power_button_pressed_for);
+
+                            // Check if it was a long press
+                            let is_long_press = power_button_pressed_for >= MIN_TIME_LONG_PRESS;
+                            println!("Is long press: {:?}", is_long_press);
+
+                            // Reset the pressed time
+                            pressed_at = None;
+
+                            // Handle long press or short press
+                            if is_long_press {
+                                println!("Long press detected");
+                            } else {
+                                println!("Short press detected");
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        }
+    }
+
+    Ok(())
+}
+```
+---
+
+## **Dependencies**
+- `zbus`: For D-Bus communication.
+- `tokio`: For asynchronous operations.
+- `serde`: For serialization and deserialization.
+
+---
