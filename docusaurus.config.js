@@ -113,18 +113,28 @@ const config = {
         //   label: "API",
         // },
         {
-          to: "https://forum.mecha.so",
-          label: "Forum",
-          position: "left",
+          to: "https://mecha.so",
+          label: "Website",
+          position: "right",
         },
         {
-          type: "search",
+          to: "https://discord.com/invite/VGrZNFPycX",
+          label: "Discord",
+          position: "right",
+        },
+        {
+          to: "https://forum.mecha.so",
+          label: "Forum",
           position: "right",
         },
         {
           to: "https://github.com/mecha-org/mecha-docs",
           label: "Github",
           position: "right",
+        },
+        {
+          type: "search",
+          position: "left",
         },
       ],
     },

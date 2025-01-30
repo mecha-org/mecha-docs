@@ -62,6 +62,7 @@ const sidebars = {
     },
   ],
   mechanixSidebar: [
+    "mechanix/intro",
     {
       type: "category",
       label: "Using the GUI",
@@ -98,6 +99,7 @@ const sidebars = {
     },
   ],
   mechaCloudSidebar: [
+    "mecha-cloud/intro",
     {
       type: "category",
       label: "Console",
