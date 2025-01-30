@@ -1,14 +1,14 @@
 import Link from "@docusaurus/Link";
 import React from "react";
 import Adyen from "../../static/img/apps/adyen.svg";
-import CRM from "../../static/img/apps/app-crm.svg";
-import Invoices from "../../static/img/apps/app-invoices.svg";
-import ProductFeed from "../../static/img/apps/app-products-feed.svg";
-import Avatax from "../../static/img/apps/avatax.svg";
-import CMS from "../../static/img/apps/cms-hub.svg";
-import Notification from "../../static/img/apps/notification-hub.svg";
-import Search from "../../static/img/apps/search-hub.svg";
-import Segment from "../../static/img/apps/segment.svg";
+import Github from "../../static/img/apps/github.svg";
+import Youtube from "../../static/img/apps/youtube.svg";
+import Forum from "../../static/img/apps/forum.svg";
+import Discord from "../../static/img/apps/discord.svg";
+import Instagram from "../../static/img/apps/instagram.svg";
+import Website from "../../static/img/apps/website.svg";
+
+
 
 import s from "./apps.module.css";
 
@@ -29,43 +29,43 @@ const Apps = () => {
     <div className={s.root}>
       <div className={s.container}>
         <Shell
-          color={"rgb(10, 191, 83)"}
-          title={"Adyen"}
-          href={"developer/app-store/apps/adyen/overview"}
+          color={"#0E1821"}
+          title={"Website"}
+          href={"https://mecha.so"}
         >
-          <Adyen />
+          <Website />
         </Shell>
         <Shell
-          color={"rgb(223, 110, 44)"}
-          title={"AvaTax"}
-          href={"developer/app-store/apps/avatax/overview"}
+          color={"#FF6B6E"}
+          title={"Forums"}
+          href={"https://forum.mecha.so"}
         >
-          <Avatax />
+          <Forum />
         </Shell>
         <Shell
-          color={"rgb(39, 180, 118)"}
-          title={"CMS"}
-          href={"developer/app-store/apps/cms"}
+          color={"#000000"}
+          title={"Github"}
+          href={"https://github.com/mecha-org"}
         >
-          <CMS />
+          <Github />
         </Shell>
         <Shell
-          color={"rgb(137, 82, 255)"}
-          title={"CRM"}
-          href={"developer/app-store/apps/crm"}
+          color={"#E1306C"}
+          title={"Instagram"}
+          href={"https://www.instagram.com/mecha_systems/"}
         >
-          <CRM />
+          <Instagram />
         </Shell>
         {/*missing docs*/}
         {/*<Shell color={"rgb(59, 213, 121)"} title={"Data importer"}>*/}
         {/*  <Data />*/}
         {/*</Shell>*/}
         <Shell
-          color={"rgb(227, 149, 60)"}
-          title={"Invoices"}
-          href={"developer/app-store/apps/invoices"}
+          color={"#FF0000"}
+          title={"Youtube"}
+          href={"https://www.youtube.com/@mechasystems"}
         >
-          <Invoices />
+          <Youtube />
         </Shell>
 
         {/*missing docs*/}
@@ -74,40 +74,12 @@ const Apps = () => {
         {/*</Shell>{" "}*/}
 
         <Shell
-          color={"rgb(122, 150, 176)"}
-          title={"Product Feed"}
-          href={"developer/app-store/apps/product-feed"}
+          color={"#5865F2"}
+          title={"Discord"}
+          href={"https://discord.com/invite/VGrZNFPycX"}
         >
-          <ProductFeed />
+          <Discord />
         </Shell>
-        <Shell
-          color={"rgb(199, 58, 63)"}
-          title={"Search"}
-          href={"developer/app-store/apps/search"}
-        >
-          <Search />
-        </Shell>
-        <Shell
-          color={"rgb(37, 195, 101)"}
-          title={"Twilio Segment"}
-          href={"developer/app-store/apps/segment"}
-        >
-          <Segment />
-        </Shell>
-
-        {/*missing docs*/}
-        {/*<Shell color={"rgb(95, 58, 199)"} title={"Slack"}>*/}
-        {/*  <Placeholder />*/}
-        {/*</Shell>*/}
-
-        <Shell
-          color={"rgb(199, 159, 58)"}
-          title={"SMTP"}
-          href={"developer/app-store/apps/smtp/overview"}
-        >
-          <Notification />
-        </Shell>
-
         {/*missing docs*/}
         {/*<Shell color={"rgb(99, 91, 255)"} title={"Stipe"}>*/}
         {/*  <Stripe />*/}

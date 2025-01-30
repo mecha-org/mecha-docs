@@ -1,7 +1,7 @@
 :root {
   --ifm-menu-link-padding-horizontal: var(--spacer-3);
   --ifm-menu-link-padding-vertical: 0.25rem;
-  --doc-sidebar-width: 320px !important;
+  --doc-sidebar-width: 360px !important;
   --ifm-menu-color-background-active: transparant;
   --ifm-menu-color-background-hover: transparant;
 }
@@ -14,6 +14,7 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
   padding: var(--ifm-menu-link-padding-horizontal) !important;
+  font-weight: var(--ifm-font-weight-normal);
 }
 
 .menu__link {
@@ -25,20 +26,37 @@
   color: var(--gray12);
 }
 
+.menu__list-item-collapsible {
+  font-weight: var(--ifm-font-weight-semibold);
+  /* padding-bottom: var(--spacer-2) */
+}
+
+.theme-doc-sidebar-item-category-level-1 {
+  padding-bottom: var(--spacer-3);
+}
+
 .menu__link--active:not(
     .menu__link--sublist,
     .menu__list-item-collapsible > a
   ) {
   color: var(--highlight);
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+.theme-doc-sidebar-item-link-level-1 {
+  font-size: var(--font-size-sm);
+  /* padding-left: var(--ifm-menu-link-padding-horizontal); */
+  padding-right: var(--ifm-menu-link-padding-horizontal);
+  margin-bottom: var(--spacer-3);
+  font-weight: var(--ifm-font-weight-semibold);
 }
 
 .menu__list-item-collapsible .menu__link {
-  font-weight: 600;
+  font-weight: var(--ifm-font-weight-semibold);
 }
 
 .theme-doc-sidebar-item-link-level-2 .menu__link--active {
   border-radius: 0;
-  border-left: solid 1px var(--highlight);
   z-index: 20;
 }
 
@@ -50,6 +68,7 @@
 .menu__list .menu__list .menu__list-item {
   position: relative;
   padding-left: var(--spacer-2);
+  /* margin-bottom: var(--spacer-2) */
 }
 .menu__list .menu__list .menu__list-item:before {
   background-color: var(--gray4);
@@ -61,14 +80,15 @@
   left: 8px;
   position: absolute;
   top: 0;
-  width: 1px;
+  width: 0px;
 }
 
 .menu__list-item:not(:first-child) {
   margin: 0;
 }
 .menu__list-item > * {
-  height: 2.2rem;
+  min-height: 2rem;
+  text-overflow: ellipsis;
 }
 
 .menu__caret:before,
@@ -77,9 +97,9 @@
   background-repeat: no-repeat;
 }
 
-.menu__list:first-child {
+/* .menu__list:first-child {
   margin-top: 13px;
-}
+} */
 
 .menu__group-label {
   font-size: var(--font-size-xs);

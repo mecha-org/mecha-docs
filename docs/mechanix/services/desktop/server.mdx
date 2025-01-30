@@ -1,0 +1,302 @@
+---
+
+title: Desktop D-Bus Server
+hide_table_of_contents: false
+---
+
+# **Mechanix Desktop D-Bus Server**
+
+## **Overview**
+The **Mechanix Desktop D-Bus Server** is a background service that provides D-Bus interfaces for managing desktop-related features such as sound and power. It also includes a handler for idle notification. Built in Rust, it enables seamless communication between Mechanix OS components and desktop services.
+
+---
+
+## **Interfaces**
+The Mechanix Desktop D-Bus server exposes several interfaces for managing desktop features. These interfaces are used by client applications like the launcher and settings app to interact with the server and control desktop features. These methods can be accessed using the `busctl` command-line tool or through D-Bus libraries in various programming languages. Proxies for these interfaces are available in the Mechanix Desktop D-Bus Client library built in Rust.
+
+---
+
+### **1. Sound Interface `org.mechanix.services.Sound`**
+Manages sound devices, including volume control, mute status, and device information.
+
+#### **Methods**
+1. #### **Get Connected Input Devices**
+    ##### Description:
+    This method is used to retrieve a list of connected input devices.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound GetConnectedInputDevices
+    ```
+
+    ##### Returns:  
+    - List of connected input devices.  
+    - On failure, an error message is returned.
+
+---
+
+2. #### **Get Connected Output Devices**
+    ##### Description:
+    This method is used to retrieve a list of connected output devices.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound GetConnectedOutputDevices
+    ```
+
+    ##### Returns:  
+    - List of connected output devices.  
+    - On failure, an error message is returned.
+
+---
+
+3. #### **Get Input Device Volume**
+    ##### Description:
+    This method is used to retrieve the volume level of a specified input device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound GetInputDeviceVolume s "<device>"
+    ```
+
+    ##### Returns:  
+    - Volume level.  
+    - On failure, an error message is returned.
+
+---
+
+4. #### **Get Output Device Volume**
+    ##### Description:
+    This method is used to retrieve the volume level of a specified output device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound GetOutputDeviceVolume s "<device>"
+    ```
+
+    ##### Returns:  
+    - Volume level.  
+    - On failure, an error message is returned.
+
+---
+
+5. #### **Input Device Mute**
+    ##### Description:
+    This method is used to mute a specified input device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound InputDeviceMute s "<device>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+6. #### **Input Device Toggle Mute**
+    ##### Description:
+    This method is used to toggle the mute status of a specified input device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound InputDeviceToggleMute s "<device>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+7. #### **Input Device Unmute**
+    ##### Description:
+    This method is used to unmute a specified input device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound InputDeviceUnmute s "<device>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+8. #### **Output Device Mute**
+    ##### Description:
+    This method is used to mute a specified output device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound OutputDeviceMute s "<device>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+9. #### **Output Device Toggle Mute**
+    ##### Description:
+    This method is used to toggle the mute status of a specified output device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound OutputDeviceToggleMute s "<device>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+10. #### **Output Device Unmute**
+    ##### Description:
+    This method is used to unmute a specified output device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound OutputDeviceUnmute s "<device>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+11. #### **Set Input Device Volume**
+    ##### Description:
+    This method is used to set the volume level for a specified input device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound SetInputDeviceVolume s "<volume>" "<device>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+12. #### **Set Output Device Volume**
+    ##### Description:
+    This method is used to set the volume level for a specified output device.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Sound /org/mechanix/services/Sound org.mechanix.services.Sound SetOutputDeviceVolume s "<volume>" "<device>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+#### **Signals**
+1. #### **Notification**
+    ##### Description:
+    This method is used to return a notification stream which client can subscribe to get sound-related events. The stream includes the following fields:
+    - `is_mute`: Mute status
+    - `volume_level`: Volume level
+---
+
+### **2. Power Interface `org.mechanix.services.Power`**
+Provides methods for managing system performance related settings.
+
+#### **Methods**
+1. #### **Get Available CPU Governors**
+    ##### Description:
+    This method is used to retrieve a list of available CPU governors.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Power /org/mechanix/services/Power org.mechanix.services.Power GetAvailableGovernors
+    ```
+
+    ##### Returns:  
+    - List of available CPU governors (Powersave, OnDemand etc).  
+    - On failure, an error message is returned.
+
+---
+
+2. #### **Get Current CPU Governor**
+    ##### Description:
+    This method is used to retrieve the name of the currently active CPU governor.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Power /org/mechanix/services/Power org.mechanix.services.Power GetCurrentCPUGovernor
+    ```
+
+    ##### Returns:  
+    - Name of the current CPU governor.  
+    - On failure, an error message is returned.
+
+---
+
+3. #### **Set CPU Governor**
+    ##### Description:
+    This method is used to set the CPU governor to the specified value.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Power /org/mechanix/services/Power org.mechanix.services.Power SetCPUGovernor s "<governor>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+## **Handlers**
+#### **Idle Notification Handler**
+The **Idle Notification Handler** monitors user inactivity and triggers actions such as turning off the display or locking the screen when the system is idle for a configured period.
+
+##### **Functionality**
+- Listens for inactivity using the **ext_idle_notify_v1** Wayland protocol.
+- Performs actions based on configured idle timeouts.
+
+##### **Idle Events**
+1. **Display Off**: Turns off the backlight when idle.
+2. **Screen Lock**: Locks the session when idle.
+
+---
+
+## **Local Setup**
+
+### **Prerequisites**
+- [Rust Toolchain](https://www.rust-lang.org/tools/install)
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mecha-org/mechanix-gui.git
+   cd mechanix-gui/services
+   ```
+
+2. Build:
+   ```bash
+   cargo build --release # Production build
+   ```
+
+3. Add service settings file:
+   ```bash
+   cp desktop/server/settings.yml.example target/release/settings.yml
+   ```
+
+4. Run:
+   ```bash
+   cd target/release
+   ./mechanix_desktop_dbus_server
+   ```
+
+---
