@@ -60,15 +60,15 @@ const config = {
   ],
 
   themes: [["docusaurus-theme-openapi-docs", {}]],
-
+  
   themeConfig: {
-    image: "img/docusaurus-social-card.jpg",
     algolia: {
-      appId: "P1Y4DTZUZN", // cspell: disable-line
-      apiKey: "021901243603f49a626be6b7435a2a8d",
-      indexName: "saleor",
-      placeholder: "Search Saleor Documentation",
+      appId: "HZJ4XG1ZJJ", // cspell: disable-line
+      apiKey: "75ca7bc62c992a3b2e7e0d86b531b333",
+      indexName: "developers_mecha_so_hzj4xg1zjj_pages",
+      placeholder: "Search Mecha Documentation"
     },
+    image: "img/docusaurus-social-card.jpg",
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,

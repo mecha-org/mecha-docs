@@ -1,10 +1,7 @@
 import mechaApiRefSidebar from "./apis/references/sidebar"
 const sidebars = {
   cometSidebar: [
-    {
-      type:"html",
-      value:"Mecha Comet documentation"
-    },
+    "comet/intro",
     {
       type: "category",
       label: "Getting Started",

@@ -1,0 +1,46 @@
+---
+slug: /
+title: Developer Documentation
+hide_table_of_contents: true
+description: Learn about Mecha Comet using tutorials, API reference, and developer guides.
+---
+
+<style>
+  {`
+    /* Hack to prevent overflow, not possible to have it on other pages due to position sticky used in TOC */
+    main .container {
+        position: relative;
+        overflow: hidden;
+    }
+`}
+</style>
+
+import { Block } from "@site/components/Block/Block";
+import Apps from "@site/components/Apps/Apps";
+import Chapters from "@site/components/Chapters";
+import { Icon32 } from "@site/components/Icons/icons";
+import CardGrid from "@site/components/CardGrid";
+import Tiles from "@site/components/Tiles";
+
+import {
+  Tag,
+  BadgePercent,
+  Split,
+  ShoppingBag,
+  TableProperties,
+  CreditCard,
+} from "lucide-react";
+
+
+Become a Mecha Tinkerer? Discover user guides, developer documentation, schematics and more.
+
+<CardGrid>
+
+    [<Icon32 name={"play"} /> **Mecha Comet** Need help using Mecha Comet? Discover guides, developer documentation, schematics, blueprints, and more.](quickstart/cloud.mdx)
+
+    [<Icon32 name={"api"} /> **Mechanix OS** Learn to develop applications using our own RUST based GUI library , MCTK, customization, and integration with the Mechanix ecosystem. ](api-reference/api-reference.mdx)
+
+    [<Icon32 name={"feature"} /> **Mecha Cloud** We'll walk you through the steps to create and set up your account on Mecha, including registration, verification, and initial configuration.](overview/why-saleor/headless.mdx)
+
+</CardGrid>
+
