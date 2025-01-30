@@ -1,6 +1,7 @@
 import mechaApiRefSidebar from "./apis/references/sidebar"
 const sidebars = {
   mctkSidebar: [
+    "mctk/intro",
     "mctk/introduction",
     {
       type: "category",
@@ -13,6 +14,7 @@ const sidebars = {
     // "mctk/architecture",
   ],
   cometSidebar: [
+    "comet/intro",
     {
       type: "category",
       label: "Getting Started",
@@ -73,6 +75,7 @@ const sidebars = {
     },
   ],
   mechanixSidebar: [
+    "mechanix/intro",
     {
       type: "category",
       label: "Using the GUI",
@@ -119,6 +122,7 @@ const sidebars = {
     },
   ],
   mechaCloudSidebar: [
+    "mecha-cloud/intro",
     {
       type: "category",
       label: "Console",

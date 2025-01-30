@@ -60,8 +60,14 @@ const config = {
   ],
 
   themes: [["docusaurus-theme-openapi-docs", {}]],
-
+  
   themeConfig: {
+    algolia: {
+      appId: "HZJ4XG1ZJJ", // cspell: disable-line
+      apiKey: "75ca7bc62c992a3b2e7e0d86b531b333",
+      indexName: "developers_mecha_so_hzj4xg1zjj_pages",
+      placeholder: "Search Mecha Documentation"
+    },
     image: "img/docusaurus-social-card.jpg",
     colorMode: {
       defaultMode: 'light',
@@ -88,6 +94,12 @@ const config = {
           position: "left",
           label: "Mechanix OS",
         },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "mechanixSidebar",
+        //   position: "left",
+        //   label: "Mechanix OS",
+        // },
         {
           type: "docSidebar",
           sidebarId: "mechaCloudSidebar",
@@ -98,7 +110,7 @@ const config = {
           type: "docSidebar",
           sidebarId: "mctkSidebar",
           position: "left",
-          label: "mctk",
+          label: "MCTK",
         },
         // {
         //   type: "docSidebar",
@@ -107,9 +119,28 @@ const config = {
         //   label: "API",
         // },
         {
-          to: "https://github.com/mecha-org/mecha-docs",
-          label: "GitHub",
+          to: "https://mecha.so",
+          label: "Website",
           position: "right",
+        },
+        {
+          to: "https://discord.com/invite/VGrZNFPycX",
+          label: "Discord",
+          position: "right",
+        },
+        {
+          to: "https://forum.mecha.so",
+          label: "Forum",
+          position: "right",
+        },
+        {
+          to: "https://github.com/mecha-org/mecha-docs",
+          label: "Github",
+          position: "right",
+        },
+        {
+          type: "search",
+          position: "left",
         },
       ],
     },

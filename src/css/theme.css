@@ -24,7 +24,10 @@
 @import url("components/landing-page.css");
 :root {
   --ifm-spacing-horizontal: var(--spacer-5);
+  --ifm-font-weight-semibold: 600;
 }
+
+
 /*Default variables for reference*/
 
 /*:root {*/
