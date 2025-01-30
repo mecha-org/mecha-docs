@@ -107,6 +107,16 @@ const sidebars = {
         "mechanix/installing-apps/adding-source",
       ],
     },
+    {
+      type: "category",
+      label: "Services",
+      items: [
+        "mechanix/services/system/server",
+        "mechanix/services/system/client",
+        "mechanix/services/desktop/server",
+        "mechanix/services/desktop/client",
+      ],
+    },
   ],
   mechaCloudSidebar: [
     {
