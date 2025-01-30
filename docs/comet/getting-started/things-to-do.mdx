@@ -1,10 +1,10 @@
 ---
-title: Routine things to-do / Common Tasks
+title: Common Tasks
 hide_table_of_contents: false
 ---
-The Mecha Comet is a modular handheld Linux device designed for flexibility and functionality. Below is a guide to routine tasks and common operations to make the most of your device.
 
----
+This guide covers essential tasks and everyday operations to help you maximize your Mecha Comet's experience:
+
 
 ### 1. **Powering On and Off**
 
@@ -24,7 +24,7 @@ The Mecha Comet is a modular handheld Linux device designed for flexibility and 
 
 ### 3. **Installing Applications**
 
-- Use the **Mechanix App Store** or terminal commands:
+- Use terminal commands:
     
     ```
     sudo apt update
@@ -63,31 +63,15 @@ The Mecha Comet is a modular handheld Linux device designed for flexibility and 
 
 ### 9. **Connecting External Devices**
 
-- Use USB or the M.2 slot for:
+- Use USB or the M.2 slot optionally for attaching:
     - Storage drives.
     - AI accelerators.
-- For Raspberry Pi HATs and MikroE Click Boards, align pins carefully and secure the connection.
+- For Raspberry Pi HATs and MikroE Click Boards, use may create a specific extension for this purpose.
 
-### 10. **Backup and Restore**
-
-- **Backup:**
-    
-    ```
-    sudo tar -cvpzf backup.tar.gz /path/to/backup
-    ```
-    
-- **Restore:**
-    
-    ```
-    sudo tar -xvpzf backup.tar.gz -C /
-    ```
-    
-
-### 12. **Troubleshooting Common Issues**
+### 10. **Troubleshooting Common Issues**
 
 - **Device Freezing:** Long-press the power button to restart.
 - **Wi-Fi Not Connecting:**
     - Ensure the network is active.
     - Restart the device.
-    - Run: `sudo systemctl restart NetworkManager`.
 - **Unresponsive Extensions:** Reattach and verify connections.
