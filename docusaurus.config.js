@@ -110,7 +110,7 @@ const config = {
           type: "docSidebar",
           sidebarId: "mctkSidebar",
           position: "left",
-          label: "mctk",
+          label: "MCTK",
         },
         // {
         //   type: "docSidebar",

@@ -1,6 +1,7 @@
 import mechaApiRefSidebar from "./apis/references/sidebar"
 const sidebars = {
   mctkSidebar: [
+    "mctk/intro",
     "mctk/introduction",
     {
       type: "category",
