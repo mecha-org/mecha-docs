@@ -1,0 +1,107 @@
+---
+title: Setup
+hide_table_of_contents: true
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import S from "@site/components/Steps/";
+
+This guide will help you set up and run an example MCTK project. Follow the steps below in order:
+
+<S>
+    <S.Step>
+        <S.Details>
+            <h3>Install Dependencies</h3>
+
+            Run the following command to install all necessary dependencies (Debian/Ubuntu):
+
+            ```bash
+            sudo apt install -y --no-install-recommends \
+                g++ \
+                libc6-dev \
+                libssl-dev \
+                libwebkit2gtk-4.0-dev \
+                build-essential \
+                curl \
+                wget \
+                libgtk-3-dev \
+                patchelf \
+                librsvg2-dev \
+                pkg-config
+            ```
+        </S.Details>
+    </S.Step>
+
+    <S.Step>
+        <S.Details>
+            <h3>Install Sway</h3>
+
+            Install the Sway window manager. On Ubuntu, you can use the following command:
+
+            ```bash
+            sudo apt install -y sway
+            ```
+        </S.Details>
+    </S.Step>
+
+    <S.Step>
+        <S.Details>
+            <h3>Run Sway</h3>
+
+            Start Sway in another terminal or run it in the background using:
+
+            ```bash
+            sway &
+            ```
+        </S.Details>
+    </S.Step>
+
+    <S.Step>
+        <S.Details>
+            <h3>Set the WAYLAND_DISPLAY Variable</h3>
+
+            Set the `WAYLAND_DISPLAY` environment variable to `wayland-1`:
+
+            ```bash
+            export WAYLAND_DISPLAY=wayland-1
+            ```
+        </S.Details>
+    </S.Step>
+
+    <S.Step>
+        <S.Details>
+            <h3>Clone the Repository</h3>
+
+            Clone the MCTK repository from GitHub:
+
+            ```bash
+            git clone [https://github.com/mecha-org/mctk.git](https://github.com/mecha-org/mctk.git)
+            ```
+        </S.Details>
+    </S.Step>
+
+    <S.Step>
+        <S.Details>
+            <h3>Navigate to the Kitchen Example</h3>
+
+            Change your current directory to the `examples/kitchen` folder:
+
+            ```bash
+            cd mctk/examples/kitchen
+            ```
+        </S.Details>
+    </S.Step>
+
+    <S.Step>
+        <S.Details>
+            <h3>Run the Project</h3>
+
+            Use Cargo to run the example:
+
+            ```bash
+            cargo run
+            ```
+        </S.Details>
+    </S.Step>
+</S>

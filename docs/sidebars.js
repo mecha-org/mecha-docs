@@ -1,5 +1,17 @@
 import mechaApiRefSidebar from "./apis/references/sidebar"
 const sidebars = {
+  mctkSidebar: [
+    "mctk/introduction",
+    {
+      type: "category",
+      label: "Getting Started",
+      items: [
+        "mctk/gettingstarted/setup",
+        "mctk/gettingstarted/first-app",
+      ],
+    },
+    // "mctk/architecture",
+  ],
   cometSidebar: [
     {
       type: "category",

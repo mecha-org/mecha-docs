@@ -94,6 +94,12 @@ const config = {
           position: "left",
           label: "Mecha Cloud",
         },
+        {
+          type: "docSidebar",
+          sidebarId: "mctkSidebar",
+          position: "left",
+          label: "mctk",
+        },
         // {
         //   type: "docSidebar",
         //   sidebarId: "mechaApiSidebar",
