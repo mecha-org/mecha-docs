@@ -19,129 +19,134 @@ import S from "@site/components/Steps/";
 <S.Column>
   ***Step right in The Mecha Comet World!*** \
   The Mecha Comet is a portable, modular, programmable handheld linux computer.\
-  We are happy to witness your journey with Mighty Mecha Comet enables you to build applications on
+  We are happy to witness your journey with Mighty Mecha Comet, enables you to build applications on
   the edge and much more. This guide will help you get started.
 </S.Column>
 
 ## Turning the device on 
 
     Turn on your Mecha Comet by pressing power button.  
-    - IMAGE - comet power button press
+    - IMAGE - comet power button press; comet with green light & mecha logo
 
     :::tip[If your Mecha Comet doesn't turn on]
-        It's possible that your device's battey is fully discharged.
+        It's possible that your device's battery is fully discharged.
 
         The recommended power supply for the Mecha Comet  is a 5V, 2.5A (12.5W).
 
-        To turn on, Plug the Type-C from your charger to the base Type-C port found at the bottom of the device.
+        To turn on, Plug the Type-C charger to the base Type-C port located at the bottom of the device.
         Once the power supply is connected you should see a green LED above the screen lit up.
 
-        - IMAGE - comet charging
+        - IMAGE - comet beign charged; comet with green light & mecha logo
     :::
 
 
 ## Connecting to the Internet
 
-    The Mecha Comet  has built in Wireless support.
-    To connect the Mecha Comet to internet, you can use either connect from settings app interface or connect from terminal:
+    The Mecha Comet has built in Wireless support.\
+    To connect the Mecha Comet to internet, you can connect it by using either Settings app->Network interface or by terminal:
 
     ### Connect a Wireless Network from Settings app
 
-    To open Settings app, you can open Settings app either from Home screen or App drawer.
+    You can open the Settings app in two ways:
+    1. From Home Screen: Tap the Settings app icon.
+    2. From App drawer: Swipe up from bottom of the screen & tap on the Settings app icon.
+
+    - IMAGE: launch settings app from home screen; launch settings app from app drawer 
 
     **Steps to connect a wireless network:**
-<S>
-    <S.Step>
-        <S.Details>
-            Navigate to **Settings Menu > Network > Enable Wireless (toggle)** 
-                - IMAGE - Enable Network & network list (not connect networks only)
-        </S.Details>
-    </S.Step>
+    <S>
+        <S.Step>
+            <S.Details>
+                Navigate to **Settings Menu > Network > Enable Wireless (toggle).** 
+                    - IMAGE - Enable Network & network list (not connect networks only)
+            </S.Details>
+        </S.Step>
 
-    <S.Step>
-        <S.Details>
-           Find your Wireless Network & tap on it, you will see 'Enter Password' screen
-                - IMAGE - Enter pwd 
-        </S.Details>
-    </S.Step>
+        <S.Step>
+            <S.Details>
+            Find your Wireless Network & tap on it, you will see 'Enter Password' screen.
+                    - IMAGE - Enter pwd 
+            </S.Details>
+        </S.Step>
 
-    <S.Step>
-        <S.Details>
-            Enter your correct password & you will see connected network in networks list screen
-                - IMAGE - Enable Network & network list (with connected networks only) 
-        </S.Details>
-    </S.Step>
-</S>
+        <S.Step>
+            <S.Details>
+                Enter your correct password & you will see connected network in networks list.
+                    - IMAGE - Enable Network & network list (with connected network only) 
+            </S.Details>
+        </S.Step>
+    </S>
 ### Connect a Wireless from terminal
 
-        You can open terminal either from Home screen or from the App drawer.
-        To display overall status of network connections managed by NetworkManager:
-        ```
-        $ nmcli general status
-        ```
-        **Output:**
-        ```
-        STATE                   CONNECTIVITY  WIFI-HW  WIFI      WWAN-HW  WWAN    
-        connected (local only)  limited       enabled  disabled  enabled  enabled 
-        ```
-        <S>
-                <S.Step>
-                        <S.Details>
-                                Turn on wifi radio switch by this command,\
-                                You will show enabled wireless icon in status bar:
-                                ```
-                                $ nmcli radio wifi on
-                                ```
-                        </S.Details>
-                </S.Step>
+    You can open terminal either from Home screen or from the App drawer.\
+        - IMAGE: launch terminal from home screen; launch terminal from app drawer 
 
-                <S.Step>
-                        <S.Details>
-                                Once wireless is enabled it will show list of available networks,\
-                                To show available networks:
-                                ```
-                                $ nmcli dev wifi list
-                                ```
-                                **Output:**
-                                ```
-                                IN-USE  BSSID              SSID                 MODE   CHAN  RATE        SIGNAL  BARS  SECURITY  
-                                        70:A7:41:D6:36:1E  MyHomeWiFi           Infra  149   270 Mbit/s  95      ▂▄▆█  WPA2      
-                                        20:B5:C6:2F:FB:5C  WorkNetwork          Infra  44    540 Mbit/s  29      ▂___  WPA2      
-                                        CA:C9:A3:9A:F3:D5  XyZNetwork           Infra  1     54 Mbit/s   20      ▂___  WPA1 WPA2 
-                                ```
-                                If wireless is disabled it will show columns names only
-                                ```
-                                $ nmcli dev wifi list
-                                ```
-                                **Output:**
-                                ```
-                                IN-USE  BSSID  SSID  MODE  CHAN  RATE  SIGNAL  BARS  SECURITY 
-                                ```
-                        </S.Details>
-                </S.Step>
+    To display overall status of network connections managed by NetworkManager:
+    ```
+    $ nmcli general status
+    ```
+    **Output:**
+    ```
+    STATE                   CONNECTIVITY  WIFI-HW  WIFI      WWAN-HW  WWAN    
+    connected (local only)  limited       enabled  disabled  enabled  enabled 
+    ```
+    <S>
+        <S.Step>
+                <S.Details>
+                        Turn on wifi radio switch by this command,\
+                        You will show enabled wireless icon in status bar:
+                        ```
+                        $ nmcli radio wifi on
+                        ```
+                </S.Details>
+        </S.Step>
 
-                <S.Step>
-                        <S.Details>
-                                To connect your network from list use this command along with password:
-                                ```
-                                $ nmcli dev wifi connect `<SSID>` password `<password>`
-                                ```
-                                for example, 
-                                ```
-                                $ nmcli dev wifi connect "MyHomeWiFi" password "mywifipassword"
-                                ```
-                                **Output:**
-                                ```
-                                Device 'wlp2s0' successfully activated with '09d42b19-10ce-4521-b321-9b1cd7cbadef'.
-                                ```
-                        </S.Details>
-                </S.Step>
+        <S.Step>
+                <S.Details>
+                        Once wireless is enabled it will show list of available networks,\
+                        To show available networks:
+                        ```
+                        $ nmcli dev wifi list
+                        ```
+                        **Output:**
+                        ```
+                        IN-USE  BSSID              SSID                 MODE   CHAN  RATE        SIGNAL  BARS  SECURITY  
+                                70:A7:41:D6:36:1E  MyHomeWiFi           Infra  149   270 Mbit/s  95      ▂▄▆█  WPA2      
+                                20:B5:C6:2F:FB:5C  WorkNetwork          Infra  44    540 Mbit/s  29      ▂___  WPA2      
+                                CA:C9:A3:9A:F3:D5  XyZNetwork           Infra  1     54 Mbit/s   20      ▂___  WPA1 WPA2 
+                        ```
+                        If wireless is disabled it will show columns names only
+                        ```
+                        $ nmcli dev wifi list
+                        ```
+                        **Output:**
+                        ```
+                        IN-USE  BSSID  SSID  MODE  CHAN  RATE  SIGNAL  BARS  SECURITY 
+                        ```
+                </S.Details>
+        </S.Step>
 
-        </S>
+        <S.Step>
+                <S.Details>
+                        To connect your network from list use this command along with password:
+                        ```
+                        $ nmcli dev wifi connect `<SSID>` password `<password>`
+                        ```
+                        for example, 
+                        ```
+                        $ nmcli dev wifi connect "MyHomeWiFi" password "mywifipassword"
+                        ```
+                        **Output:**
+                        ```
+                        Device 'wlp2s0' successfully activated with '09d42b19-10ce-4521-b321-9b1cd7cbadef'.
+                        ```
+                </S.Details>
+        </S.Step>
+    </S>
 
 ## Familiarize yourself with the device
 
-    - IMAGE : Front view
+    - IMAGE : Front view with labels for 
     - IMAGE : Back view
 
 ## Things you can do on your Mecha Comet
@@ -152,7 +157,6 @@ import S from "@site/components/Steps/";
     - play youtube video (youtube video playing image)
 
     ### Use the Terminal
-
     - You can open Terminal either from Home screen or from App drawer
 
     - You can try commands like this :
@@ -169,6 +173,11 @@ import S from "@site/components/Steps/";
         ```
         $ mkdir "directory_name"
         ```
+
+    ### Lock & Unlock your device
+    - Lock Your Screen: A quick press of the power button (on the right side) will lock your device, protecting your information.
+    - Unlock Your Screen: Swipe from left to right on the bottom of the screen to unlock and access your device.
+        - IMAGE: lock screen by pressing power button; unlcok screen swipe action
 
 ## Hop in the community
     Share your ideas, get advice, and find answers in our community.\
