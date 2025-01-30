@@ -7,7 +7,7 @@
 
 .container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacer-3);
   width: 100%;
 }
@@ -29,12 +29,16 @@
   color: inherit !important;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 100%;
   font-size: var(--font-size-sm);
   padding: 2rem;
   border: 1px solid var(--gray5);
   box-shadow: var(--shadow-sm);
   transition: border-color, box-shadow, 0.3s;
+}
+
+.cardGrid p {
+  height: 100%;
 }
 
 .cardGrid a:not(.card):active,

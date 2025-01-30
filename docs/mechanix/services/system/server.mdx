@@ -1,0 +1,279 @@
+---
+title: System D-Bus Server
+hide_table_of_contents: false
+---
+
+# Mechanix System D-Bus Server
+
+## Overview
+The Mechanix System D-Bus server is a background service that provides D-Bus interfaces for managing various system services such as Bluetooth, hardware buttons, and display control. Built in Rust, it enables event-driven communication between Mechanix OS components and underlying hardware.
+
+---
+
+## Interfaces
+The Mechanix System D-Bus server exposes several interfaces for managing system services. These interfaces are used by client applications to interact with the server and control system features. These methods can be accessed using the `busctl` command-line tool or through D-Bus libraries in various programming languages. Proxies for these interfaces are available in the Mechanix System D-Bus Client library built in Rust. Proxy methods are then called in the launcher, settings app, and other components to interact with the server.
+
+### 1. Bluetooth `org.mechanix.services.Bluetooth`
+Manages Bluetooth functionality including device scanning, connections, and adapter control.
+
+#### Methods
+1. #### **Scan**
+
+    ##### Description:
+    This method is used to initiate Bluetooth device discovery.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Bluetooth /org/mechanix/services/Bluetooth org.mechanix.services.Bluetooth Scan
+    ```
+
+    ##### Returns:  
+    A list of nearby devices with addresses, names, and other properties.
+
+---
+
+2. #### **Connect**
+
+    ##### Description:
+    This method is used to connect to a Bluetooth device by passing its address.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Bluetooth /org/mechanix/services/Bluetooth org.mechanix.services.Bluetooth Connect s "<device-address>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+3. #### **Disconnect**
+
+    ##### Description:
+    This method is used to disconnect from a paired device by passing the device ID.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Bluetooth /org/mechanix/services/Bluetooth org.mechanix.services.Bluetooth Disconnect s "<device-id>"
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+4. #### **Enable**
+
+    ##### Description:
+    This method is used to enable the Bluetooth adapter.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Bluetooth /org/mechanix/services/Bluetooth org.mechanix.services.Bluetooth Enable
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+5. #### **Disable**
+
+    ##### Description:
+    This method is used to disable the Bluetooth adapter.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Bluetooth /org/mechanix/services/Bluetooth org.mechanix.services.Bluetooth Disable
+    ```
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+6. #### **Status**
+
+    ##### Description:
+    This method is used to check the Bluetooth adapter status.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Bluetooth /org/mechanix/services/Bluetooth org.mechanix.services.Bluetooth Status
+    ```
+
+    ##### Returns:  
+    - `1` (enabled)  
+    - `0` (disabled)  
+    - On failure, an error message is returned.
+
+---
+
+7. #### **GetBluetoothProperties**
+
+    ##### Description:
+    This method is used to retrieve Bluetooth adapter details.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Bluetooth /org/mechanix/services/Bluetooth org.mechanix.services.Bluetooth GetBluetoothProperties
+    ```
+
+    ##### Returns:  
+    - Name, MAC address, power state  
+    - Discoverability status  
+    - Supported features  
+    - On failure, an error message is returned.
+
+---
+
+8. #### **IsConnected**
+
+    ##### Description:
+    This method is used to check the Bluetooth connection status (connected or disconnected).
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Bluetooth /org/mechanix/services/Bluetooth org.mechanix.services.Bluetooth IsConnected
+    ```
+
+    ##### Returns:  
+    - `1` (connected)  
+    - `0` (disconnected)  
+    - On failure, an error message is returned.
+
+---
+
+#### Signals
+The Bluetooth interface also provides a stream to which clients can subscribe to get notifications about Bluetooth events.
+
+1. #### **Notification**
+    - **Description**: This signal is emitted when a Bluetooth event occurs (e.g., device connected, disconnected, enabled, disabled).
+
+---
+
+### 2. Hardware Buttons `org.mechanix.services.HwButton`
+#### Signals
+1. #### **Notification**
+    - **Description**: This signal provides a stream to which clients can subscribe to get events when the Power or Home button is pressed or released.
+
+#### Events
+- **Pressed**: Button pressed down.
+- **Released**: Button released.
+- **Pressing**: Button held (long-press).
+
+#### Notification Paths
+Clients can subscribe to the following paths to receive button events:
+- **Power Button**:  
+  `/org/mechanix/services/HwButton/Power`
+- **Home Button**:  
+  `/org/mechanix/services/HwButton/Home`
+
+---
+
+### 3. Display Interface `org.mechanix.services.Display`
+Manages screen brightness and backlight control.
+
+#### Methods
+1. #### **SetBrightness**
+
+    ##### Description:
+    This method is used to adjust the display brightness (0-254 scale).
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Display /org/mechanix/services/Display org.mechanix.services.Display SetBrightness s "<value>"
+    ```
+
+    ##### Returns:
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+2. #### **GetBrightness**
+
+    ##### Description:
+    This method is used to retrieve the current brightness level.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Display /org/mechanix/services/Display org.mechanix.services.Display GetBrightness
+    ```
+
+    ##### Returns:
+    - Current brightness value (0-254).  
+    - On failure, an error message is returned.
+
+---
+
+3. #### **Enable Backlight**
+
+    ##### Description:
+    This method is used to turn the display backlight on.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Display /org/mechanix/services/Display org.mechanix.services.Display SetBacklightOn
+    ```
+
+    ##### Returns:
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+4. #### **Disable Backlight**
+
+    ##### Description:
+    This method is used to turn the display backlight off.
+
+    ##### Command:
+    ```bash
+    busctl --system call org.mechanix.services.Display /org/mechanix/services/Display org.mechanix.services.Display SetBacklightOff
+    ```
+
+    ##### Returns:
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+## Local Setup
+
+### Prerequisites
+- [Rust Toolchain](https://www.rust-lang.org/tools/install)
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mecha-org/mechanix-gui.git
+   cd mechanix-gui/services
+   ```
+
+2. Build:
+   ```bash
+   cargo build --release # Production build
+   ```
+
+3. Add service configuration:
+   ```bash
+   cp system/server/dbus/services-config-example.yml target/release/services-config.yml
+   ```
+   Edit `services-config.yml` to match your hardware paths:
+   ```yaml
+   power:
+     path: /dev/input/event10 # Example adjusted path
+   ```
+
+4. Run:
+   ```bash
+   cd target/release
+   sudo ./mechanix_system_dbus_server
+   ```
+
+---
