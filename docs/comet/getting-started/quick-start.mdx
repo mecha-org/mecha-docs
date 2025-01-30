@@ -1,66 +1,179 @@
 ---
 title: Quickstart
-hide_table_of_contents: true
+hide_table_of_contents: false
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import S from "@site/components/Steps/";
 
+# Quickstart
+
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+  <video controls autoPlay loop muted width="480" height="480">
+    <source src="https://web-assets.mecha.so/mecha-comet-intro-animation-r1.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
+
 <S.Column>
-  The Mecha Mecha Comet  device is an open-source handheld computer with focus on
-  multimedia and extension abilities that enables you to build applications on
-  the edge and much more. Navigate through this quick tutorial to get up and
-  running with your Mecha Comet .
+  ***Step right in The Mecha Comet World!*** \
+  The Mecha Comet is a portable, modular, programmable handheld linux computer.\
+  We are happy to witness your journey with Mighty Mecha Comet enables you to build applications on
+  the edge and much more. This guide will help you get started.
 </S.Column>
 
+## Turning the device on 
+
+    Turn on your Mecha Comet by pressing power button.  
+    - IMAGE - comet power button press
+
+    :::tip[If your Mecha Comet doesn't turn on]
+        It's possible that your device's battey is fully discharged.
+
+        The recommended power supply for the Mecha Comet  is a 5V, 2.5A (12.5W).
+
+        To turn on, Plug the Type-C from your charger to the base Type-C port found at the bottom of the device.
+        Once the power supply is connected you should see a green LED above the screen lit up.
+
+        - IMAGE - comet charging
+    :::
+
+
+## Connecting to the Internet
+
+    The Mecha Comet  has built in Wireless support.
+    To connect the Mecha Comet to internet, you can use either connect from settings app interface or connect from terminal:
+
+    ### Connect a Wireless Network from Settings app
+
+    To open Settings app, you can open Settings app either from Home screen or App drawer.
+
+    **Steps to connect a wireless network:**
 <S>
     <S.Step>
         <S.Details>
-            ### Connecting to the Power Supply
-
-            You can use any regular Type-C or USB based power supply for the Mecha Comet  that you have lying around.
-
-
-            The recommended power supply for the Mecha Comet  is a 5V, 2.5A (12.5W). Plug the Type-C from your charger to the base Type-C port found at the bottom of the device.
-
-
-            Once the power supply is connected you should see a white LED above the screen lit up.
-
-            ![Image](../../../src/images/comet_in_charge.jpg)
+            Navigate to **Settings Menu > Network > Enable Wireless (toggle)** 
+                - IMAGE - Enable Network & network list (not connect networks only)
         </S.Details>
     </S.Step>
 
     <S.Step>
         <S.Details>
-            ### Turning the device on
-
-           Use the Power button on the side of the device to turn it on, you may have to press it for a short second till a green LED above the screen lightens up.
-
-           You will see the Mecha logo on the screen and the device will start booting up its operating system.
-
-            ![Image](../../../src/images/mecha_power_button.jpg)
-            ![Image](../../../src/images/mecha_power_on.png)
-
+           Find your Wireless Network & tap on it, you will see 'Enter Password' screen
+                - IMAGE - Enter pwd 
         </S.Details>
     </S.Step>
 
     <S.Step>
         <S.Details>
-            ### Connecting to the Internet
-            #### Connect a Wireless Network
-            The Mecha Comet  has built in Wireless and Bluetooth support.
-            To connect the Mecha Comet  to your wireless network, you can use the Settings App available on the Home Screen and:
-
-            1. Launch the Settings App available on the Home screen
-            2. Navigate to **Network → Enable Wireless (toggle)**
-            3. Find your Wireless Network and enter your password to get connected or you can add hidden network from Add network option by clicking on the icon **( + )**
-        
-            ![Image](../../../src/images/settings_app_screen.jpg)
-            ![Image](../../../src/images/disabled_wireless.jpg)
-            ![Image](../../../src/images/enabled_wireless.jpg)
-
+            Enter your correct password & you will see connected network in networks list screen
+                - IMAGE - Enable Network & network list (with connected networks only) 
         </S.Details>
     </S.Step>
-
 </S>
+### Connect a Wireless from terminal
+
+        You can open terminal either from Home screen or from the App drawer.
+        To display overall status of network connections managed by NetworkManager:
+        ```
+        $ nmcli general status
+        ```
+        **Output:**
+        ```
+        STATE                   CONNECTIVITY  WIFI-HW  WIFI      WWAN-HW  WWAN    
+        connected (local only)  limited       enabled  disabled  enabled  enabled 
+        ```
+        <S>
+                <S.Step>
+                        <S.Details>
+                                Turn on wifi radio switch by this command,\
+                                You will show enabled wireless icon in status bar:
+                                ```
+                                $ nmcli radio wifi on
+                                ```
+                        </S.Details>
+                </S.Step>
+
+                <S.Step>
+                        <S.Details>
+                                Once wireless is enabled it will show list of available networks,\
+                                To show available networks:
+                                ```
+                                $ nmcli dev wifi list
+                                ```
+                                **Output:**
+                                ```
+                                IN-USE  BSSID              SSID                 MODE   CHAN  RATE        SIGNAL  BARS  SECURITY  
+                                        70:A7:41:D6:36:1E  MyHomeWiFi           Infra  149   270 Mbit/s  95      ▂▄▆█  WPA2      
+                                        20:B5:C6:2F:FB:5C  WorkNetwork          Infra  44    540 Mbit/s  29      ▂___  WPA2      
+                                        CA:C9:A3:9A:F3:D5  XyZNetwork           Infra  1     54 Mbit/s   20      ▂___  WPA1 WPA2 
+                                ```
+                                If wireless is disabled it will show columns names only
+                                ```
+                                $ nmcli dev wifi list
+                                ```
+                                **Output:**
+                                ```
+                                IN-USE  BSSID  SSID  MODE  CHAN  RATE  SIGNAL  BARS  SECURITY 
+                                ```
+                        </S.Details>
+                </S.Step>
+
+                <S.Step>
+                        <S.Details>
+                                To connect your network from list use this command along with password:
+                                ```
+                                $ nmcli dev wifi connect `<SSID>` password `<password>`
+                                ```
+                                for example, 
+                                ```
+                                $ nmcli dev wifi connect "MyHomeWiFi" password "mywifipassword"
+                                ```
+                                **Output:**
+                                ```
+                                Device 'wlp2s0' successfully activated with '09d42b19-10ce-4521-b321-9b1cd7cbadef'.
+                                ```
+                        </S.Details>
+                </S.Step>
+
+        </S>
+
+## Familiarize yourself with the device
+
+    - IMAGE : Front view
+    - IMAGE : Back view
+
+## Things you can do on your Mecha Comet
+    ### Browse the internet
+
+    - You can open browser either from Home screen or from App drawer
+    - search "https://mecha.so"
+    - play youtube video (youtube video playing image)
+
+    ### Use the Terminal
+
+    - You can open Terminal either from Home screen or from App drawer
+
+    - You can try commands like this :
+
+        To list files:
+        ``` 
+        $ ls
+        ``` 
+        To show present working directory :
+        ```
+        $ pwd 
+        ```
+        To create new working directory :
+        ```
+        $ mkdir "directory_name"
+        ```
+
+## Hop in the community
+    Share your ideas, get advice, and find answers in our community.\
+    Connect with others who share your interests.
+    
+    - forum link with img click
+    - discord link with img click
+

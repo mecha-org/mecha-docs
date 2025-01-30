@@ -1,38 +1,109 @@
 ---
 title: Connecting to Internet
-hide_table_of_contents: true
+hide_table_of_contents: false
 ---
-### Connect a Wireless Network from Settings App
+import CardGrid from "@site/components/CardGrid";
+import S from "@site/components/Steps/";
 
-The Mecha Comet  has built in Wireless and Bluetooth support.
-To connect the Mecha Comet  to your wireless network, you can use the Settings App available on the Home Screen and follow these steps:
 
-1. Launch the Settings App available on the Home screen.
-2. Navigate to **Network → Enable Wireless (toggle)**
-3. Find your Wireless Network and enter your password to get connected or you can add hidden network from Add network option by clicking on the icon **( + )** \
+The Mecha Comet  has built in Wireless support.\
+To connect the Mecha Comet to internet, you can use either connect from settings app interface or connect from terminal:
 
-![Image](../../../src/images/settings_app_screen.jpg)
-![Image](../../../src/images/enabled_wireless_1.jpg)\
+### Connect a Wireless Network from Settings app
 
-![Image](../../../src/images/connect_wireless_pwd.jpg)
-![Image](../../../src/images/forget_wireless.jpg)
+You can open the Settings app in two ways :
+1. From Home Screen: Tap the Settings app icon.
+2. From App drawer:  Swipe up from bottom of the screen & tap on the Settings app icon
 
-### Connect to Wireless from terminal
+- image 1 - From the Home Screen
+- image 2 - From App drawer
 
-1. Check available Wireless networks:
-```
-nmcli dev wifi list
-```
-2. Connect to a Wireless Network:
-Replace `<SSID>` with the network’s name & `<password>` with the network’s password
-```
-nmcli dev wifi connect `<SSID>` password `<password>`
-```
-For example, 
-```
-nmcli dev wifi connect "MyHomeWiFi" password "mywifipassword"
-```
-3. Check the Connection Status:
-```
-nmcli dev status
-```
+**Steps to connect a wireless network:**
+<S>
+    <S.Step>
+        <S.Details>
+            1. Navigate to **Settings Menu > Network > Enable Wireless (toggle)** 
+                - image 1 - Enable Network & network list (not connect networks only)
+        </S.Details>
+    </S.Step>
+
+    <S.Step>
+        <S.Details>
+           2. Find your Wireless Network & tap on it, you will see 'Enter Password' screen
+                - image 2 - Enter pwd 
+        </S.Details>
+    </S.Step>
+
+    <S.Step>
+        <S.Details>
+            3. Enter your correct password & you will see connected network in networks list screen
+                - image 3 - Enable Network & network list (with connected networks only) 
+        </S.Details>
+    </S.Step>
+</S>
+
+### Connect a Wireless from terminal
+
+        You can open terminal either from Home screen or from the App drawer.
+        To display overall status of network connections managed by NetworkManager:
+        ```
+        $ nmcli general status
+        ```
+        **Output:**
+        ```
+        STATE                   CONNECTIVITY  WIFI-HW  WIFI      WWAN-HW  WWAN    
+        connected (local only)  limited       enabled  disabled  enabled  enabled 
+        ```
+        <S>
+                <S.Step>
+                        <S.Details>
+                                Turn on wifi radio switch by this command,\
+                                You will show enabled wireless icon in status bar:
+                                ```
+                                $ nmcli radio wifi on
+                                ```
+                        </S.Details>
+                </S.Step>
+
+                <S.Step>
+                        <S.Details>
+                                Once wireless is enabled it will show list of available networks,\
+                                To show available networks:
+                                ```
+                                $ nmcli dev wifi list
+                                ```
+                                **Output:**
+                                ```
+                                IN-USE  BSSID              SSID                 MODE   CHAN  RATE        SIGNAL  BARS  SECURITY  
+                                        70:A7:41:D6:36:1E  MyHomeWiFi           Infra  149   270 Mbit/s  95      ▂▄▆█  WPA2      
+                                        20:B5:C6:2F:FB:5C  WorkNetwork          Infra  44    540 Mbit/s  29      ▂___  WPA2      
+                                        CA:C9:A3:9A:F3:D5  XyZNetwork           Infra  1     54 Mbit/s   20      ▂___  WPA1 WPA2 
+                                ```
+                                If wireless is disabled it will show columns names only
+                                ```
+                                $ nmcli dev wifi list
+                                ```
+                                **Output:**
+                                ```
+                                IN-USE  BSSID  SSID  MODE  CHAN  RATE  SIGNAL  BARS  SECURITY 
+                                ```
+                        </S.Details>
+                </S.Step>
+
+                <S.Step>
+                        <S.Details>
+                                To connect your network from list use this command along with password:
+                                ```
+                                $ nmcli dev wifi connect `<SSID>` password `<password>`
+                                ```
+                                for example, 
+                                ```
+                                $ nmcli dev wifi connect "MyHomeWiFi" password "mywifipassword"
+                                ```
+                                **Output:**
+                                ```
+                                Device 'wlp2s0' successfully activated with '09d42b19-10ce-4521-b321-9b1cd7cbadef'.
+                                ```
+                        </S.Details>
+                </S.Step>
+        </S>
