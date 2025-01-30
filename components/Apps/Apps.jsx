@@ -1,6 +1,5 @@
 import Link from "@docusaurus/Link";
 import React from "react";
-import Adyen from "../../static/img/apps/adyen.svg";
 import Github from "../../static/img/apps/github.svg";
 import Youtube from "../../static/img/apps/youtube.svg";
 import Forum from "../../static/img/apps/forum.svg";
