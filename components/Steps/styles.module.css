@@ -25,6 +25,7 @@
 
   .details {
     padding-bottom: 2rem;
+    width: 900px;
   }
 }
 
@@ -72,3 +73,5 @@
 .column {
   max-width: 900px;
 }
+
+
