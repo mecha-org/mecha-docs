@@ -1,0 +1,27 @@
+.cardGrid {
+    position: relative;
+    gap: var(--spacer-3);
+    color: var(--gray12);
+    container-type: inline-size;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--spacer-3);
+    width: 100%;
+    font-size: var(--font-size-sm);
+  }
+  
+  @container (width < 800px) {
+    .container {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+  
+  @container (width < 400px) {
+    .container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
