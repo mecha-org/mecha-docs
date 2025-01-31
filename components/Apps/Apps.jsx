@@ -7,8 +7,6 @@ import Discord from "../../static/img/apps/discord.svg";
 import Instagram from "../../static/img/apps/instagram.svg";
 import Website from "../../static/img/apps/website.svg";
 
-
-
 import s from "./apps.module.css";
 
 const Shell = ({ color, title, children, href = "" }) => {
@@ -28,10 +26,20 @@ const Apps = () => {
     <div className={s.root}>
       <div className={s.container}>
         <Shell
-          color={"#0E1821"}
-          title={"Website"}
-          href={"https://mecha.so"}
+          color={"#5865F2"}
+          title={"Discord"}
+          href={"https://discord.com/invite/VGrZNFPycX"}
         >
+          <Discord />
+        </Shell>
+        <Shell
+          color={"#000000"}
+          title={"Github"}
+          href={"https://github.com/mecha-org"}
+        >
+          <Github />
+        </Shell>
+        <Shell color={"#0E1821"} title={"Website"} href={"https://mecha.so"}>
           <Website />
         </Shell>
         <Shell
@@ -42,11 +50,11 @@ const Apps = () => {
           <Forum />
         </Shell>
         <Shell
-          color={"#000000"}
-          title={"Github"}
-          href={"https://github.com/mecha-org"}
+          color={"#FF0000"}
+          title={"Youtube"}
+          href={"https://www.youtube.com/@mechasystems"}
         >
-          <Github />
+          <Youtube />
         </Shell>
         <Shell
           color={"#E1306C"}
@@ -59,26 +67,12 @@ const Apps = () => {
         {/*<Shell color={"rgb(59, 213, 121)"} title={"Data importer"}>*/}
         {/*  <Data />*/}
         {/*</Shell>*/}
-        <Shell
-          color={"#FF0000"}
-          title={"Youtube"}
-          href={"https://www.youtube.com/@mechasystems"}
-        >
-          <Youtube />
-        </Shell>
 
         {/*missing docs*/}
         {/*<Shell color={"rgb(58, 86, 199)"} title={"Klaviyo"}>*/}
         {/*  <Placeholder />*/}
         {/*</Shell>{" "}*/}
 
-        <Shell
-          color={"#5865F2"}
-          title={"Discord"}
-          href={"https://discord.com/invite/VGrZNFPycX"}
-        >
-          <Discord />
-        </Shell>
         {/*missing docs*/}
         {/*<Shell color={"rgb(99, 91, 255)"} title={"Stipe"}>*/}
         {/*  <Stripe />*/}
