@@ -22,9 +22,6 @@ const sidebars = {
         "comet/getting-started/quick-start",
         "comet/getting-started/form-factor",
         "comet/getting-started/using-gui",
-        "comet/getting-started/connecting-to-internet",
-        "comet/getting-started/things-to-do",
-        
       ],
     },
     {
