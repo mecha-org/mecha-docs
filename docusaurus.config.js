@@ -34,7 +34,7 @@ const config = {
           routeBasePath: "/",
           path: "docs",
           sidebarPath: require.resolve("./docs/sidebars.js"),
-          sidebarCollapsible: false,
+          // sidebarCollapsible: false,
           docItemComponent: "@theme/ApiItem",  // Added property
         },
       },
