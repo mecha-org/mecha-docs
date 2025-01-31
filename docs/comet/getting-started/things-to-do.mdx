@@ -1,12 +1,12 @@
 ---
-title: Routine things to-do / Common Tasks
+title: Common Tasks
 hide_table_of_contents: false
 ---
-The Mecha Comet is a modular handheld Linux device designed for flexibility and functionality. Below is a guide to routine tasks and common operations to make the most of your device.
 
----
+This guide covers essential tasks and everyday operations to help you maximize your Mecha Comet's experience:
 
-### 1. **Powering On and Off**
+
+### 1. **Power On and Off**
 
 - **To Power On:**
     1. Press and hold the power button for 2 seconds.
@@ -15,79 +15,93 @@ The Mecha Comet is a modular handheld Linux device designed for flexibility and 
     1. Long-press the power button.
     2. OR there is a provision in GUI, in notification bar. 
 
-### 2. **Connecting to Wi-Fi**
+### 2. **Connect to Wi-Fi**
 
 1. Open the **Settings** app.
-2. Navigate to **Network** > **Wi-Fi**.
+2. Navigate to **Network** > **Wireless** (enable toggle).
 3. Select your preferred network and enter the password.
 4. Confirm the connection.
 
-### 3. **Installing Applications**
+### 3. **Use the Terminal**
 
-- Use the **Mechanix App Store** or terminal commands:
-    
-    ```
-    sudo apt update
-    sudo apt install <package-name>
-    ```
-    
+- You can open Terminal either from Home screen or from App drawer
 
-### 4. **Using Extensions**
+- You can try commands like this :
+
+To list files:
+``` 
+$ ls
+``` 
+To show present working directory :
+```
+$ pwd 
+```
+To create new working directory :
+```
+$ mkdir "directory_name"
+```
+
+### 4. **Browse the Internet**
+
+- You can open browser either from Home screen or from App drawer
+
+### 5. **Install/Manage Applications**
+
+- Use package managers like apt to install apps:
+    
+```
+$ sudo apt update
+$ sudo apt install <package-name>
+```  
+
+### 6. **Use the Camera**
+- Capture images, record videos, or enable computer vision projects
+
+### 7. **SSH & Remote Access**
+- Control your device remotely via SSH
+
+### 8. **Network with Gigabit Ethernet**
+– Establish high-speed wired connections
+
+### 9. **Program and Test**
+– Run Python, C, or Bash scripts directly on the device
+
+### 10. **Using Extensions**
 
 - **Gamepad Extension:** Attach to the modular port for gaming. Configure controls in the **Gaming Settings**.
 - **GPIO Extension:** Use for hardware prototyping. Pin mappings are accessible through the **Mechanix GPIO Manager**.
 - **Keyboard Extension:** Plug and play for text input.
 
-### 5. **Adjusting Display Settings**
+### 11. **Adjusting Display Settings**
 
 1. Go to **Settings** > **Display**.
 2. Adjust brightness, resolution, and orientation.
 
-### 6. **Adjusting Sound Settings**
+### 12. **Adjusting Sound Settings**
 
 1. Go to **Settings** > **Sound**.
 2. Adjust volume.
 
-### 7. **Customizing the GUI**
-
-- Access the **Mechanix Shell Settings** to:
-    - Change themes.
-    - Modify application shortcuts.
-    - Enable/disable widgets.
-
-### 8. **Managing Files**
+### 13. **Managing Files**
 
 1. Open the **File Manager** from the home screen.
 2. Browse, copy, move, or delete files.
-3. Use a USB connection to transfer files to/from a computer.
 
-### 9. **Connecting External Devices**
+### 14. **Connecting External Devices**
 
-- Use USB or the M.2 slot for:
+- Use USB or the M.2 slot optionally for attaching:
     - Storage drives.
     - AI accelerators.
-- For Raspberry Pi HATs and MikroE Click Boards, align pins carefully and secure the connection.
+- For Raspberry Pi HATs and MikroE Click Boards, use may create a specific extension for this purpose.
 
-### 10. **Backup and Restore**
+### 15. **Tinkering with Open-Source Software**
 
-- **Backup:**
-    
-    ```
-    sudo tar -cvpzf backup.tar.gz /path/to/backup
-    ```
-    
-- **Restore:**
-    
-    ```
-    sudo tar -xvpzf backup.tar.gz -C /
-    ```
-    
+- Modify Linux, create scripts, or test custom OS builds.
 
-### 12. **Troubleshooting Common Issues**
+### 16. **Troubleshooting Common Issues**
 
 - **Device Freezing:** Long-press the power button to restart.
 - **Wi-Fi Not Connecting:**
     - Ensure the network is active.
     - Restart the device.
-    - Run: `sudo systemctl restart NetworkManager`.
 - **Unresponsive Extensions:** Reattach and verify connections.

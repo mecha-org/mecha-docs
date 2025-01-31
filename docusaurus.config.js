@@ -86,9 +86,17 @@ const config = {
         {
           type: "docSidebar",
           sidebarId: "cometSidebar",
+          sidebarId: "cometSidebar",
           position: "left",
           label: "Mecha Comet",
+          label: "Mecha Comet",
         },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "hardwareSidebar",
+        //   position: "left",
+        //   label: "Mecha Comet",
+        // },
         {
           type: "docSidebar",
           sidebarId: "mechanixSidebar",

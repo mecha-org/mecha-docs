@@ -2,17 +2,68 @@
 title: Using the GUI
 hide_table_of_contents: false
 ---
-The Mecha Comet operates on **Mechanix OS**, a Debian-based Linux distribution tailored for handheld devices. This operating system ensures compatibility with over 60,000 packages available in the Debian repositories, allowing users to install and run a vast array of applications seamlessly.
+The Mecha Comet operates on **Mechanix OS**, a Debian-based Linux distribution designed for handheld devices. This OS provides access to over 60,000 packages from the Debian repositories, allowing users to install and run a wide range of applications effortlessly.
 
-Central to the user experience is the **Mechanix Shell**, an open-source graphical user interface (GUI) built using Rust. Designed specifically for small-screen devices, the Mechanix Shell supports GPU rendering on Wayland, providing a responsive and efficient user-experience.
+## **Getting Started with the Mechanix Shell**
 
-**Key Features of the Mechanix Shell:**
+The **Mechanix Shell** is the graphical user interface (GUI) of the Mecha Comet. It is built using Rust and optimized for small-screen devices, offering a responsive and efficient user experience.
 
-- **Build in Rust** for blazing fast performance with very low memory/cpu usage
-- **Touch-Friendly Interface:** Optimized for the Comet's 3.4-inch capacitive touch LCD, facilitating intuitive navigation and interaction.
-- **Open-Source UI Framework:** The shell is developed using Mecha's own open-source UI framework for Linux applications, enabling developers to create and customize applications that integrate seamlessly with the system's interface.
+### **Key Features of the Mechanix Shell:**
 
-For developers interested in building or porting applications to the Comet, the open-source nature of the Mechanix Shell and its UI framework provides flexibility and control over the user experience.
+- **High Performance:** Rust based, ensuring fast execution with minimal CPU and memory usage.
+- **Touch-Friendly Interface:** Designed for the Comet's 3.4-inch capacitive touch LCD
+- **Wayland-Based Rendering:** Utilizes GPU acceleration for enhanced graphical performance.
+- **Open-Source UI Framework:** Developer friendly for building custom applications.
+
+### **Accessing the GUI**
+
+- Upon powering on, the Mecha logo appears, followed by the home screen.
+- To unlock from sleep mode, swipe right over the patterned line on the screen.
+<img src="/img/comet/device-unlock.jpeg" alt="Device Unlock" width="500" style={{ filter: 'brightness(1.5)' }} />
+
+## **Navigating the GUI**
+
+### **1. Home Screen**
+
+- Displays **Wi-Fi, battery, Bluetooth status**, and system settings.
+- Shows **device IP, uptime, CPU usage, and memory graphs** for quick monitoring.
+- Provides **quick access** to the **Terminal and Chrome browser**
+- Use the **programmable button** to switch between recently used apps
+
+<img src="/img/comet/device-homescreen.jpeg" alt="Device Homescreen" width="500" style={{ filter: 'brightness(2.0)' }} />
+
+### **2. App Drawer**
+
+- Swipe up from the bottom of the screen to open the App Drawer.
+- Browse, search, and launch applications easily.
+
+<img src="/img/comet/device-app-drawer.jpeg" alt="Device App Drawer" width="500" style={{ filter: 'brightness(2.5)' }} />
+
+### **3. System Settings**
+
+- Customize display settings, network connections, and system preferences.
+- Access the **Settings** app by swiping down on the home screen.
+
+### **4. Installing Applications  (add steps to install app by cmd ?)**
+
+- Use the terminal commands:
+    
+    ```
+    $ sudo apt update
+    $ sudo apt install <package-name>
+    ```
+    
+
+## **For Developers**
+
+Developers can leverage the open-source **Mechanix UI framework** to create or port applications with: 
+
+- Seamless GUI integration.
+- Full control over appl design and interaction.
+- Access to development tools and documentation.
+
+To get started, visit the official repository and follow the setup instructions for building applications on the Mecha Comet.
+
 
 <!-- <video controls width="640" height="360">
   <source src="/videos/The Mecha Comet Makes It Happen.mp4" type="video/mp4"></source>
