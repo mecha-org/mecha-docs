@@ -11,7 +11,7 @@ const sidebars = {
         "mctk/gettingstarted/first-app",
       ],
     },
-    "mctk/concepts",
+    // "mctk/concepts",
   ],
   cometSidebar: [
     "comet/intro",
