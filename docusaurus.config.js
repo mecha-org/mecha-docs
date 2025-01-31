@@ -157,23 +157,23 @@ const config = {
       links: [
         {
           items: [
-            { label: 'Home', to: '/' },
-            { label: 'Shipping', to: 'docs/doc2/' },
-            { label: 'Contact', to: 'docs/doc2/' },
+            { label: 'Home', to: 'https://mecha.so/' },
+            { label: 'Shipping', to: 'https://mecha.so/legal/shipping' },
+            { label: 'Contact', to: 'https://mecha.so/contact' },
           ],
         },
         {
           items: [
-            { label: 'Privacy', href: 'https://stackoverflow.com/questions/tagged/docusaurus' },
-            { label: 'Terms of Use', href: 'https://discordapp.com/invite/docusaurus' },
-            { label: 'Refunds', href: 'https://twitter.com/docusaurus' },
+            { label: 'Privacy', href: 'https://mecha.so/legal/privacy' },
+            { label: 'Terms of Use', href: 'https://mecha.so/legal/terms-of-use' },
+            { label: 'Refunds', href: 'https://mecha.so/legal/refunds' },
           ],
         },
         {
           items: [
-            { label: 'Code Of Conduct', href: 'https://stackoverflow.com/questions/tagged/docusaurus' },
-            { label: 'Media Kit', href: 'https://discordapp.com/invite/docusaurus' },
-            { label: 'Comet On Kickstarter', href: 'https://twitter.com/docusaurus' },
+            { label: 'Code Of Conduct', href: 'https://mecha.so/legal/code-of-conduct' },
+            { label: 'Media Kit', href: 'https://mecha.so/media-kit' },
+            { label: 'Comet On Kickstarter', href: 'https://mecha.so/comet/notify' },
           ],
         },
       ],
