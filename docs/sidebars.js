@@ -11,7 +11,7 @@ const sidebars = {
         "mctk/gettingstarted/first-app",
       ],
     },
-    // "mctk/architecture",
+    // "mctk/concepts",
   ],
   cometSidebar: [
     "comet/intro",
@@ -68,8 +68,9 @@ const sidebars = {
           label: "Machine Learning",
           items: [
             "comet/developing/machine-learning/MLintro",
-            "comet/developing/machine-learning/running-tensorflow",
             "comet/developing/machine-learning/setting-up-pyenv",  
+            "comet/developing/machine-learning/running-tensorflow",
+            "comet/developing/machine-learning/coralinstall",
             "comet/developing/machine-learning/On-deviceLLM",
           ]
         }
