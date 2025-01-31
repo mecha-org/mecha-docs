@@ -18,16 +18,13 @@ Your browser does not support the video tag.
 
 </div> */}
 
----
 
 ### Prerequisites
 
 - Ensure `nmcli` and `nftables` are installed on Mecha Comet.
-- You need **sudo privileges** to execute the commands.
 - Replace `wlan0` and `end0` with your actual **Wireless interface** and **outbound network interface** names.
 - Ensure mecha comet is connected to the **Ethernet network**.
 
----
 
 <S.Column>
   ### Steps
@@ -108,7 +105,6 @@ Your browser does not support the video tag.
         </S.Details>
     </S.Step>
 </S>
----
 
 ### Verification
 
@@ -124,14 +120,12 @@ Verify nftables Rules
 $ sudo nft list table ip nat
 ```
 
----
 
 ### Notes
 
 - Replace interface names (`wlan0`, `end0`) as needed for your setup.
 - This setup assumes the Mecha Comet's outbound interface is `end0`. Adjust accordingly.
 
----
 
 ### Troubleshooting
 

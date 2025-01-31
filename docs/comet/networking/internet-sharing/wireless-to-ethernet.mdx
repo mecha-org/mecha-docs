@@ -13,16 +13,11 @@ The purpose of this setup is to share a wireless internet connection over an Eth
     </video>
 </div> */}
 
----
-
 ### Prerequisites
 
 - Ensure you have `nmcli` and `nftables` installed on Mecha Comet.
-- You need `sudo` privileges to execute the commands.
 - Replace `wlan0` and `end0` with your actual Wireless interface and outbound network interface names.
 - Ensure Mecha Comet is connected to wireless and have internet access.
-
----
 
 <S.Column>
   ### Steps
@@ -100,8 +95,6 @@ The purpose of this setup is to share a wireless internet connection over an Eth
     </S.Step>
 </S>
 
----
-
 ### Verification
 
 Verify the Ethernet connection status:
@@ -116,14 +109,10 @@ Check the NAT table rules to confirm the configuration:
 sudo nft list table ip nat
 ```
 
----
-
 ### Notes
 
 - Ensure your Ethernet adapter is functional and properly connected.
 - Replace interface names as needed for your specific setup.
-
----
 
 ### Troubleshooting
 
