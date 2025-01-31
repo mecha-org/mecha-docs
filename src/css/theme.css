@@ -30,8 +30,13 @@
 .footer {
   background-color: transparent;
 }
-.footer__bottom {
-  margin-top: 40px;
+
+.footer__title{
+  display: none
+}
+
+.footer__links {
+  width: 100%
 }
 
 /*Default variables for reference*/

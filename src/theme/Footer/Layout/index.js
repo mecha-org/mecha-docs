@@ -10,12 +10,14 @@ export default function FooterLayout({style, links, logo, copyright}) {
       })}>
       <div className="container container-fluid">
         <div className="margin-bottom--sm"><MechaIcon/></div>
+        <div style={{width:"100%", display:"flex", flexDirection:"row"}}>
         {links}
         {(logo || copyright) && (
-          <div className="footer__bottom text--center">
+          <div className="footer__bottom text--right">
             {copyright}
           </div>
         )}
+        </div>
       </div>
     </footer>
   );
