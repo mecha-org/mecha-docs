@@ -1,0 +1,58 @@
+---
+title: Installing Coral Accelerator 
+hide_table_of_contents: false
+---
+![Image](assets\corallmain.jpeg)
+
+The Coral Accelerator is a powerful Edge TPU designed for running ML workloads efficiently on devices like Comet. This guide walks you through the hardware installation process, explains relevant terms, and provides additional steps for software setup and use cases.
+
+---
+
+## Step 1: Open the Back Panel of Comet
+
+1. The back cover of the Comet device is secured with press-down slots and does not require a screwdriver for removal. 
+2. Use your hands to gently detach the back cover to expose the internal components.
+
+---
+
+## Step 2: Locate the M.2 Slot on the PCB
+
+The M.2 is a slot which supports PCIe Lanes. Locate the M.2 slot on the Comet's PCB, indicated in the red box in the following image:
+
+![Image](assets\back-view.jpg)
+![Image](assets\pcb-back_view.png)
+---
+
+## Step 3: Install the Coral Accelerator
+
+1. Use the provided Allen key that comes with the Comet device to secure or disassemble the components as needed.
+2. Align the Coral Accelerator's gold connectors with the M.2 slot.
+3. Insert the module at a 45-degree angle to ensure proper connection.<br />
+Refer to the image below for proper installation:<br />
+
+![Installing Coral Accelerator](assets\coralinstalling.jpeg)
+
+4. Secure the module by gently pushing it down and tightening the screw using dedicated allen key at the end of the module to the PCB.
+
+After complete assembly:
+
+![Installed Coral Accelerator](assets\coralinstalled.jpeg)
+
+
+---
+
+## Step 4: Reassemble the back cover
+
+1. Place the back panel back onto the device.
+2. Tighten the press-down slots securely to ensure the panel is firmly in place.
+3. Your hardware installation is now complete!
+
+---
+
+## Step 5: Software Installation
+
+For software installation, follow the [official Coral guide](https://coral.ai/docs/m2/get-started/#2-install-the-pcie-driver-and-edge-tpu-runtime) to install the PCIe driver and Edge TPU runtime on your Comet device. This is essential for enabling the Coral Accelerator to function correctly.
+
+---
+
+By following this guide, you can fully unlock the potential of the Coral Accelerator on Comet for your edge computing projects!

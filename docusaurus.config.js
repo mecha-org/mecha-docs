@@ -1,6 +1,7 @@
 // @ts-check
 import { themes as prismThemes } from "prism-react-renderer";
 
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Mecha Documentation",
@@ -34,6 +35,7 @@ const config = {
           routeBasePath: "/",
           path: "docs",
           sidebarPath: require.resolve("./docs/sidebars.js"),
+          // sidebarCollapsible: false,
           docItemComponent: "@theme/ApiItem",  // Added property
         },
       },
@@ -68,7 +70,7 @@ const config = {
       indexName: "developers_mecha_so_hzj4xg1zjj_pages",
       placeholder: "Search Mecha Documentation"
     },
-    image: "img/docusaurus-social-card.jpg",
+    image: "img/mecha-social-card.jpg",
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,
@@ -85,9 +87,7 @@ const config = {
         {
           type: "docSidebar",
           sidebarId: "cometSidebar",
-          sidebarId: "cometSidebar",
           position: "left",
-          label: "Mecha Comet",
           label: "Mecha Comet",
         },
         // {
@@ -149,6 +149,32 @@ const config = {
         {
           type: "search",
           position: "left",
+        },
+      ],
+    },
+    footer: {
+      copyright: `Copyright © ${new Date().getFullYear()} Mecha Systems Inc.`,
+      links: [
+        {
+          items: [
+            { label: 'Home', to: 'https://mecha.so/' },
+            { label: 'Shipping', to: 'https://mecha.so/legal/shipping' },
+            { label: 'Contact', to: 'https://mecha.so/contact' },
+          ],
+        },
+        {
+          items: [
+            { label: 'Privacy', href: 'https://mecha.so/legal/privacy' },
+            { label: 'Terms of Use', href: 'https://mecha.so/legal/terms-of-use' },
+            { label: 'Refunds', href: 'https://mecha.so/legal/refunds' },
+          ],
+        },
+        {
+          items: [
+            { label: 'Code Of Conduct', href: 'https://mecha.so/legal/code-of-conduct' },
+            { label: 'Media Kit', href: 'https://mecha.so/media-kit' },
+            { label: 'Comet On Kickstarter', href: 'https://mecha.so/comet/notify' },
+          ],
         },
       ],
     },

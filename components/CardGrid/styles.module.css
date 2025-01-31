@@ -30,6 +30,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  justify-content: center;
   font-size: var(--font-size-sm);
   padding: 2rem;
   border: 1px solid var(--gray5);
@@ -48,7 +49,7 @@
 
 .cardGrid a strong {
   color: var(--gray12);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   margin-bottom: var(--spacer-2);
 }
 .cardGrid .container svg {
