@@ -27,6 +27,12 @@
   --ifm-font-weight-semibold: 600;
 }
 
+.footer {
+  background-color: transparent;
+}
+.footer__bottom {
+  margin-top: 40px;
+}
 
 /*Default variables for reference*/
 

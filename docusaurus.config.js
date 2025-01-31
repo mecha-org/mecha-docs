@@ -1,6 +1,7 @@
 // @ts-check
 import { themes as prismThemes } from "prism-react-renderer";
 
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Mecha Documentation",
@@ -69,7 +70,7 @@ const config = {
       indexName: "developers_mecha_so_hzj4xg1zjj_pages",
       placeholder: "Search Mecha Documentation"
     },
-    image: "img/docusaurus-social-card.jpg",
+    image: "img/mecha-social-card.jpg",
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,
@@ -86,9 +87,7 @@ const config = {
         {
           type: "docSidebar",
           sidebarId: "cometSidebar",
-          sidebarId: "cometSidebar",
           position: "left",
-          label: "Mecha Comet",
           label: "Mecha Comet",
         },
         // {
@@ -150,6 +149,32 @@ const config = {
         {
           type: "search",
           position: "left",
+        },
+      ],
+    },
+    footer: {
+      copyright: `Copyright © ${new Date().getFullYear()} Mecha Systems Inc.`,
+      links: [
+        {
+          items: [
+            { label: 'Home', to: '/' },
+            { label: 'Shipping', to: 'docs/doc2/' },
+            { label: 'Contact', to: 'docs/doc2/' },
+          ],
+        },
+        {
+          items: [
+            { label: 'Privacy', href: 'https://stackoverflow.com/questions/tagged/docusaurus' },
+            { label: 'Terms of Use', href: 'https://discordapp.com/invite/docusaurus' },
+            { label: 'Refunds', href: 'https://twitter.com/docusaurus' },
+          ],
+        },
+        {
+          items: [
+            { label: 'Code Of Conduct', href: 'https://stackoverflow.com/questions/tagged/docusaurus' },
+            { label: 'Media Kit', href: 'https://discordapp.com/invite/docusaurus' },
+            { label: 'Comet On Kickstarter', href: 'https://twitter.com/docusaurus' },
+          ],
         },
       ],
     },
