@@ -4,9 +4,9 @@ hide_table_of_contents: false
 ---
 import CardGrid from "@site/components/CardGrid";
 import S from "@site/components/Steps/";
+import Video from "@site/components/Video/";
 
-
-The Mecha Comet  has built in Wireless support.\
+The Mecha Comet has built in Wireless support.\
 To connect the Mecha Comet to internet, you can use either connect from settings app interface or connect from terminal:
 
 ### Connect a Wireless Network from Settings app
@@ -15,37 +15,31 @@ You can open the Settings app in two ways:
 1. From Home Screen: Tap the Settings app icon.
 2. From App drawer: Swipe up from bottom of the screen & tap on the Settings app icon.
 
-- IMAGE: launch settings app from home screen; launch settings app from app drawer 
-
 **Steps to connect a wireless network:**
 <S>
     <S.Step>
         <S.Details>
             1. Navigate to **Settings Menu > Network > Enable Wireless (toggle).** 
-                - IMAGE - Enable Network & network list (not connect networks only)
-
+                <Video src="https://web-assets.mecha.so/developers-v1/launcher/available-network.mp4">
+                        Your browser does not support the video tag.
+                </Video>
         </S.Details>
     </S.Step>
 
     <S.Step>
         <S.Details>
-           2. Find your Wireless Network & tap on it, you will see 'Enter Password' screen.
-                - IMAGE - Enter password & confirm
+           2. Find your Wireless Network, enter your correct password hit the ✔️ button to get connected.
+                <Video src="https://web-assets.mecha.so/developers-v1/launcher/connecting-comet-to-wifi.mp4">
+                        Your browser does not support the video tag.
+                </Video>
         </S.Details>
     </S.Step>
 
-    <S.Step>
-        <S.Details>
-            3. Enter your correct password & you will see connected network in networks list screen.
-                - IMAGE - Enable Network & network list (with connected networks only) 
-        </S.Details>
-    </S.Step>
 </S>
 
 ### Connect a Wireless from terminal
 
         You can open terminal either from Home screen or from the App drawer.
-                - IMAGE: launch terminal from home screen; launch terminal from app drawer 
 
         To display overall status of network connections managed by NetworkManager:
         ```
@@ -53,8 +47,8 @@ You can open the Settings app in two ways:
         ```
         **Output:**
         ```
-        STATE                   CONNECTIVITY  WIFI-HW  WIFI      WWAN-HW  WWAN    
-        connected (local only)  limited       enabled  disabled  enabled  enabled 
+        STATE                   CONNECTIVITY  WIFI-HW  WIFI      WWAN-HW  WWAN
+        connected (local only)  limited       enabled  disabled  enabled  enabled
         ```
         <S>
                 <S.Step>
@@ -76,10 +70,10 @@ You can open the Settings app in two ways:
                                 ```
                                 **Output:**
                                 ```
-                                IN-USE  BSSID              SSID                 MODE   CHAN  RATE        SIGNAL  BARS  SECURITY  
-                                        70:A7:41:D6:36:1E  MyHomeWiFi           Infra  149   270 Mbit/s  95      ▂▄▆█  WPA2      
-                                        20:B5:C6:2F:FB:5C  WorkNetwork          Infra  44    540 Mbit/s  29      ▂___  WPA2      
-                                        CA:C9:A3:9A:F3:D5  XyZNetwork           Infra  1     54 Mbit/s   20      ▂___  WPA1 WPA2 
+                                IN-USE  BSSID              SSID                 MODE   CHAN  RATE        SIGNAL  BARS  SECURITY
+                                        70:A7:41:D6:36:1E  MyHomeWiFi           Infra  149   270 Mbit/s  95      ▂▄▆█  WPA2
+                                        20:B5:C6:2F:FB:5C  WorkNetwork          Infra  44    540 Mbit/s  29      ▂___  WPA2
+                                        CA:C9:A3:9A:F3:D5  XyZNetwork           Infra  1     54 Mbit/s   20      ▂___  WPA1 WPA2
                                 ```
                                 If wireless is disabled it will show columns names only
                                 ```
@@ -87,7 +81,7 @@ You can open the Settings app in two ways:
                                 ```
                                 **Output:**
                                 ```
-                                IN-USE  BSSID  SSID  MODE  CHAN  RATE  SIGNAL  BARS  SECURITY 
+                                IN-USE  BSSID  SSID  MODE  CHAN  RATE  SIGNAL  BARS  SECURITY
                                 ```
                         </S.Details>
                 </S.Step>
@@ -98,7 +92,7 @@ You can open the Settings app in two ways:
                                 ```
                                 $ nmcli dev wifi connect `<SSID>` password `<password>`
                                 ```
-                                for example, 
+                                for example,
                                 ```
                                 $ nmcli dev wifi connect "MyHomeWiFi" password "mywifipassword"
                                 ```
