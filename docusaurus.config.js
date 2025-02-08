@@ -153,7 +153,7 @@ const config = {
       ],
     },
     footer: {
-      copyright: `Copyright © ${new Date().getFullYear()} Mecha Systems Inc.`,
+      copyright: `© ${new Date().getFullYear()} Mecha Systems Inc.`,
       links: [
         {
           items: [

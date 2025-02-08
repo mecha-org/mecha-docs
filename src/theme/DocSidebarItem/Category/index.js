@@ -105,7 +105,7 @@ export default function DocSidebarItemCategory({
     //   }
     //   return isActive ? false : item.collapsed;
     // },
-    initialState: false,
+    initialState: collapsed,
   });
   const {expandedItem, setExpandedItem} = useDocSidebarItemsExpandedState();
   // Use this instead of `setCollapsed`, because it is also reactive

@@ -29,6 +29,7 @@
 
 .footer {
   background-color: transparent;
+  border-top: 1px var(--gray5) solid;
 }
 
 .footer__title{

@@ -18,6 +18,7 @@ const sidebars = {
     {
       type: "category",
       label: "Getting Started",
+      collapsed: false,
       items: [
         "comet/getting-started/quick-start",
         "comet/getting-started/form-factor",
@@ -27,6 +28,7 @@ const sidebars = {
     {
       type: "category",
       label: "Remote Access",
+      collapsed: true,
       items: [
         "comet/remote-access/introduction-to-remote-access",
         "comet/remote-access/find-ip-address",
@@ -45,32 +47,29 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Developing",
+      collapsed: true,
+      label: "Development",
       items: [
-        {
-          type: "category",
-          label: "Environment Setup",
-          items: [
-            "comet/developing/setting-up-environment/cpp",
-            "comet/developing/setting-up-environment/go",
-            "comet/developing/setting-up-environment/java",
-            "comet/developing/setting-up-environment/nodejs",
-            "comet/developing/setting-up-environment/php",
-            "comet/developing/setting-up-environment/python",
-            "comet/developing/setting-up-environment/ruby",
-            "comet/developing/setting-up-environment/rust",            
-          ]
-        },{
-          type: "category",
-          label: "Machine Learning",
-          items: [
-            "comet/developing/machine-learning/MLintro",
-            "comet/developing/machine-learning/setting-up-pyenv",  
-            "comet/developing/machine-learning/running-tensorflow",
-            "comet/developing/machine-learning/coralinstall",
-            "comet/developing/machine-learning/On-deviceLLM",
-          ]
-        }
+        "comet/development/cpp",
+        "comet/development/go",
+        "comet/development/java",
+        "comet/development/nodejs",
+        "comet/development/php",
+        "comet/development/python",
+        "comet/development/ruby",
+        "comet/development/rust",            
+      ]
+    },
+    {
+      type: "category",
+      collapsed: true,
+      label: "Machine Learning",
+      items: [
+        "comet/machine-learning/MLintro",
+        "comet/machine-learning/setting-up-pyenv",  
+        "comet/machine-learning/running-tensorflow",
+        "comet/machine-learning/coralinstall",
+        "comet/machine-learning/On-deviceLLM",
       ],
     },
     {
