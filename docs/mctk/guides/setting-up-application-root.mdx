@@ -1,0 +1,257 @@
+---
+title: Setting up Application Root
+hide_table_of_contents: true
+---
+
+This guide will teach you how to architect the project of an mctk application.
+
+## File Structure
+
+```
+.
+├── Cargo.lock
+├── Cargo.toml
+└── src
+    ├── assets
+    │   ├── fonts
+    │   └── icons
+    ├── components
+    │   └── mod.rs
+    ├── constants.rs
+    ├── contexts
+    │   └── mod.rs
+    ├── gui.rs
+    ├── main.rs
+    └── pages
+        └── homepage
+            └── mod.rs
+```
+
+- The `src/assets` directory holds all the assets of the application, including fonts, icons, and others.
+- `main.rs` is responsible for initializing static assets, opening the window, and managing contexts.
+- `gui.rs` creates the `RootComponent<T>`, which also handles global messages and routing of the application.
+- The `contexts` directory contains the contexts of the application in a module.
+- The `components` directory contains the components of the application in a module.
+- The `pages` directory contains the pages of the application in a module. Each submodule of a page has a component that represents the page.
+
+## Structuring main.rs
+
+The `main.rs` will handle three major aspects:
+
+```rust
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    ...
+}
+```
+
+### Static Assets
+
+Static assets include images, fonts, and icons. You pass these three to the `WindowParameters` when opening the window.
+
+Fonts are stored as the type `cosmic_text::fontdb::Database`. Add fonts using the following code:
+
+```rust
+// Initialize the font database.
+let mut fonts = cosmic_text::fontdb::Database::new();
+
+// Load all system fonts.
+fonts.load_system_fonts();
+
+// Individually add custom fonts for your application.
+fonts.load_font_data(include_bytes!("assets/fonts/<your-font-name>.ttf").into());
+```
+
+Icons and images are stored as the type `HashMap<String, AssetParams>`. Add them as shown below:
+
+```rust
+// Initialize and add images.
+let mut assets: HashMap<String, AssetParams> = HashMap::new();
+assets.insert(
+    "<image_name>".to_string(),
+    AssetParams::new("src/assets/icons/<image>.png".to_string()),
+);
+
+// Initialize and add icons.
+let mut svgs = HashMap::new();
+svgs.insert(
+    "<icon_name>".to_string(),
+    "src/assets/icons/<icon>.svg".to_string(),
+);
+```
+
+When using images or icons, use the key used to store them in the HashMap. For example, in `IconButton`, use `IconButton::new("<icon_name>")` or `IconButton::new("<image_name>")`.
+
+### Opening the Window
+
+This example demonstrates a `LayerShell` application.
+
+Initialize three variables to open a `LayerShell` application:
+
+```rust
+let layer_shell_opts = LayerOptions {
+    ...
+};
+```
+
+```rust
+let window_info = WindowInfo {
+    id: "mctk.guide.application".to_string(),
+    title: "Mctk Window".to_string(),
+    namespace: "mctk.guides.namespace",
+};
+```
+
+```rust
+let window_opts = WindowOptions {
+    height: 480,
+    width: 480,
+    scale_factor: 1.0,
+};
+```
+
+Pass the configuration variables and static assets when opening the window. `AppParams` are the parameters of your `RootComponent`, which will be created in `gui.rs`.
+
+```rust
+let (mut app, mut event_loop, ..) =
+    layer_window::LayerWindow::open_blocking::<Kitchen, KitchenParams>(
+        LayerWindowParams {
+            // Window Options
+            window_info,
+            window_opts,
+            layer_shell_opts,
+
+            // Static Assets
+            fonts,
+            assets,
+            svgs,
+
+            // Others
+            ..Default::default()
+        },
+        AppParams {},
+    );
+```
+
+Finally, start the event loop:
+
+```rust
+loop {
+    event_loop
+        .dispatch(Duration::from_millis(16), &mut app)
+        .unwrap();
+}
+```
+
+### Managing Contexts
+
+```rust
+let window_tx_channel = window_tx.clone();
+let context_handler = context::get_static_context_handler();
+
+// This callback function will request a redraw to mctk
+context_handler.register_on_change(Box::new(move || {
+    window_tx_channel
+        .send(WindowMessage::Send { message: msg!(0) })
+        .unwrap();
+}));
+
+// Register the callback function for all the contexts in the model.
+AppModel::get().register_context_handler(context_handler);
+```
+
+## Structuring gui.rs
+
+The `gui.rs` will contain our `RootComponent`.
+
+```rust
+#[derive(Default, Debug)]
+struct App;
+
+#[derive(Debug, Clone)]
+struct AppParams;
+
+impl Component for App {}
+impl RootComponent<AppParams> for App {}
+```
+
+This root component will be responsible for routing. Define the routes of your application in an enum:
+
+```rust
+#[derive(Debug, Copy, Clone, Hash)]
+enum Route {
+    HomePage,
+    About
+}
+```
+
+Routes will be changed using messages:
+
+```rust
+#[derive(Debug, Clone)]
+pub enum Message {
+    ChangeRoute { route: Route },
+}
+```
+
+This will be handled in the `fn update(&mut self, messages: component::Message) -> Vec<component::Message>` of `Component`:
+
+```rust
+impl Component for App {
+    ...
+    fn update(&mut self, msg: component::Message) -> Vec<component::Message> {
+        if let Some(message) = msg.downcast_ref::<Message>() {
+            match message {
+                Message::ChangeRoute { route } => {
+                    // Do something
+                }
+            }
+        }
+        vec![]
+    }
+}
+```
+
+Store the current route in the `AppState`. Modify the implementation slightly for that:
+
+```rust
+#[derive(Debug)]
+pub struct AppState {
+    current_route: Route,
+}
+
+#[component(State = "AppState")] // This will add the AppState to our root component.
+#[derive(Debug, Default)]
+pub struct App {}
+
+#[state_component_impl(AppState)] // This will add the state_mut, state_ref, and other functions to the implementation.
+impl Component for App {
+    ...
+}
+```
+
+Display the routes in the `fn view(&self) -> Option<Node>` for `Component`:
+
+```rust
+impl Component for App {
+    ...
+    fn view(&self) -> Option<Node> {
+        let current_route = self.state_ref().current_route;
+
+        let screen = match current_route {
+            Route::HomePage => node!(pages::HomePage {}),
+            Route::About => node!(pages::About {})
+        };
+        Some(screen)
+    }
+}
+```
+
+To change routes, for example, on a click:
+
+```rust
+Button::new().on_click(Box::new(|| msg!(
+    Message::ChangeRoute { route: Route::About }
+)));
+```
+

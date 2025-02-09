@@ -11,7 +11,15 @@ const sidebars = {
         "mctk/gettingstarted/first-app",
       ],
     },
-    // "mctk/concepts",
+    {
+      type: "category",
+      label: "Guides",
+      items: [
+        "mctk/guides/setting-up-application-root",
+        "mctk/guides/writing-a-component",
+        "mctk/guides/handling-input-events",
+      ],
+    },
   ],
   cometSidebar: [
     "comet/intro",
