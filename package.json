@@ -16,6 +16,7 @@
   "dependencies": {
     "@docusaurus/core": "^3.5.2",
     "@docusaurus/preset-classic": "^3.5.2",
+    "@docusaurus/theme-mermaid": "^3.5.2",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "docusaurus-plugin-openapi-docs": "^4.0.1",
@@ -24,7 +25,8 @@
     "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-redux": "^7.2.9"
+    "react-redux": "^7.2.9",
+    "recharts": "^2.15.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.5.2",

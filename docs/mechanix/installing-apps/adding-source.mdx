@@ -1,0 +1,206 @@
+---
+title: Adding Source Repositories
+hide_table_of_contents: false
+---
+
+The purpose of this guide is to explain how to add and manage APT repositories on a Debian-based Bookworm system. APT repositories provide a way to install and update software packages from external or official sources.
+
+## Prerequisites
+
+- You need `sudo` privileges to add or manage APT repositories.
+- A working internet connection to download and update packages.
+- Familiarity with the repository URL and GPG key required for the specific software.
+
+<br />
+
+---
+
+## Overview of APT Sources
+
+APT repositories are defined in the following locations:
+
+1. **Main sources file**: `/etc/apt/sources.list`
+2. **Custom files**: `/etc/apt/sources.list.d/` (preferred for third-party repositories)
+
+Each repository line follows this format:
+
+```plaintext
+deb [options] <repository-url> <distribution> <components>
+```
+
+- `deb`: Indicates a binary package repository.
+- `options`: Additional options for the repository.
+- `repository-url`: The URL of the repository.
+- `distribution`: The release codename (e.g., `bookworm`).
+- `components`: The repository components (e.g., `main`, `contrib`, `non-free`).
+
+
+## Adding APT Repositories
+
+There are several ways to add APT repositories to your system. The following steps outline the process:
+
+### 1. Using apt-add-repository Command
+
+The `apt-add-repository` command is a utility that simplifies adding repositories to the APT sources list. It is not installed by default on Debian Bookworm but can be installed using the following command:
+
+```bash
+sudo apt update
+sudo apt install software-properties-common
+```
+
+After installing the `software-properties-common` package, you can use the `add-apt-repository` command to add repositories. For example, to add a PPA repository:
+
+```bash
+sudo add-apt-repository ppa:repository
+```
+
+#### Example of adding a Docker repository:
+
+step 1: Add the GPG key:
+
+```bash
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+```
+
+step 2: Add the repository:
+
+```bash
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bookworm stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev
+```
+
+step 3: Update the package list:
+
+```bash
+sudo apt update
+```
+
+step 4: Install Docker:
+
+```bash
+sudo apt install docker-ce docker-ce-cli containerd.io
+```
+
+### 2. Manually Editing the Sources List
+
+You can manually add repositories by editing the `/etc/apt/sources.list` file or creating a new file in the `/etc/apt/sources.list.d/` directory. Here's an example of adding a repository manually:
+
+```bash
+sudo nano /etc/apt/sources.list.d/repository.list
+```
+
+Add the repository line in the following format:
+
+```plaintext
+deb [options] <repository-url> <distribution> <components>
+```
+
+where:
+- `options`: Additional options for the repository.
+- `repository-url`: The URL of the repository.
+- `distribution`: The release codename (e.g., `bookworm`).
+- `components`: The repository components (e.g., `main`, `contrib`, `non-free`).
+
+
+Save the file and exit the text editor. Then, update the package list:
+
+```bash
+sudo apt update
+```
+
+#### Example of adding couchdb repository:
+
+step 1: Add the repository:
+
+```bash
+echo "deb https://apache.bintray.com/couchdb-deb bookworm main" | sudo tee /etc/apt/sources.list.d/couchdb.list
+```
+
+step 2: Add Source
+
+```bash
+curl -fsSL https://apache.bintray.com/couchdb-deb/KEYS | sudo gpg --dearmor -o /usr/share/keyrings/couchdb-archive-keyring.gpg
+```
+
+step 3: Add the GPG key
+
+```bash
+echo "deb [signed-by=/usr/share/keyrings/couchdb-archive-keyring.gpg] https://apache.bintray.com/couchdb-deb bookworm main" | sudo tee /etc/apt/sources.list.d/couchdb.list
+```
+
+step 4: Update the package list
+
+```bash
+sudo apt update
+```
+step 5: Install CouchDB
+
+```bash
+sudo apt install couchdb
+```
+
+
+### 3. Adding PPA Repositories
+
+PPA (Personal Package Archive) repositories are commonly used on Ubuntu systems. To add a PPA repository on Debian Bookworm, you can use the `add-apt-repository` command with the PPA URL. For example:
+
+
+```bash
+sudo add-apt-repository ppa:repository
+```
+
+### Example of adding a ffmpeg repository
+
+```bash
+sudo add-apt-repository ppa:jonathonf/ffmpeg-4
+```
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install ffmpeg
+```
+
+### 4. Adding Backports Repositories
+
+Backports repositories provide newer versions of software packages that are not available in the default Debian repositories. To add the backports repository, create a new file in the `/etc/apt/sources.list.d/` directory:
+
+```bash
+sudo nano /etc/apt/sources.list.d/backports.list
+```
+
+Add the backports repository line:
+
+```plaintext
+deb http://deb.debian.org/debian bookworm-backports main
+```
+
+Save the file and exit the text editor. Then, update the package list:
+
+```bash
+sudo apt update
+```
+
+example of adding backports repository:
+
+```bash
+echo "deb http://deb.debian.org/debian bookworm-backports main" | sudo tee /etc/apt/sources.list.d/backports.list
+```
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install -t bookworm-backports <package-name>
+```
+
+---
+
+
+
+
+
+
+
