@@ -59,7 +59,15 @@ const config = {
     ],
   ],
 
-  themes: [["docusaurus-theme-openapi-docs", {}]],
+ 
+  themes: [
+    "@docusaurus/theme-mermaid",  // ✅ Added Mermaid support
+    ["docusaurus-theme-openapi-docs", {}],
+  ],
+
+  markdown: {
+    mermaid: true,  // ✅ Enables Mermaid in Markdown files
+  },
 
   themeConfig: {
     image: "img/docusaurus-social-card.jpg",
