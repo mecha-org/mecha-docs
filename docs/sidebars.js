@@ -114,6 +114,16 @@ const sidebars = {
       ],
     },
   ],
+  benchmarkSidebar: [
+      //we need only one sidebar for all the sections that that is called benchmark
+    {
+      type: "category",
+      label: "Benchmarks",
+      items: [
+        "benchmarks/mecha-comet-benchmark",
+      ],
+    },
+  ],
   mechanixSidebar: [
     {
       type: "category",
