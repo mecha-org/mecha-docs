@@ -1,0 +1,175 @@
+---
+
+title: Desktop D-Bus Client
+hide_table_of_contents: false
+---
+
+# **Mechanix Desktop D-Bus Client**
+
+The `mechanix_desktop_dbus_client` is a Rust library that provides an easy-to-use client interface for interacting with the **Mechanix Desktop D-Bus Server**. It simplifies communication with desktop services like **sound** and **power management** using the `zbus` Rust crate.
+
+---
+
+## **Overview**
+
+This library contains the following components:
+
+1. **Proxies for Mechanix Desktop D-Bus services**:
+   - Provides Rust abstractions for D-Bus methods, signals, and interfaces.
+   - Includes functionality for the `Sound` and `Power` services.
+
+2. **Service modules**:
+   - Each service module exposes user-friendly APIs that wrap the underlying D-Bus proxies.
+
+3. **Modules**:
+   - **`Sound`**: Sound-related operations, such as volume control and device management.
+   - **`Power`**: Power-related operations, such as CPU governor management.
+
+---
+
+## **Proxies and their functions**
+
+### **Sound**
+This proxy provides a client API for interacting with the Sound service. It allows you to manage sound devices, including volume control, mute status, and device information.
+
+#### Functions:
+1. #### **`get_sound_percentage(device)`**
+    ##### Description:
+    Retrieves the volume level of a specified output device.
+
+    ##### Parameters:
+    - `device`: The name of the output device (e.g., `"default"`).
+
+    ##### Returns:  
+    - Volume level.  
+    - On failure, an error message is returned.
+
+---
+
+2. #### **`set_sound_percentage(value, device)`**
+    ##### Description:
+    Sets the volume level for a specified output device.
+
+    ##### Parameters:
+    - `value`: The desired volume level.
+    - `device`: The name of the output device (e.g., `"default"`).
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+3. #### **`get_input_devices()`**
+    ##### Description:
+    Retrieves a list of connected input devices.
+
+    ##### Returns:  
+    - List of connected input devices.  
+    - On failure, an error message is returned.
+
+---
+
+4. #### **`get_output_devices()`**
+    ##### Description:
+    Retrieves a list of connected output devices.
+
+    ##### Returns:  
+    - List of connected output devices.  
+    - On failure, an error message is returned.
+
+---
+
+5. #### **`get_notification_stream()`**
+    ##### Description:
+    Subscribes to a stream of sound-related notifications (e.g., volume changes, mute toggles).
+
+    ##### Returns:  
+    - A stream of sound notification events.
+
+---
+
+### **Power**
+This proxy provides a client API for interacting with the Power service. It allows you to manage CPU governors and power-related settings.
+
+#### Functions:
+1. #### **`get_available_governors()`**
+    ##### Description:
+    Retrieves a list of available CPU governors.
+
+    ##### Returns:  
+    - List of available CPU governors.  
+    - On failure, an error message is returned.
+
+---
+
+2. #### **`set_cpu_governor(governor)`**
+    ##### Description:
+    Sets the CPU governor to the specified value.
+
+    ##### Parameters:
+    - `governor`: The name of the desired CPU governor (e.g., `"performance"`).
+
+    ##### Returns:  
+    - On success, nothing is returned.  
+    - On failure, an error message is returned.
+
+---
+
+3. #### **`get_current_cpu_governor()`**
+    ##### Description:
+    Retrieves the name of the currently active CPU governor.
+
+    ##### Returns:  
+    - Name of the current CPU governor.  
+    - On failure, an error message is returned.
+
+---
+
+## **How to Use**
+1. Add `mechanix_desktop_dbus_client` as a dependency in your Rust project.
+2. Use the appropriate module (e.g., `sound` or `power`) to perform actions.
+
+**Example**:
+```rust
+use mechanix_desktop_dbus_client::sound::Sound;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Get the volume of the default output device
+    let volume = Sound::get_sound_percentage("default".to_string()).await?;
+    println!("Current Volume: {}%", volume);
+
+    // Set the volume to 50%
+    Sound::set_sound_percentage(50.0, "default".to_string()).await?;
+
+    Ok(())
+}
+```
+
+**Stream subscribe Example for Sound Notifications**:
+```rust
+use mechanix_desktop_dbus_client::sound::Sound;
+use futures::StreamExt;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Subscribe to sound notifications
+    let mut stream = Sound::get_notification_stream().await?;
+
+    while let Some(event) = stream.next().await {
+        println!("Sound Event: {:?}", event);
+    }
+
+    Ok(())
+}
+```
+
+---
+
+## **Dependencies**
+- `zbus`: For D-Bus communication.
+- `tokio`: For asynchronous operations.
+- `serde`: For serialization and deserialization.
+
+---

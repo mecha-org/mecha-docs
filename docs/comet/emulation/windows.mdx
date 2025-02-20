@@ -1,0 +1,74 @@
+---
+title: Windows (x86-64)
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps/";
+
+The purpose of this setup to run Windows (x86-64) applications on Mecha Comet using Hangover and Fex.
+
+## Introduction
+Hangover is a Wine-based solution that allows running x86-64 Windows applications on ARM64 Linux systems. <br /> 
+It works by translating x86 instructions to ARM64 using FEX, a fast user-mode emulator. 
+
+This guide will walk you through the installation process for Hangover, FEX and show how to run Notepad++ on Mecha Comet
+
+## Prerequisites
+- Ensure Mecha Comet is connected to internet.
+
+## Installation Steps
+
+<S>
+    <S.Step>
+        <S.Details>
+            #### Download packages
+            <S.Code>
+                ```bash
+                $ wget https://github.com/AndreRH/hangover/releases/download/hangover-10.0/hangover_10.0_debian12_bookworm_arm64.tar
+                ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Extract packages
+            <S.Code>
+                ```bash
+                $ tar -xvf hangover_10.0_debian12_bookworm_arm64.tar
+                ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Install packages
+            <S.Code>
+                ```bash
+                $ sudo dpkg -i hangover-wine_10.0~bookworm_arm64.deb 
+                ```
+                ```bash
+                $ sudo dpkg -i hangover-libarm64ecfex_10.0_arm64.deb
+                ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Download windows application
+            Download the windows application you want to run on Mecha Comet.
+            **Example**: Download Notepad++ from [here](https://notepad-plus-plus.org/downloads/v7.8/)
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Run application
+            <S.Code>
+                ```bash
+                wine <path-to-application>
+                ```
+                **Example**: `wine npp.7.8.Installer.exe`
+            </S.Code>
+        </S.Details>
+    </S.Step>
+</S> 
+This completes the setup for running windows applications on Mecha Comet.   

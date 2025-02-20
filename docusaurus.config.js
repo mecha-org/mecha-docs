@@ -1,6 +1,7 @@
 // @ts-check
 import { themes as prismThemes } from "prism-react-renderer";
 
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Mecha Documentation",
@@ -34,6 +35,7 @@ const config = {
           routeBasePath: "/",
           path: "docs",
           sidebarPath: require.resolve("./docs/sidebars.js"),
+          // sidebarCollapsible: false,
           docItemComponent: "@theme/ApiItem",  // Added property
         },
       },
@@ -60,9 +62,19 @@ const config = {
   ],
 
   themes: [["docusaurus-theme-openapi-docs", {}]],
-
+  
   themeConfig: {
-    image: "img/docusaurus-social-card.jpg",
+    algolia: {
+      appId: "HZJ4XG1ZJJ", // cspell: disable-line
+      apiKey: "75ca7bc62c992a3b2e7e0d86b531b333",
+      indexName: "developers_mecha_so_hzj4xg1zjj_pages",
+      placeholder: "Search Mecha Documentation"
+    },
+    image: "img/mecha-social-card.jpg",
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
+    },
     navbar: {
       hideOnScroll: true,
       logo: {
@@ -90,13 +102,24 @@ const config = {
           position: "left",
           label: "Mechanix OS",
         },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "mechanixSidebar",
+        //   position: "left",
+        //   label: "Mechanix OS",
+        // },
         {
           type: "docSidebar",
           sidebarId: "mechaCloudSidebar",
           position: "left",
           label: "Mecha Cloud",
         },
-        
+        {
+          type: "docSidebar",
+          sidebarId: "mctkSidebar",
+          position: "left",
+          label: "MCTK",
+        },
         // {
         //   type: "docSidebar",
         //   sidebarId: "mechaApiSidebar",
@@ -104,9 +127,54 @@ const config = {
         //   label: "API",
         // },
         {
-          to: "https://github.com/mecha-org/mecha-docs",
-          label: "GitHub",
+          to: "https://mecha.so",
+          label: "Website",
           position: "right",
+        },
+        {
+          to: "https://discord.com/invite/VGrZNFPycX",
+          label: "Discord",
+          position: "right",
+        },
+        {
+          to: "https://forum.mecha.so",
+          label: "Forum",
+          position: "right",
+        },
+        {
+          to: "https://github.com/mecha-org/mecha-docs",
+          label: "Github",
+          position: "right",
+        },
+        {
+          type: "search",
+          position: "left",
+        },
+      ],
+    },
+    footer: {
+      copyright: `Copyright © ${new Date().getFullYear()} Mecha Systems Inc.`,
+      links: [
+        {
+          items: [
+            { label: 'Home', to: 'https://mecha.so/' },
+            { label: 'Shipping', to: 'https://mecha.so/legal/shipping' },
+            { label: 'Contact', to: 'https://mecha.so/contact' },
+          ],
+        },
+        {
+          items: [
+            { label: 'Privacy', href: 'https://mecha.so/legal/privacy' },
+            { label: 'Terms of Use', href: 'https://mecha.so/legal/terms-of-use' },
+            { label: 'Refunds', href: 'https://mecha.so/legal/refunds' },
+          ],
+        },
+        {
+          items: [
+            { label: 'Code Of Conduct', href: 'https://mecha.so/legal/code-of-conduct' },
+            { label: 'Media Kit', href: 'https://mecha.so/media-kit' },
+            { label: 'Comet On Kickstarter', href: 'https://mecha.so/comet/notify' },
+          ],
         },
       ],
     },

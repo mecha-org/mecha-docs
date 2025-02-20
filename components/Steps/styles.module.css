@@ -1,10 +1,11 @@
 .root {
   width: 100%;
-  border-top: solid 1px var(--ifm-color-emphasis-200);
-  border-bottom: solid 1px var(--ifm-color-emphasis-200);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 .step {
   display: flex;
+  white-space: pre-wrap;
 }
 .stepSection {
   padding-left: 2rem;
@@ -14,7 +15,7 @@
 }
 
 .code {
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 @media (min-width: 1440px) {
@@ -25,14 +26,15 @@
 
   .details {
     padding-bottom: 2rem;
+    width: 900px;
   }
 }
 
 .step:first-child {
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 .step:last-child {
-  margin-bottom: 5rem;
+  margin-bottom: 0rem;
 }
 
 .step:last-child .line {
@@ -72,3 +74,5 @@
 .column {
   max-width: 900px;
 }
+
+

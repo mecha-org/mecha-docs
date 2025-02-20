@@ -1,6 +1,20 @@
 import mechaApiRefSidebar from "./apis/references/sidebar"
 const sidebars = {
+  mctkSidebar: [
+    "mctk/intro",
+    "mctk/introduction",
+    {
+      type: "category",
+      label: "Getting Started",
+      items: [
+        "mctk/gettingstarted/setup",
+        "mctk/gettingstarted/first-app",
+      ],
+    },
+    // "mctk/concepts",
+  ],
   cometSidebar: [
+    "comet/intro",
     {
       type: "category",
       label: "Getting Started",
@@ -10,117 +24,94 @@ const sidebars = {
         "comet/getting-started/using-gui",
         "comet/getting-started/connecting-to-internet",
         "comet/getting-started/things-to-do",
-      ],
-    },
-    // {
-    //   type: "category",
-    //   label: "Extensions",
-    //   items: [
-    //     "comet/extensions/quick-start",
-    //     "comet/extensions/form-factor",
-    //     "comet/extensions/using-gui",
-    //     "comet/extensions/connecting-to-internet",
-    //   ],
-    // },
-    "comet/connect-to-ssh",
-  ],
-  hardwareSidebar: [
-    {
-      type: "category",
-      label: "Getting Started",
-      items: [
-        "hardware/gettingstarted/quickstart",
-        "hardware/gettingstarted/specifications",
+        
       ],
     },
     {
       type: "category",
-      label: "Connectivity",
+      label: "Remote Access",
       items: [
-        "hardware/connectivity/connecting-via-ssh",
-        "hardware/connectivity/via-serial-console",
-        "hardware/connectivity/using-public-key-auth",
-        "hardware/connectivity/using-putty-on-windows",
-      ],
-    },
-    {
-      type: "category",
-      label: "Kernel",
-      items: [
-        "hardware/kernel/connecting-basics",
-        "hardware/kernel/device-tree",
-        "hardware/kernel/working-with-kernel",
-        "hardware/kernel/build-from-source",
-      ],
-    },
-    {
-      type: "category",
-      label: "Bootloader",
-      items: [
-        "hardware/bootloader/basics-in-bootloader",
+        "comet/remote-access/introduction-to-remote-access",
+        "comet/remote-access/find-ip-address",
         {
           type: "category",
-          label: "Working with U-Boot",
+          label: "Access a remote terminal with SSH",
           items: [
-            "hardware/bootloader/working-with-u-boot/u-boot-commands",
-            "hardware/bootloader/working-with-u-boot/mount-usb-storage",
-            "hardware/bootloader/working-with-u-boot/working-with-variables",
-            "hardware/bootloader/working-with-u-boot/change-boot-logo",
+            "comet/remote-access/access-remote-terminal-with-ssh/connect-to-an-ssh-server",
+            "comet/remote-access/access-remote-terminal-with-ssh/configure-ssh-without-password",
           ],
-        },
-        "hardware/bootloader/debugging-u-boot",
-        "hardware/bootloader/build-from-source-bootloader",
+        },,
+        "comet/remote-access/screen-share-with-vnc",
+        "comet/remote-access/share-files-with-scp",
+        "comet/remote-access/share-files-with-kde-connect",
       ],
     },
     {
       type: "category",
-      label: "Peripherals",
+      label: "Developing",
       items: [
-        "hardware/peripherals/soc",
-        "hardware/peripherals/wireless",
-        "hardware/peripherals/camera",
-        "hardware/peripherals/audio",
-        "hardware/peripherals/display",
-        "hardware/peripherals/pcle",
-        "hardware/peripherals/motion",
-        "hardware/peripherals/rgb",
-        "hardware/peripherals/rtc",
-        "hardware/peripherals/security",
-        "hardware/peripherals/power",
-        "hardware/peripherals/ethernet",
-        "hardware/peripherals/usb",
-        "hardware/peripherals/gpio",
-        "hardware/peripherals/mikrobus",
+        {
+          type: "category",
+          label: "Environment Setup",
+          items: [
+            "comet/developing/setting-up-environment/cpp",
+            "comet/developing/setting-up-environment/go",
+            "comet/developing/setting-up-environment/java",
+            "comet/developing/setting-up-environment/nodejs",
+            "comet/developing/setting-up-environment/php",
+            "comet/developing/setting-up-environment/python",
+            "comet/developing/setting-up-environment/ruby",
+            "comet/developing/setting-up-environment/rust",            
+          ]
+        },{
+          type: "category",
+          label: "Machine Learning",
+          items: [
+            "comet/developing/machine-learning/MLintro",
+            "comet/developing/machine-learning/setting-up-pyenv",  
+            "comet/developing/machine-learning/running-tensorflow",
+            "comet/developing/machine-learning/coralinstall",
+            "comet/developing/machine-learning/On-deviceLLM",
+          ]
+        }
       ],
     },
     {
       type: "category",
-      label: "Mechanicals",
+      label: "Networking",
       items: [
-        "hardware/mechanicals/3d-drawings",
-        "hardware/mechanicals/schematics",
-        "hardware/mechanicals/extensions",
-        "hardware/mechanicals/mounting-system",
-        "hardware/mechanicals/revisions",
+        {
+          type: "category",
+          label: "Internet Sharing",
+          items: [
+            "comet/networking/internet-sharing/ethernet-to-wireless",
+            "comet/networking/internet-sharing/wireless-to-ethernet",
+          ],
+        },,
       ],
     },
     {
       type: "category",
-      label: "Labs",
+      label: "Emulation",
       items: [
-        "hardware/labs/yocto",
-        "hardware/labs/android",
-        "hardware/labs/cortex-m4",
+        "comet/emulation/windows",
+        "comet/emulation/linux",
+        "comet/emulation/dosbox",
       ],
     },
   ],
   mechanixSidebar: [
+    "mechanix/intro",
     {
       type: "category",
       label: "Using the GUI",
       items: [
         "mechanix/using-the-gui/mechanix-shell",
+        "mechanix/using-the-gui/launcher",
+        "mechanix/using-the-gui/keyboard",
         "mechanix/using-the-gui/settings-app",
+        "mechanix/using-the-gui/file-manager",
+        "mechanix/using-the-gui/camera",
       ],
     },
     {
@@ -141,10 +132,23 @@ const sidebars = {
       items: [
         "mechanix/installing-apps/package-manager",
         "mechanix/installing-apps/using-flatpak",
+        "mechanix/installing-apps/using-snap",
+        "mechanix/installing-apps/adding-source",
+      ],
+    },
+    {
+      type: "category",
+      label: "Services",
+      items: [
+        "mechanix/services/system/server",
+        "mechanix/services/system/client",
+        "mechanix/services/desktop/server",
+        "mechanix/services/desktop/client",
       ],
     },
   ],
   mechaCloudSidebar: [
+    "mecha-cloud/intro",
     {
       type: "category",
       label: "Console",
@@ -242,8 +246,6 @@ const sidebars = {
     // {
     "apis/first-request",
     "apis/api-authentication",
-
-    
     {
       type: "category",
       label: "How-to Guides",
