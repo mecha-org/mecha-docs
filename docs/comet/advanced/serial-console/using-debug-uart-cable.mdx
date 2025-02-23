@@ -3,27 +3,48 @@ title: Connecting via Serial Console
 hide_table_of_contents: false
 ---
 
-The Comet-M has an inbuilt Serial Console that can be connected using a UART cable. Note, this also can be a **Hail Mary** solution if SSH or any other form of connectivity fails.
+Sometimes, your Mecha Comet just won’t boot. Other times, it boots but behaves strangely. Maybe you don’t have an HDMI display, and SSH access isn’t an option. Or perhaps—against all odds—someone accidentally cut your Mecha Comet in half, and you need to figure out what’s going on.
+
+Fortunately, the Mecha Comet has a built-in Serial Console that you can access using a UART cable. This can be a **Hail Mary** solution when SSH or any other form of connectivity fails.
+
+## What is the UART
+
+Embedded systems often need communication with external devices for data transfer, command exchange, or debugging. One of the most common interfaces for this is the Universal Asynchronous Receiver/Transmitter (UART). When a board reaches the software or firmware team, the first priority is usually setting up the debug console.
+
+UART (Universal Asynchronous Receiver-Transmitter) supports various serial communication protocols for transmitting and receiving data. In serial communication, data is sent bit by bit over a single wire. For two-way communication, two wires are used—one for transmission and one for reception.
+
+[Simply Embedded has a great overview of UART](http://www.simplyembedded.org/tutorials/msp430-uart/) if you want to learn more.
 
 ## What you'll need
 
-* USB to UART cable - [Amazon link](https://www.amazon.com/Serial-Adapter-Signal-Prolific-Windows/dp/B08BLKBK1K)
+* USB to UART aable - [Amazon link](https://www.amazon.co.uk/WELLDOER-Interfaces-Debugging-Connection-Development/dp/B0D48928M5)
+          **OR**
+* USB-C cable - [Amazon link](https://www.amazon.in/Wayona-Braided-Charger-Charging-Samsung/dp/B081FH7R7D)
 
-## Connecting the USB to UART Cable
+## Connect USB-C Cable to Mecha Comet (Breakout Extension)
 
-* The Debug UART pin mapping for the Comet-M is shown below.
 
-```
-$ sudo apt add update
-```
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+  <img src="/assets/remote-access/breakout-extension.png" alt="comet uart port preview" width="340" height="340" style={{ maxWidth: '100%', height: 'auto' }} />
 
-* Connect the male header pins of the UART cable to the Debug UART pins on the Comet-M
-* Connect the USB end of the cable to your machine.
+  <img src="/assets/remote-access/breakout-extention-c.png" alt="comet uart port preview" width="340" height="380" style={{ maxWidth: '100%', height: 'auto' }} />
+</div>
+
+
+## Connect UART Cable to Mecha Comet
+
+For Mecha Comet, the UART port is located on the backside. Simply remove the back cover to access it.
+
+
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+  <img src="/assets/remote-access/main-uart-point-3.png" alt="comet uart port preview" width="340" height="340" style={{ maxWidth: '100%', height: 'auto' }} />
+  <img src="/assets/remote-access/connect-uart.png" alt="comet uart port preview" width="340" height="380" style={{ maxWidth: '100%', height: 'auto' }} />
+</div>
 
 ## Connect to Serial Console on Linux
 
 1. Open the Terminal on your Linux machine.
-2. Type `dmesg | grep tty` to list the connected devices. Your UART bridge will appear as something like `/dev/ttyUSB0`.
+2. Type `sudo dmesg | grep tty` to list the connected devices. Your UART bridge will appear as something like `/dev/ttyUSB0`.
 
 ```
 $ dmesg | grep tty
@@ -60,4 +81,39 @@ $ screen /dev/cu.usbserial-XXXX 115200
 
 ## Connect to Serial Console on Windows
 
-You will need the PuTTY application to connect to Serial Console on Windows. Follow [this tutorial](http://developers.mecha.so/comet/connectivity/using-putty-on-windows) on how to use PuTTY.
+#### Prerequisites
+
+- A USB-to-UART cable
+- PuTTY ([Download from here](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
+
+### Steps to Connect
+1. Install PuTTY
+Download and install PuTTY from the link above if you haven’t already.
+
+2. Connect the USB-to-UART Cable
+Plug the USB-to-UART cable into your Windows PC.
+
+3. Identify the COM Port
+
+    1. Open Device Manager:
+        - Right-click on the This PC icon.
+        - Select Manage.
+        - Navigate to Device Manager.
+
+    2. Expand the Ports (COM & LPT) section.
+
+    3. Note the COM port number assigned to the USB-to-UART cable (e.g., COM3).
+
+4. Configure and Open PuTTY
+
+    1. Launch PuTTY.
+
+    2. Under Connection Type, select Serial.
+
+    3. In the Serial line field, enter the COM port number (e.g., COM3).
+
+    4. Set the Speed (baud rate) to 115200.
+
+    5. Click Open.
+
+The terminal window will open, establishing a serial console connection.
