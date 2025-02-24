@@ -3,39 +3,100 @@ title: Change boot logo
 hide_table_of_contents: false
 ---
 
-# Customizing the Boot Splash Image
+# **Changing Boot Logo in U-Boot**
 
-Customizing the boot splash image on your OS can give it a personal touch. This guide will walk you through the process of locating the default splash image, replacing it with your custom image, and ensuring that the changes are applied when you reboot.
+This guide explains how to load and display a custom boot logo in U-Boot. You can load the splash screen from different storage devices, such as MMC/SD, USB, or use a preloaded image stored in the U-Boot binary.
 
-### Step 1: Locate the Default Splash Image
+---
 
-The default splash images used by Plymouth are typically located in `/boot/splash/logo.bmp`. This file controls the appearance of the U-Boot logo.
+## **1. Loading and Displaying a Boot Logo in U-Boot**
 
-**Note**: The resolution must be 480x480 pixels.
+### **1.1 Loading from MMC/SD Card**
 
-### Step 2: Replace the Default Image
-
-#### 1. Prepare Your Custom Image
-
-- Create or choose an image you want to use as the boot logo.
-- Ensure the image is in BMP format and has a resolution of 480x480 pixels.
-
-#### 2. Backup the Original Image
-
-Before replacing the image, back up the original one:
+To load a BMP image from an MMC/SD card:
 
 ```bash
-sudo cp /boot/splash/logo.bmp /boot/splash/logo.bmp.bak
+mmc dev 0          # Select MMC/SD card
+mmc rescan         # Rescan for storage devices
+load mmc 0 ${loadaddr} <bmp file name>  # Load BMP file into memory
+bmp display ${loadaddr}  # Display the image
 ```
 
-#### 3. Replace the Image
-
-Copy your custom image over the default one:
+**Example:**
 
 ```bash
-sudo cp /path/to/your/logo.bmp /boot/splash/logo.bmp
+mmc dev 2
+mmc rescan
+load mmc 2 ${loadaddr} splash/logo.bmp
+bmp display ${loadaddr}
 ```
 
-## Conclusion
+### **1.2 Loading from USB Storage**
 
-By following these steps, you can easily replace the default OS boot splash image with your custom logo. Backing up the original image ensures that you can revert to the default logo if needed. Your custom image will be displayed during the boot process, giving your system a personalized touch.
+To load a BMP image from a USB storage device:
+
+```bash
+usb start          # Start USB subsystem
+load usb <device number> ${loadaddr} <bmp file name>  # Load BMP file
+bmp display ${loadaddr}  # Display the image
+```
+
+**Example:**
+
+```bash
+usb start
+load usb 0 ${loadaddr} splash/logo.bmp
+bmp display ${loadaddr}
+```
+
+---
+
+## **2. Preloading Splash Screen from eMMC/SD/USB**
+
+Instead of embedding the splash screen in the U-Boot binary, you can configure U-Boot to automatically load the logo from a FAT partition on an eMMC, SD card, or USB storage.
+
+### **2.1 Setting Up Automatic Splash Screen Loading**
+
+To configure U-Boot to load a splash screen automatically:
+
+1. Ensure the splash screen file is stored in a FAT partition.
+2. Set the `splashfile` variable to point to the splash screen image.
+3. Set the `splashsource` variable to specify the storage device.
+4. Save the environment variables.
+5. Restart the system.
+
+```bash
+setenv splashfile /boot/logo.bmp  # Set splash screen file path
+setenv splashsource mmc_fs        # Specify source storage (e.g., mmc_fs, usb_fs)
+saveenv                            # Save environment settings
+reset                              # Reboot to apply changes
+```
+
+**Example for eMMC:**
+
+```bash
+setenv splashfile /boot/logo.bmp
+setenv splashsource mmc_fs
+saveenv
+reset
+```
+
+**Example for USB:**
+
+```bash
+setenv splashfile /boot/logo.bmp
+setenv splashsource usb_fs
+saveenv
+reset
+```
+
+---
+
+## **3. Additional Notes**
+
+- Ensure that the BMP file is in a compatible format (e.g., 24-bit uncompressed BMP).
+- `loadaddr` should be set to a valid memory address where the image will be loaded.
+- Use `printenv` to check current environment variables.
+- If the splash screen does not appear, check the storage device and file path.
+
+This guide provides a step-by-step approach to changing the boot logo in U-Boot using different methods. Depending on your use case, you can either load the logo manually or configure it for automatic loading during boot.

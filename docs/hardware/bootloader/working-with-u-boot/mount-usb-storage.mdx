@@ -3,184 +3,221 @@ title: Mount USB storage
 hide_table_of_contents: false
 ---
 
-# Configuring USB Ports in Mecha Hardware
+## Introduction
 
-In this tutorial, we'll walk through the steps to check and set the modes of the USB ports on Mecha hardware, which has two Type-A USB ports that can be configured as either host or gadget modes using sysfs entries. By default, USB-1 (J214) operates in gadget mode, and USB-2 (J213) operates in host mode.
+U-Boot provides various commands for working with USB devices, including scanning for USB storage, retrieving device information, and mounting file systems. This document will guide developers on how to perform these USB operations on the Mecha Comet device using U-Boot.
 
-### 1. Check the Current Mode of USB Ports
+## Enabling USB in U-Boot
 
-Before making any changes, it's important to know the current mode of the USB ports. You can do this by reading the role file for each port in the sysfs.
-
-Check Mode for USB-1 (J214):
-
-```bash
-cat /sys/class/udc/ci_hdrc.0/device/role
-```
-
-Check Mode for USB-2 (J213):
-
-```bash
-cat /sys/class/udc/ci_hdrc.1/device/role
-```
-
-These commands will output either host or gadget, indicating the current mode of each USB port.
-
-### 2. Set Host Mode for USB Ports
-
-If you want to configure the USB ports to operate as a host, you can set the role to host. This mode allows the USB port to control other devices (e.g., USB drives, keyboards).
-
-Set Host Mode for USB-1 (J214):
-
-```bash
-echo host > /sys/class/udc/ci_hdrc.0/device/role
-```
-
-Set Host Mode for USB-2 (J213):
-
-```bash
-echo host > /sys/class/udc/ci_hdrc.1/device/role
-```
-
-After running these commands, the USB ports will be switched to host mode.
-
-### 3. Set Gadget Mode for USB Ports
-
-To switch the USB ports to gadget mode, where they can act as USB devices (e.g., appearing as storage devices or network interfaces when connected to a host), set the role to gadget.
-
-Set Gadget Mode for USB-1 (J214):
-
-```bash
-echo gadget > /sys/class/udc/ci_hdrc.0/device/role
-```
-
-Set Gadget Mode for USB-2 (J213):
-
-```bash
-echo gadget > /sys/class/udc/ci_hdrc.1/device/role
-```
-
-After these commands, the USB ports will function in gadget mode.
-
-### 4. Verify the Changes
-
-After setting the modes, it's a good practice to verify that the changes have taken effect.
-
-Verify Mode for USB-1 (J214):
-
-```bash
-cat /sys/class/udc/ci_hdrc.0/device/role
-```
-
-Verify Mode for USB-2 (J213):
-
-```bash
-cat /sys/class/udc/ci_hdrc.1/device/role
-```
-
-The output should reflect the new mode (host or gadget) based on the changes you made.
-
-## How to use USB on Linux machine
-
-### 1. Plug in the USB Device
-
-Insert the USB device into a USB port on your Linux machine.
-
-### 2. Check if the USB Device is Detected
-
-Open a terminal and type the following command to list all connected storage devices:
-
-```bash
-lsblk
-```
-
-This will display a list of all block devices. Look for your USB device, typically labeled as /dev/sdX (where X is a letter like a, b, etc.). You can also use:
-
-```bash
-dmesg | tail
-```
-
-This will show the latest kernel messages, which should include information about the connected USB device.
-
-### 3. Create a Mount Point (if necessary)
-
-Create a directory where you can mount the USB device, for example:
-
-```bash
-sudo mkdir /mnt/usb
-```
-
-### 4. Mount the USB Device
-
-Mount the USB drive to the directory you just created. Replace /dev/sdX1 with the correct partition (e.g., /dev/sdb1):
-
-```bash
-sudo mount /dev/sdX1 /mnt/usb
-```
-
-After mounting, you can access the files on the USB drive using:
-
-```bash
-cd /mnt/usb
-ls
-```
-
-### 5. Access and Manage Files
-
-You can now copy, move, delete, or edit files on the USB drive using standard Linux commands like cp, mv, rm, etc.
-Example:
-
-```bash
-cp /path/to/file /mnt/usb/
-```
-
-### 6. Safely Unmount the USB Device
-
-Before removing the USB device, unmount it to ensure that all data is properly written and to avoid file system corruption:
-
-```bash
-sudo umount /mnt/usb
-```
-
-If you get a "device is busy" error, it means some process is still using the USB device. You can use the lsof command to find out what is using the device:
-
-```bash
-lsof +f -- /mnt/usb
-```
-
-After resolving the issue, try unmounting again.
-
-### 7. Remove the USB Device
-
-Once unmounted, you can safely remove the USB device from the port.
-
-### 8. Additional Tips
-
-#### Formatting the USB Drive
-
-If you need to format the USB drive, you can use mkfs for various file systems like FAT32, NTFS, or ext4:
-
-```bash
-sudo mkfs.vfat /dev/sdX1    # For FAT32
-sudo mkfs.ntfs /dev/sdX1    # For NTFS
-sudo mkfs.ext4 /dev/sdX1    # For ext4
-```
-
-#### Checking Disk Usage
-
-To see how much space is used or free on the USB drive:
-
-```bash
-df -h /mnt/usb
-```
-
-### 9. Auto-mount USB Devices
-
-Most modern Linux distributions automatically mount USB devices when plugged in. If this doesn't happen, you can add an entry to the /etc/fstab file for auto-mounting.
-
-Example entry in /etc/fstab:
+Before interacting with USB devices, ensure that USB support is enabled in U-Boot. Run the following command to initialize the USB subsystem:
 
 ```
-/dev/sdX1 /mnt/usb <vfat> defaults 0 0
+usb start
 ```
 
-This guide should help you get started with using USB devices on a Linux system, whether you're accessing files, managing partitions, or safely removing the device.
+This command initializes the USB controller and detects connected USB devices. If the initialization fails, try resetting the USB subsystem with:
+
+```
+usb reset
+```
+
+This forces the re-enumeration of all connected USB devices.
+
+## Scanning for USB Devices
+
+To detect and list all connected USB devices, use:
+
+```
+usb tree
+```
+
+### Example Output:
+
+```
+USB device tree:
+  1  Hub (480 Mb/s, 0mA)
+  |  u-boot EHCI Host Controller
+  |
+  |+-2  Mass Storage (480 Mb/s, 500mA)
+       SRT USB 3.0 JET 16G 049113121910253634000130
+```
+
+If devices are not detected, ensure that they are properly connected and powered.
+
+## Getting USB Device Information
+
+To retrieve detailed information about connected USB devices, run:
+
+```
+usb info
+```
+
+### Example Output:
+
+```
+1: Hub,  USB Revision 2.0
+ - u-boot EHCI Host Controller
+ - Class: Hub
+ - PacketSize: 64  Configurations: 1
+ - Vendor: 0x0000  Product 0x0000 Version 1.0
+   Configuration: 1
+   - Interfaces: 1 Self Powered 0mA
+     Interface: 0
+     - Alternate Setting 0, Endpoints: 1
+     - Class Hub
+     - Endpoint 1 In Interrupt MaxPacket 8 Interval 255ms
+
+2: Mass Storage,  USB Revision 2.10
+ - SRT USB 3.0 JET 16G 049113121910253634000130
+ - Class: (from Interface) Mass Storage
+ - PacketSize: 64  Configurations: 1
+ - Vendor: 0x090c  Product 0x1000 Version 17.0
+   Configuration: 1
+   - Interfaces: 1 Bus Powered 500mA
+     Interface: 0
+     - Alternate Setting 0, Endpoints: 2
+     - Class Mass Storage, Transp. SCSI, Bulk only
+     - Endpoint 1 Out Bulk MaxPacket 512
+     - Endpoint 2 In Bulk MaxPacket 512
+```
+
+If no devices are listed, check whether USB support is properly enabled in U-Boot.
+
+## Listing USB Storage Devices
+
+If you have a USB storage device connected, list the available partitions using:
+
+```
+usb storage
+```
+
+To list all block devices (including USB storage), use:
+
+```
+ls usb 0
+```
+
+## Mounting a USB Storage Device
+
+To access files from a USB storage device, first check the filesystem type.
+
+For FAT-formatted partitions:
+
+```
+fatls usb 0
+```
+
+### Example Output:
+
+```
+   13012   boot.scr
+   456789   uImage
+```
+
+For ext4-formatted partitions:
+
+```
+ext4ls usb 0
+```
+
+### Example Output:
+
+```
+   20480   /boot/kernel.img
+   10240   /boot/initrd.img
+```
+
+## Loading a File from USB Storage
+
+To load a specific file from the USB drive into memory:
+
+For FAT-formatted partitions:
+
+```
+fatload usb 0:1 0x80000000 boot.scr
+```
+
+For ext4-formatted partitions:
+
+```
+ext4load usb 0:1 0x80000000 /boot/kernel.img
+```
+
+This loads the specified file into memory address `0x80000000` for further processing.
+
+## Booting from USB
+
+To boot a kernel or script from a USB device, follow these steps:
+
+1. Load the kernel into memory:
+    
+    ```
+    fatload usb 0:1 0x80000000 zImage
+    ```
+    
+    Or for ext4:
+    
+    ```
+    ext4load usb 0:1 0x80000000 /boot/zImage
+    ```
+    
+2. Load the device tree (if required):
+    
+    ```
+    fatload usb 0:1 0x81000000 dtb
+    ```
+    
+3. Boot the kernel:
+    
+    ```
+    bootz 0x80000000 - 0x81000000
+    ```
+    
+    The `-` signifies that no initrd is being used.
+
+## Writing to USB Storage
+
+To write a file to a USB storage device in U-Boot, prepare the file in RAM and use the `fatwrite` or `ext4write` commands:
+
+For FAT:
+
+```
+fatwrite usb 0:1 0x80000000 newfile.txt 1024
+```
+
+For ext4:
+
+```
+ext4write usb 0:1 0x80000000 /newfile.txt 1024
+```
+
+This writes 1024 bytes from memory address `0x80000000` to the specified file.
+
+## Unmounting and Stopping USB
+
+After using the USB storage device, unmount and stop the USB subsystem:
+
+```
+usb stop
+```
+
+This safely stops USB operations before rebooting or removing the device.
+
+## Troubleshooting Common USB Issues
+
+1. **USB device not detected**
+    - Ensure `usb start` is executed.
+    - Try `usb reset`.
+    - Check hardware connections.
+    - Verify U-Boot has USB support enabled.
+2. **File not found errors**
+    - Ensure the correct partition index is used (`usb 0:1`).
+    - Verify the file exists with `fatls` or `ext4ls`.
+3. **Boot failure from USB**
+    - Ensure kernel and device tree are loaded correctly.
+    - Use the correct memory addresses for `bootz`.
+
+## Conclusion
+
+This guide covers the essential U-Boot USB commands on the Mecha Comet device, helping developers manage USB operations effectively. By following these steps, you can scan, mount, retrieve information, write to USB storage, and boot from USB devices in U-Boot.
+

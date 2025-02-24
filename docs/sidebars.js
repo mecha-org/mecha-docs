@@ -49,6 +49,7 @@ const sidebars = {
       items: [
         "hardware/kernel/connecting-basics",
         "hardware/kernel/device-tree",
+        "hardware/kernel/building-device-tree",
         "hardware/kernel/working-with-kernel",
         "hardware/kernel/build-from-source",
       ],
