@@ -56,6 +56,15 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Debian rootfs",
+      items: [
+        "hardware/rootfs/build-rootfs-mecha-make",
+        "hardware/rootfs/build-rootfs-natively",
+        "hardware/rootfs/flashing-device",
+      ],
+    },
+    {
+      type: "category",
       label: "Bootloader",
       items: [
         "hardware/bootloader/basics-in-bootloader",

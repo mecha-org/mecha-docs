@@ -1,0 +1,429 @@
+---
+title: Building the rootfs using Mecha make
+hide_table_of_contents: true
+---
+
+
+**Mecha Make** is an automated build suite that constructs the kernel, U-Boot, and root filesystem for **Mecha Comet**. Built with [**Nushell**](https://github.com/nushell/nushell) (a Rust-based shell), it provides a robust, modular, and highly configurable approach to building embedded systems. Each module in Mecha Make is configurable so you can tailor the build process (such as U-Boot, kernel, or rootfs) without breaking the system.
+
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Key Features](#key-features)
+3. [Prerequisites](#prerequisites)
+4. [Build Process Overview](#build-process-overview)
+5. [Configuration Files](#configuration-files)
+6. [Module Descriptions](#module-descriptions)
+7. [Usage Instructions](#usage-instructions)
+8. [Troubleshooting](#troubleshooting)
+9. [Contributing](#contributing)
+
+---
+
+## Introduction
+
+Mecha Make is designed to simplify and modularize the process of building a customized Debian-based Linux distribution for the **Mecha Comet** ARM machine. Written in Nushell, Mecha Make uses a series of modules that cover all aspects of system configuration and package installation, enabling you to:
+
+- Configure network settings, audio, Bluetooth, and more.
+- Manage package sources and installations both on the host and target systems.
+- Automate the entire build process, from setting up a base system with debootstrap to finalizing the root filesystem packaging.
+
+---
+
+## Key Features
+
+- **Modular Architecture:**
+
+    Each component (networking, package installation, system configuration) is handled by individual modules, making the system highly flexible.
+    
+- **Customizable Build Configuration:**
+
+    Modify settings for the kernel, U-Boot, and rootfs via YAML configuration files without altering core scripts.
+    
+- **Integrated Logging and Error Handling:**
+
+    Detailed logs are provided throughout the build process, with mechanisms in place to handle errors gracefully.
+    
+- **Automated Package Installation:**
+
+    Install packages using customized package groups for both the host and target systems.
+    
+- **Flexible Target Support:**
+
+    Tailor the build process for different ARM machine targets, with examples provided for the **mecha-comet-m** platform.
+
+---
+
+## Prerequisites
+
+Before using Mecha Make, ensure that your host system meets the following requirements:
+
+- **Operating System:**
+
+    A Debian-based host system is recommended.
+    
+- **Nushell (nu):**
+
+    Install the latest version of [Nushell](https://github.com/nushell/nushell).
+    
+- **Docker:**
+
+    Used for containerized builds if needed.
+    
+- **qemu-user-static:**
+
+    Ensure that `qemu-arm-static` is installed for ARM emulation.
+    
+- **Additional Tools:**
+
+    Basic tools like `wget`, `dpkg`, and standard Unix utilities.
+
+---
+
+## Build Process Overview
+
+The build process for Mecha Make is divided into several stages:
+
+### 1. Pre-condition Setup
+
+- **Debootstrap:**  
+    Sets up a minimal Debian base system.
+- **QEMU ARM Static:**  
+    Copies `qemu-arm-static` into the target root filesystem.
+- **Mounting Volumes:**  
+    Mounts necessary system directories (`/sys` and `/proc`) within the chroot environment.
+
+### 2. System Configuration
+
+- **Network Configuration:**  
+    Sets up networking and custom package sources.
+- **Boot Script Setup:**  
+    Configures U-Boot and kernel boot scripts.
+- **Package Installation:**  
+    Installs required packages on both the host and target systems.
+- **User and SSH Configuration:**  
+    Creates the default user, sets passwords, and configures SSH settings.
+- **Audio and Bluetooth Configuration:**  
+    Ensures that audio and Bluetooth services are properly configured.
+- **System Files and Ownership:**  
+    Adjusts file permissions and finalizes system file configurations.
+
+### 3. Finalization
+
+- **Unmounting Volumes:**  
+    Unmounts previously mounted volumes.
+- **Root Filesystem Packaging:**  
+    Packages the final root filesystem for deployment.
+
+---
+
+## Configuration Files
+
+Mecha Make uses several YAML configuration files to manage the build process:
+
+### `conf/build.yml`
+
+Defines the core build settings:
+
+```yaml
+hostname: mecha-comet-m
+locale:
+  timezone: America/Los_Angeles
+  lang: en-US.UTF-8
+user:
+  name: mecha
+  password: mecha
+  is_password_expired: true
+ssh:
+  user_ca:
+  host_ca:
+  authorized_keys: []
+  is_password_authentication_disabled: false
+debian:
+  version: 12
+  name: bookworm
+apt:
+  sources:
+    - http://debian.mecha.build apollo main
+os-release:
+  ID: mechanix
+  ID_LIKE:
+    - debian
+  NAME: Mechanix
+  VERSION: "24.03.0 LTS (Apollo)"
+  VERSION_ID: "24.03"
+  VERSION_CODENAME: Apollo
+  PRETTY_NAME: "Mechanix 24.03 LTS"
+  HOME_URL: "https://mecha.so/"
+  SUPPORT_URL: "https://forum.mecha.so/"
+  BUG_REPORT_URL: "https://forum.mecha.so/"
+keyboard-config:
+  layout: "us"
+  model: "pc1067"
+  variant: ""
+  options: ""
+  toggle: "No toggling"
+packages-path: ./include/
+scripts-path:  ./../../uboot/include
+media-files: ./include/splash/
+firmware-files: ./include**/packages/firmware
+include-path: ./include**
+```
+
+### `conf-packages/host.yml`
+
+Defines the package groups to be installed on the host system:
+
+```yaml
+
+packages:
+  - name: debootstrap
+    url: http://ftp.us.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.128+nmu2+deb12u1_all.deb
+    sha: ""
+  - name: qemu-user-static
+    url: http://ftp.us.debian.org/debian/pool/main/q/qemu/qemu-user-static_7.2+dfsg-7+deb12u5_amd64.deb
+    sha: ""
+  - name: whois
+    url: http://ftp.us.debian.org/debian/pool/main/w/whois/whois_5.4.3_amd64.deb
+    sha: ""
+```
+
+
+### `conf-packages/target.yml`
+
+Defines the package groups to be installed:
+
+```yaml
+packages:
+  - firmware.group
+  - linux.group
+  - system.group
+  - network.group
+  - build.group
+  - locale.group
+  - wayland.group
+  - greeter.group
+  - audio.group
+  - graphics.group
+  - mechanix.group
+package_groups:
+  - name: firmware
+    packages:
+      - initramfs-tools
+      - imx-sdma-firmware
+      - bluez-firmware
+      - u-boot-tools
+  - name: linux
+    packages:
+      - linux-image-6.6.36+mecha+
+      - linux-headers-6.6.36+mecha+
+      - linux-libc-dev=6.6.36-g00659ceb855e-1
+  - name: system
+    packages:
+      - dbus
+      - nano
+      - openssh-server
+      - sudo
+      - bash-completion
+      - dosfstools
+      - cpufrequtils
+      - upower
+      - libglib2.0-0
+  - name: network
+    packages:
+      - bluez
+      - hostapd
+      - file
+      - ethtool
+      - network-manager
+      - net-tools
+      - curl
+      - wget
+      - unzip
+  - name: build
+    packages:
+      - python3
+  - name: graphics
+    packages:
+      - mesa-utils
+  - name: locale
+    packages:
+      - systemd-timesyncd
+      - locales
+  - name: wayland
+    packages:
+      - xwayland
+      - xorg
+      - libwlroots12t64
+      - labwc
+      - weston
+  - name: greeter
+    packages:
+      - greetd
+  - name: audio
+    packages:
+      - pulseaudio
+      - mpg123
+      - pulseaudio-module-bluetooth
+      - alsa-tools
+      - alsa-utils
+      - libasound2
+      - libasound2-plugins
+  - name: web
+    packages:
+      - chromium
+  - name: mechanix
+    packages:
+      - mechanix-launcher
+      - mechanix-keyboard
+      - mechanix_desktop_dbus_server
+      - mechanix_system_dbus_server
+      - mechanix-camera
+      - mechanix-files
+      - mechanix-settings
+      - mecha-connect
+      - mecha-agent
+```
+
+
+# Module Descriptions
+
+Mecha Make is composed of several modular scripts written in Nushell. Each module performs a specific task:
+
+- **`logger.nu`**:
+    
+    Provides logging functionality to record information, debug messages, and errors during the build process.
+    
+- **`pkg.nu`**:
+    
+    Handles package installation for both host and target systems.
+    
+- **`network-config.nu`**:
+    
+    Configures network settings within the target system.
+    
+- **`audio-config.nu`**:
+    
+    Sets up and configures audio services.
+    
+- **`boot-config.nu`**:
+    
+    Manages boot script setup, including U-Boot and kernel configurations.
+    
+- **`system-config.nu`**:
+    
+    Configures system files, such as `os-release` and other system parameters.
+    
+- **`user-config.nu`**:
+    
+    Creates and configures user accounts, including setting up the default user and SSH settings.
+    
+- **`kernel-config.nu`**:
+    
+    Contains kernel configuration options.
+    
+- **`pack-rootfs.nu`**:
+    
+    Packages the final root file-system after all configurations are applied.
+    
+- **`os-config.nu`**:
+    
+    Applies additional OS-level configurations and settings.
+    
+- **Other Modules:**
+    
+    Modules such as `chromium-config.nu`, `alacritty-config.nu`, and `clean-up.nu` offer further customization, ensuring that any application or system setting can be adjusted as needed.
+
+---
+
+## Usage Instructions
+
+### Build Command
+
+To start the build process, use the following Nushell command:
+
+```bash
+nu build-debian.nu <machine-target> <build-directory>
+```
+
+### Example
+
+```bash
+nu build-debian.nu mecha-comet-m /home/mecha/build
+```
+
+# Build Stages Recap
+
+### Pre-condition Setup:
+- Run debootstrap to create a Debian base system.
+- Copy `qemu-arm-static` into the target's `/usr/bin/` directory.
+- Mount necessary system directories (`/sys` and `/proc`).
+
+### Configuration & Installation:
+- Set environment variables.
+- Configure networking, package sources, and boot scripts.
+- Install target packages based on configuration files.
+- Customize audio, Bluetooth, SSH, user accounts, and more.
+
+### Finalization:
+- Adjust file ownership and permissions.
+- Unmount system directories.
+- Package the root filesystem for deployment.
+
+---
+
+# Troubleshooting
+
+### qemu-arm-static Missing:
+
+If you see an error regarding `qemu-arm-static`, install it using your package manager:
+
+```bash
+sudo apt-get install qemu-user-static
+```
+# Troubleshooting
+
+### Configuration File Errors:
+Double-check your YAML configuration files for formatting issues. Use a YAML validator if necessary.
+
+### Build Logs:
+Review the detailed logs provided by the logging module. These logs help identify any steps that may have failed during the build process.
+
+### Package Installation Failures:
+If a package fails to install, the system logs an error but continues with the build. Check the individual package installation logs to address specific issues.
+
+---
+
+# Contributing
+
+We welcome contributions to improve Mecha Make. To contribute:
+
+### 1. **Fork the Repository:**
+
+Clone your fork to your local machine.
+
+### 2. **Create a Branch:**
+
+Create a new branch for your feature or bug fix.
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+### 3. **Make Your Changes:**
+
+Commit your changes with clear and descriptive messages.
+
+### 4. **Submit a Pull Request:**
+
+Open a pull request with your branch. Please include details of your changes and any relevant information for testing.
+
+---
+
+# Final Notes
+
+Mecha Make offers a flexible, modular build system for creating customized embedded Linux distributions. Its use of Nushell and YAML configurations allows for extensive customization, ensuring that you can tailor each build to your specific requirements.
+
+For more detailed instructions, examples, and updates, visit the [Mecha Make GitHub repository](https://github.com/mecha-org/mecha-make).
+

@@ -1,0 +1,201 @@
+---
+title: Building the rootfs natively
+hide_table_of_contents: true
+---
+
+This guide details the steps to manually build a Debian-based root filesystem tailored for the **Mecha Comet** platform. The process leverages `debootstrap` for system initialization, configures essential packages, and ensures compatibility with the Mecha ecosystem. The final root filesystem is bundled into a compressed tar archive for easy deployment.
+
+---
+
+### **1. Install Required Packages**
+
+```bash
+sudo apt install debootstrap qemu-user-static
+```
+
+### **2. Set Up the Root Directory**
+
+```bash
+mkdir target
+export ROOTDIR=$(realpath target)
+```
+
+### **3. Bootstrap Debian (Bookworm)**
+
+```bash
+sudo debootstrap --arch=arm64 --foreign --no-check-gpg --include=eatmydata,gnupg bookworm $ROOTDIR http://deb.debian.org/debian
+```
+
+### **4. Enable ARM Execution Support**
+
+```bash
+sudo cp /usr/bin/qemu-aarch64-static $ROOTDIR/usr/bin/
+```
+
+### **5. Complete Debootstrap Installation**
+
+```bash
+export CHROOTCMD="eval LC_ALL=C LANGUAGE=C LANG=C sudo chroot $ROOTDIR"
+$CHROOTCMD /debootstrap/debootstrap --second-stage
+```
+
+### **6. Set Up Networking**
+
+```bash
+sudo mkdir $ROOTDIR/home/root
+sudo mount -t sysfs sysfs $ROOTDIR/sys
+sudo mount -t proc proc $ROOTDIR/proc
+
+# Backup host networking config
+cp $ROOTDIR/etc/environment{,.sav}
+cp $ROOTDIR/etc/resolv.conf{,.sav}
+cp $ROOTDIR/etc/hosts{,.sav}
+
+# Apply host networking configuration
+cp /etc/resolv.conf $ROOTDIR/etc/resolv.conf
+cp /etc/hosts $ROOTDIR/etc/hosts
+```
+
+### **7. Configure Package Sources**
+
+```bash
+echo "deb http://debian.mecha.build apollo main" | sudo tee -a $ROOTDIR/etc/apt/sources.list
+$CHROOTCMD apt-get update
+```
+
+### **8. Install Essential Packages**
+
+```bash
+$CHROOTCMD apt-get clean
+$CHROOTCMD apt-get update
+```
+
+### **Install Packages by Category**
+
+### **Firmware Packages**
+
+Essential firmware for hardware support:
+
+```bash
+$CHROOTCMD apt-get install -y initramfs-tools imx-sdma-firmware bluez-firmware u-boot-tools
+```
+
+### **Linux Kernel Packages**
+
+Installing the required kernel and headers from the Mecha repository:
+
+```bash
+$CHROOTCMD apt-get install -y linux-image-6.6.36+mecha+ linux-headers-6.6.36+mecha+ linux-libc-dev=6.6.36-g00659ceb855e-1
+```
+
+### **System Utilities**
+
+Essential system utilities for basic functionality:
+
+```bash
+$CHROOTCMD apt-get install -y dbus nano openssh-server sudo bash-completion dosfstools cpufrequtils upower libglib2.0-0
+```
+
+### **Network Tools**
+
+Networking essentials for connectivity:
+
+```bash
+$CHROOTCMD apt-get install -y bluez hostapd file ethtool network-manager net-tools curl wget unzip
+
+```
+
+### **Locale and Time Synchronization**
+
+Setting up locale support and time synchronization:
+
+```bash
+$CHROOTCMD apt-get install -y systemd-timesyncd locales
+
+```
+
+### **Wayland and Graphics**
+
+Setting up Wayland and essential graphics components:
+
+```bash
+$CHROOTCMD apt-get install -y xwayland xorg libwlroots12t64 labwc weston
+
+```
+
+### **Greeter Setup**
+
+Installing the greetd display manager:
+
+```bash
+$CHROOTCMD apt-get install -y greetd
+
+```
+
+### **Audio Support**
+
+Essential audio packages for sound support:
+
+```bash
+$CHROOTCMD apt-get install -y pulseaudio mpg123 pulseaudio-module-bluetooth alsa-tools alsa-utils libasound2 libasound2-plugins
+
+```
+
+### **Mechanix Platform Packages**
+
+Required packages for the Mechanix environment:
+
+```bash
+$CHROOTCMD apt-get install -y mechanix-launcher mechanix-keyboard mechanix_desktop_dbus_server mechanix_system_dbus_server mechanix-camera mechanix-files mechanix-settings mecha-connect mecha-agent
+```
+
+## **9. Configure Users**
+
+Create a `mecha` user with password `mecha`:
+
+```bash
+$CHROOTCMD useradd -m -u 1001 -p '\$5\$11223344\$Qi1UvJ46XO2CCaKoCyuMjV4cPu7YWZYWoSJpu3gdGsD' mecha
+$CHROOTCMD adduser mecha sudo
+$CHROOTCMD adduser mecha netdev
+$CHROOTCMD chsh -s /bin/bash mecha
+```
+
+## **10. Set Hostname**
+
+```bash
+echo "127.0.0.1 localhost.localdomain  mecha-comet" >> $ROOTDIR/etc/hosts
+echo "mecha-comet" > $ROOTDIR/etc/hostname
+```
+
+## **11. Configure Filesystem**
+
+```bash
+cp fstab $ROOTDIR/etc/fstab
+```
+
+## **12. Final Cleanup**
+
+```bash
+$CHROOTCMD apt-get clean
+mv $ROOTDIR/etc/environment.sav $ROOTDIR/etc/environment
+mv $ROOTDIR/etc/resolv.conf.sav $ROOTDIR/etc/resolv.conf
+mv $ROOTDIR/etc/hosts.sav $ROOTDIR/etc/hosts
+```
+
+```bash
+umount -l -f $ROOTDIR/sys
+umount -l -f $ROOTDIR/proc
+rm -rf $ROOTDIR/tmp/deb
+```
+
+## **13. Bundle Root Filesystem**
+
+```bash
+tar -czf mecha-comet-rootfs.tar.gz -C $ROOTDIR .
+```
+
+---
+
+### **Conclusion**
+
+This guide provides a structured approach to building a **Debian-based root filesystem** for the **Mecha Comet** platform. By including essential system, network, and Mechanix-specific packages, this root filesystem ensures smooth integration with Mecha hardware and software environments. The final bundled tar archive can be deployed directly to a target system.
