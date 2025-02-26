@@ -1,0 +1,42 @@
+---
+title: Flashing Mecha Comet
+hide_table_of_contents: true
+---
+
+
+### Prerequisites
+
+1. **Install the `uuu` utility:**
+Ensure the `uuu` (Universal Update Utility) utility is installed on your system. This utility is used for flashing firmware and root filesystem images to devices in fastboot mode.
+    - Install instructions can be found on the [official GitHub page](https://github.com/NXPmicro/mfgtools).
+2. **Prepare the rootfs bundle:**
+Make sure you have the following files available in the same folder as the flashing files:
+    - `debian-v2.auto` (this is the configuration file for the flashing process).
+    - `flash.bin` (the flash binary file).
+    - `debian-image-rootfs.tar.gz` (the root filesystem image to flash).
+
+### Steps to Flash the Root Filesystem
+
+1. **Put the device into fastboot mode:**
+    - Locate the switch provided on the back of your device and toggle it to enter fastboot mode.
+2. **Connect the device to your machine:**
+    - Use a USB cable to connect the device to your machine.
+    
+3. **Ensure the necessary files are in place:**
+    - Make sure the rootfs bundle (`debian-image-rootfs.tar.gz`) and the `debian-v2.auto` file are in the same directory as the flashing files.
+4. **Flash the image:**
+    - Run the following command to flash the device:
+        
+        ```bash
+        sudo uuu -v -b debian-v2.auto flash.bin debian-image-rootfs.tar.gz
+        
+        ```
+        
+    - This command uses the `uuu` utility to flash the `flash.bin` file and the root filesystem image (`debian-image-rootfs.tar.gz`) to the device in fastboot mode.
+
+### Final Notes
+
+- The flashing process will begin once the command is executed, and it will use the `debian-v2.auto` configuration file for the process.
+- Monitor the terminal output to ensure that the flashing completes successfully. If there are any errors during the flashing, they will be displayed in the terminal.
+
+---

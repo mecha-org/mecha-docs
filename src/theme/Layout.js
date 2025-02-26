@@ -4,7 +4,7 @@ import Layout from '@theme-original/Layout';
 export default function LayoutWrapper(props) {
   return (
     <>
-      <div style={{
+      {/* <div style={{
         backgroundColor:"#FAEC78",
         color:"black",
         paddingLeft:"12px",
@@ -14,7 +14,7 @@ export default function LayoutWrapper(props) {
         display:'flex',
         justifyContent:"center",
         alignItems:"center"
-      }}>Docs are work in progress</div>
+      }}>Docs are work in progress</div> */}
       <Layout {...props} />
     </>
   );

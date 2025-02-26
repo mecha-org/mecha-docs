@@ -2,3 +2,183 @@
 title: Build from source
 hide_table_of_contents: true
 ---
+
+### Introduction
+
+This guide provides a step-by-step process for building the Mecha-Comet kernel from source. It explains setting up a cross-compilation environment, configuring the kernel, compiling it, and packaging the kernel image, device tree, and modules for installation.
+
+---
+
+### 1. Clone the Kernel Source Repository
+
+To begin, clone the kernel source repository from GitHub:
+
+```bash
+git clone https://github.com/chiragp-mecha/linux-imx
+cd linux-imx
+```
+
+This repository contains the Linux kernel source code with Mecha-Comet-specific configurations and patches.
+
+---
+
+### 2. Set Up the Cross-Build Environment
+
+Since the target device uses an ARM64 architecture, we need a cross-compilation toolchain. On an Ubuntu-based system, install the necessary toolchain:
+
+```bash
+sudo apt-get install gcc-aarch64-linux-gnu
+```
+
+Then, set up environment variables:
+
+```bash
+export ARCH=arm64
+export CROSS_COMPILE=/usr/bin/aarch64-linux-gnu-
+```
+
+These variables ensure that the correct architecture and compiler are used for the build process.
+
+---
+
+### 3. Configure the Kernel
+
+Copy the default kernel configuration for the Mecha-Comet platform:
+
+```bash
+cp arch/arm64/configs/mecha_v8_defconfig .config
+```
+
+Modify the configuration if needed:
+
+```bash
+make menuconfig
+```
+
+Once the changes are made, save and exit.
+
+---
+
+### 4. Build the Kernel
+
+Compile the kernel using multiple CPU cores for faster execution:
+
+```bash
+make -j$(nproc)
+```
+
+Key output files:
+
+- **Kernel Image**: `arch/arm64/boot/Image`
+- **Device Tree Blob (DTB)**: `arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dtb`
+
+---
+
+### 5. Create a Debian Package for the Kernel and Modules
+
+#### Option 1: Using `bindeb-pkg`
+
+```bash
+make bindeb-pkg
+```
+
+#### Option 2: Manual Packaging
+
+```bash
+make modules
+mkdir -p kernel-modules/usr
+make modules_install INSTALL_MOD_PATH=kernel-modules
+make headers_install INSTALL_HDR_PATH=kernel-modules/usr
+```
+
+Create a Debian package:
+
+```bash
+mkdir -p /tmp/comet/kernel-modules/DEBIAN
+```
+
+Create a `control` file inside `DEBIAN`:
+
+```
+Package: Kernel-Modules
+Version: 6.1.22+git0+492e0a2188ff-r0
+Description: Kernel-modules
+Section: base
+Priority: optional
+Maintainer: mecha
+Architecture: arm64
+OE: Kernel-Modules
+PackageArch: armv8a
+```
+
+Build the package:
+
+```bash
+dpkg-deb --build /tmp/comet/kernel-modules/ kernel-modules.deb
+```
+
+---
+
+### 6. Alternative Methods for Kernel Module Installation
+
+#### Using a TAR Archive
+
+```bash
+mkdir /tmp/comet-modules
+make modules
+make modules_install INSTALL_MOD_PATH=/tmp/comet-modules/
+sudo tar -czvf kernel-modules.tar.gz -C /tmp/comet-modules/ .
+```
+
+#### Using SSHFS for Direct Installation
+
+```bash
+sudo apt install sshfs
+mkdir /mnt/comet
+sudo sshfs -o allow_other mecha@192.168.29.000:/ /mnt/comet/
+sudo make modules_install INSTALL_MOD_PATH=/mnt/comet
+sudo umount /mnt/comet
+```
+
+---
+
+### 7. Important Notes
+
+- Ensure the kernel image and modules installed on the target device match the same source revision (`SRC-REV`) to avoid compatibility issues.
+- If changes are made to the kernel configuration, rebuild both the kernel and the modules before installation.
+- The target device must have enough storage and the required dependencies installed for smooth installation.
+
+---
+
+## Building the Kernel Using Mecha-Make
+
+We’ve built a system using Nu Shell that simplifies the kernel build process, making rapid development easier.
+
+### Prerequisites
+
+1. Clone `mecha-make` repository from [Mecha-Make GitHub Repository](https://github.com/mecha-org/mecha-make).
+2. Ensure Nu Shell is installed. If you encounter errors, update Rust to the latest version.
+3. Install necessary dependencies:
+
+```bash
+sudo apt-get update && sudo apt-get install -y sudo curl git rsync cpio
+```
+
+### Steps to Build
+
+```bash
+git clone https://github.com/chiragp-mecha/linux-imx
+cd linux-imx
+mkdir -p kernel-build
+nu build.nu mecha-comet-gen1 ../kernel-build
+```
+
+### Output Files
+
+Check the output files in:
+
+```bash
+ls -laR kernel-build/deploy
+```
+
+This method provides a streamlined and automated approach to kernel building, making it easier for users to compile the kernel natively on their devices.

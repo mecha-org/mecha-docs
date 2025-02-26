@@ -2,3 +2,84 @@
 title: Basics in bootloader
 hide_table_of_contents: true
 ---
+
+## 1. What is a Bootloader?
+A bootloader is a small piece of software responsible for loading the operating system (OS) into memory. Microprocessors can only execute code that exists in memory (RAM or ROM), while operating systems typically reside on storage devices like hard disks, USB drives, or network servers. Since the memory is empty when the processor is powered on, the bootloader's job is to load the OS from storage into memory and execute it.
+
+### 1.1 Bootloader on Desktop PCs
+- Resides in the Master Boot Record (MBR) of the hard drive.
+- Executes after the BIOS (Basic Input/Output System) completes system initialization.
+- Loads and transfers control to the OS.
+
+### 1.2 Bootloader in Embedded Systems
+Embedded systems often lack a BIOS, making the bootloader responsible for:
+- Initializing the hardware (especially the memory controller).
+- Providing boot parameters for the OS.
+- Loading and executing the OS.
+- Managing firmware updates and debugging.
+
+## 2. Use Cases of a Bootloader
+### 2.1 System Startup
+- Ensures the system boots correctly by initializing the hardware and loading the OS.
+
+### 2.2 Firmware Updates
+- Enables flashing new firmware to update or fix the system software.
+
+### 2.3 Debugging and Development
+- Provides tools for developers to test and debug the system by allowing direct memory access and command execution.
+
+### 2.4 Booting Multiple Operating Systems
+- Supports selecting between different OS images at boot time.
+
+## 3. What is U-Boot?
+U-Boot (Universal Boot Loader) is an open-source, cross-platform bootloader widely used in embedded systems. It supports various CPU architectures, including PowerPC, ARM, XScale, MIPS, Coldfire, NIOS, Microblaze, and x86.
+
+### 3.1 Features of U-Boot
+#### 3.1.1 Customizable Footprint
+- U-Boot can be configured for a minimal size or rich feature set, depending on the system requirements.
+
+#### 3.1.2 Monitor (Command Shell)
+- Provides an interactive shell to execute boot commands and customize the boot process.
+
+#### 3.1.3 Environment Variables
+- Stores configurations and scripts in non-volatile memory, allowing flexible boot setups.
+
+#### 3.1.4 Ethernet and USB Support
+- Enables downloading kernel images via Ethernet or USB without flashing, reducing wear on flash storage.
+
+#### 3.1.5 Number Representation
+- U-Boot uses hexadecimal format for numerical values (e.g., 0x30100).
+
+## 4. Example: Using U-Boot
+### 4.1 Checking U-Boot Version
+```sh
+U-Boot> version
+```
+
+### 4.2 Listing Environment Variables
+```sh
+U-Boot> printenv
+```
+
+### 4.3 Setting Boot Arguments
+```sh
+U-Boot> setenv bootargs console=ttyS0,115200 root=/dev/mmcblk0p2 rw
+```
+
+### 4.4 Saving Environment Variables
+```sh
+U-Boot> saveenv
+```
+
+### 4.5 Loading a Kernel Image
+```sh
+U-Boot> tftp 0x80000000 uImage
+```
+
+### 4.6 Booting the OS
+```sh
+U-Boot> bootm 0x80000000
+```
+
+## 5. Conclusion
+Bootloaders, especially U-Boot, play a crucial role in embedded systems by initializing hardware, managing boot parameters, and providing tools for debugging and updates. Understanding how to work with U-Boot commands can greatly aid in system development and maintenance.

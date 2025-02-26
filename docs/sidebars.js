@@ -1,5 +1,29 @@
 import mechaApiRefSidebar from "./apis/references/sidebar"
 const sidebars = {
+  cometSidebar: [
+    {
+      type: "category",
+      label: "Getting Started",
+      items: [
+        "comet/getting-started/quick-start",
+        "comet/getting-started/form-factor",
+        "comet/getting-started/using-gui",
+        "comet/getting-started/connecting-to-internet",
+        "comet/getting-started/things-to-do",
+      ],
+    },
+    // {
+    //   type: "category",
+    //   label: "Extensions",
+    //   items: [
+    //     "comet/extensions/quick-start",
+    //     "comet/extensions/form-factor",
+    //     "comet/extensions/using-gui",
+    //     "comet/extensions/connecting-to-internet",
+    //   ],
+    // },
+    "comet/connect-to-ssh",
+  ],
   hardwareSidebar: [
     {
       type: "category",
@@ -25,8 +49,18 @@ const sidebars = {
       items: [
         "hardware/kernel/connecting-basics",
         "hardware/kernel/device-tree",
+        "hardware/kernel/building-device-tree",
         "hardware/kernel/working-with-kernel",
         "hardware/kernel/build-from-source",
+      ],
+    },
+    {
+      type: "category",
+      label: "Debian rootfs",
+      items: [
+        "hardware/rootfs/build-rootfs-mecha-make",
+        "hardware/rootfs/build-rootfs-natively",
+        "hardware/rootfs/flashing-device",
       ],
     },
     {
@@ -90,6 +124,16 @@ const sidebars = {
       ],
     },
   ],
+  benchmarkSidebar: [
+      //we need only one sidebar for all the sections that that is called benchmark
+    {
+      type: "category",
+      label: "Benchmarks",
+      items: [
+        "benchmarks/mecha-comet-benchmark",
+      ],
+    },
+  ],
   mechanixSidebar: [
     {
       type: "category",
@@ -117,6 +161,8 @@ const sidebars = {
       items: [
         "mechanix/installing-apps/package-manager",
         "mechanix/installing-apps/using-flatpak",
+        "mechanix/installing-apps/using-snap",
+        "mechanix/installing-apps/adding-source",
       ],
     },
   ],

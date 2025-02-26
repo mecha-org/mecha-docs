@@ -278,7 +278,7 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Grafana Integration",
+      label: "grafana-integration",
       items: [
         {
           type: "doc",

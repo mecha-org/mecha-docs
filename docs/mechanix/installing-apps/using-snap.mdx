@@ -1,0 +1,148 @@
+---
+title: Snap Package Manager Guide
+hide_table_of_contents: false
+---
+
+The purpose of this guide is to explain how to use **Snap**, a package manager for installing, updating, and managing software packages in a secure and sandboxed environment on Linux distributions.
+
+## Prerequisites
+
+- You need `sudo` privileges to install or remove software using Snap.
+- A working internet connection is required to download and update packages.
+- Ensure that Snap is installed on your system. If not, refer to [Snap’s installation guide](https://snapcraft.io/docs/installing-snapd) for your Linux distribution.
+
+<br />
+
+### 1. Install Snap (if not already installed)
+
+If Snap is not already installed on your system, use the following command based on your Linux distribution.
+
+#### **For Debian/Ubuntu-based distributions:**
+
+```bash
+sudo apt update
+sudo apt install snapd
+```
+
+#### **For Fedora distributions:**
+
+```bash
+sudo dnf install snapd
+```
+
+#### **For Arch-based distributions:**
+
+```bash
+sudo pacman -S snapd
+```
+
+Once installed, the systemd unit that manages the main snap communication socket needs to be enabled:
+
+```bash
+sudo systemctl enable --now snapd.socket
+```
+
+<br />
+
+### 2. Test the Snap installation
+
+To verify that Snap is installed correctly, run the following command:
+
+```bash
+snap version
+```
+
+The output should display the Snap version information.
+
+<br />
+
+### 3. Install software packages
+
+To install a software package using Snap, use the `snap install` command followed by the package name.
+
+```bash
+sudo snap install <package-name>
+```
+
+For example, to install the `htop` package:
+
+```bash
+sudo snap install htop
+```
+
+### 4. Remove software packages
+
+To remove a software package installed via Snap, use the `snap remove` command followed by the package name.
+
+```bash
+sudo snap remove <package-name>
+```
+
+For example, to remove the `htop` package:
+
+```bash
+sudo snap remove htop
+```
+
+### 5. Update installed packages
+
+To update all installed Snap packages to their latest versions, use the `snap refresh` command:
+
+```bash
+sudo snap refresh
+```
+
+### 6. Search for software packages
+
+You can search for software packages available on the Snap Store using the following command:
+
+```bash
+snap find <package-name>
+```
+
+For example, to search for the VLC media player, run:
+
+```bash
+snap find VLC
+```
+
+### 7. Run applications
+
+To run an application installed via Snap, use the following command:
+
+```bash
+snap run <application-name>
+```
+
+For example, to run the VLC media player, run:
+
+```bash
+snap run VLC
+```
+
+### 8. Update applications
+
+To update an application installed via Snap, use the following command:
+
+```bash
+sudo snap refresh <application-name>
+```
+
+For example, to update the VLC media player, run:
+
+```bash
+
+sudo snap refresh VLC
+```
+
+### 9. List installed Snap packages
+
+To list all installed Snap packages, use the following command:
+
+```bash
+snap list
+```
+
+### 10. Troubleshooting
+
+If you encounter any issues while using Snap, refer to the [Snap documentation](https://snapcraft.io/docs) for troubleshooting tips and solutions.

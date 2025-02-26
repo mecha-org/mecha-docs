@@ -1,0 +1,138 @@
+---
+title:  Modifying Device Tree Blob 
+hide_table_of_contents: false
+---
+
+## 1. Introduction to Device Tree
+
+### What is a Device Tree?
+
+A Device Tree (DT) is a data structure used in embedded Linux systems to describe hardware components and their configurations to the Linux kernel. It eliminates the need for hardcoded board-specific information in the kernel source code.
+
+### What is a Device Tree Blob (DTB)?
+
+The Device Tree Blob (DTB) is a compiled binary representation of the Device Tree Source (DTS) file. The Linux kernel reads the DTB during boot to configure hardware settings properly.
+
+### Why is the Device Tree Important?
+
+- It provides flexibility to configure hardware without modifying kernel source code.
+- It defines how peripherals (I2C, SPI, UART, etc.) interact with the SoC.
+- It allows enabling/disabling specific hardware components dynamically.
+
+## 2. Locating and Modifying the DTS File
+
+### Step 1: Identifying the Relevant DTS File
+
+For the **Mecha Comet** device, the top-level DTB file used by the kernel is:
+
+```
+arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dtb
+```
+
+This DTB is generated from the corresponding **DTS file**:
+
+```
+arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dts
+```
+
+This DTS file may include other files such as:
+
+```
+arch/arm64/boot/dts/freescale/imx8mm-mecha-som-gen1.dts
+```
+
+These included files define common hardware configurations for the Mecha Comet platform.
+
+### Step 2: Editing the DTS File
+
+To modify the DTS file:
+
+1. Open the DTS file in a text editor:
+    
+    ```
+    nano arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dts
+    ```
+    
+2. Locate the node you want to modify. A typical node looks like this:
+    
+    ```
+    &i2c2 {
+        status = "disabled";
+    };
+    ```
+    
+3. Modify the node parameters according to your needs. For example, to enable a hardware component, change its `status`:
+    
+    ```
+    &i2c2 {
+        status = "okay";
+    };
+    ```
+    
+4. Save the file and exit the editor.
+
+## 3. Compiling the Modified DTS File
+
+After making changes, you need to compile the DTS file into a DTB file:
+
+```
+make DTBS
+```
+
+This command generates the modified DTB at:
+
+```
+arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dtb
+```
+
+## 4. Deploying the Modified DTB
+
+Once compiled, the new DTB must be copied to the boot partition of your device:
+
+```
+cp arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dtb /boot/
+```
+
+Or, if using a bootloader such as U-Boot:
+
+```
+scp arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dtb user@target:/boot/
+```
+
+After copying, reboot the device to apply the changes:
+
+```
+reboot
+```
+
+## 5. Verifying the Changes
+
+To verify that your modifications are applied:
+
+1. Dump the device tree in a readable format:
+    
+    ```
+    dtc -I dtb -O dts /boot/imx8mm-mecha-comet-m-gen1.dtb -o modified.dts
+    ```
+    
+2. Check if your changes are present in `modified.dts`.
+
+## 6. Troubleshooting
+
+- If the device fails to boot after modifying the DTB, revert to the previous DTB:
+    
+    ```
+    mv /boot/imx8mm-mecha-comet-m-gen1.dtb.bak /boot/imx8mm-mecha-comet-m-gen1.dtb
+    reboot
+    ```
+    
+- If `make DTBS` fails, ensure you have the correct dependencies installed:
+    
+    ```
+    sudo apt install device-tree-compiler
+    ```
+    
+## Conclusion
+
+Modifying the DTB allows customization of hardware configurations for the Mecha Comet device without kernel modifications. Always ensure proper testing before deploying DTB changes in production environments.
+
