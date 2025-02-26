@@ -22,6 +22,8 @@
 @import url("components/container.css");
 @import url("components/layout.css");
 @import url("components/landing-page.css");
+@import url("components/img.css");
+
 :root {
   --ifm-spacing-horizontal: var(--spacer-5);
   --ifm-font-weight-semibold: 600;

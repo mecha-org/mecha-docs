@@ -1,0 +1,64 @@
+---
+title: Installation
+hide_table_of_contents: true
+---
+
+import S from "@site/components/Steps/";
+
+## Install Python
+
+Python should already be preinstalled in Mechanix OS. If not, the below command will install *Python 3* using the apt package manager.
+
+```bash
+$ sudo apt install python3
+```
+
+After installation, verify that `python` and `pip` are properly installed:
+
+```bash
+$ python --version
+$ pip --version
+```
+
+## Running an example
+Let's create a simple hello world program to test Python.
+
+
+<S>
+    <S.Step>
+        <S.Details>
+            Create a new directory, and a new source file for your go program.
+
+            ```bash
+            $ mkdir hello_python && cd hello_python
+            $ nano main.py
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Paste the following program in the editor
+
+            ```python
+            print("Hello, Python!")
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Now lets compile and run the program.
+
+            ```bash
+            $ python hello.py
+            Hello, Python!
+            ```
+        </S.Details>
+    </S.Step>
+</S>
+
+You are all set now, you are ready for running `Python` on the Comet 🐍!
+
+
+
+
+

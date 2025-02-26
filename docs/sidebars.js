@@ -27,67 +27,61 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Remote Access",
-      collapsed: true,
+      label: "Access via network",
+      collapsed: false,
       items: [
-        "comet/remote-access/introduction-to-remote-access",
-        "comet/remote-access/find-ip-address",
-        {
-          type: "category",
-          label: "Access a remote terminal with SSH",
-          items: [
-            "comet/remote-access/access-remote-terminal-with-ssh/connect-to-an-ssh-server",
-            "comet/remote-access/access-remote-terminal-with-ssh/configure-ssh-without-password",
-          ],
-        },,
-        "comet/remote-access/screen-share-with-vnc",
-        "comet/remote-access/share-files-with-scp",
-        "comet/remote-access/share-files-with-kde-connect",
+        "comet/network-access/find-ip-address",
+        "comet/network-access/connect-via-ssh",
+        "comet/network-access/share-files-with-scp",
+        "comet/network-access/screen-share-with-vnc",
+        // "comet/network-access/share-files-with-kde-connect",
       ],
     },
     {
       type: "category",
-      collapsed: true,
+      collapsed: false,
       label: "Development",
       items: [
-        "comet/development/cpp",
-        "comet/development/go",
-        "comet/development/java",
-        "comet/development/nodejs",
-        "comet/development/php",
-        "comet/development/python",
-        "comet/development/ruby",
-        "comet/development/rust",            
+        "comet/development/c-cpp/install",
+        "comet/development/go/install",
+        "comet/development/java/install",
+        "comet/development/nodejs/install",
+        {
+          type: "category",
+          collapsed: true,
+          label: "Python",
+          items: [
+            "comet/development/python/install",
+            "comet/development/python/setting-up-pyenv",
+          ]
+        },
+        "comet/development/ruby/install",
+        "comet/development/rust/install",            
       ]
     },
     {
       type: "category",
-      collapsed: true,
+      collapsed: false,
       label: "Machine Learning",
       items: [
-        "comet/machine-learning/MLintro",
-        "comet/machine-learning/setting-up-pyenv",  
+        "comet/machine-learning/intro",
         "comet/machine-learning/running-tensorflow",
-        "comet/machine-learning/coralinstall",
-        "comet/machine-learning/On-deviceLLM",
+        "comet/machine-learning/installing-coral",
+        "comet/machine-learning/on-device-llm",
       ],
     },
     {
       type: "category",
+      collapsed: false,
       label: "Networking",
       items: [
-        {
-          type: "category",
-          label: "Internet Sharing",
-          items: [
-            "comet/networking/internet-sharing/ethernet-to-wireless",
-            "comet/networking/internet-sharing/wireless-to-ethernet",
-          ],
-        },,
+        "comet/networking/ethernet-to-wireless",
+        "comet/networking/wireless-to-ethernet",
       ],
     },
     {
       type: "category",
+      collapsed: false,
       label: "Emulation",
       items: [
         "comet/emulation/windows",
