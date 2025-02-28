@@ -97,7 +97,7 @@ const sidebars = {
         "comet/emulation/windows",
         "comet/emulation/linux",
         "comet/emulation/dosbox",
-        "comet/emulation/waydroid",
+        "comet/emulation/android",
       ],
     },
   ],
