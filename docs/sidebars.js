@@ -85,8 +85,8 @@ const sidebars = {
       label: "Emulation",
       items: [
         "comet/emulation/windows",
-        "comet/emulation/linux",
         "comet/emulation/dosbox",
+        "comet/emulation/android",
       ],
     },
   ],

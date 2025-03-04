@@ -1,0 +1,111 @@
+---
+title: Android (via Waydroid)
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps/";
+import Video from "@site/components/Video/";
+
+## Introductions
+A container-based approach to boot a full Android system on comet running Wayland based desktop environments.
+
+This tutorial focuses on bringing Waydroid support to the Mecha Comet, it ensures compatibility, performance, and hardware acceleration, allowing users to run Android applications alongside their Linux workflow.
+
+The Waydroid environment includes a minimal, customized Android system image based on LineageOS, currently using Android 11.
+
+The purpose of this setup is to install and configure Waydroid for Android System.
+
+## Prerequisites
+- You need sudo privileges to execute the commands.
+- Ensure Mecha Comet is connected to wireless and have internet access.
+
+<S>
+    <S.Step>
+        <S.Details>
+            #### Kernel flags modifications
+            <S.Code>
+                ```bash
+                CONFIG_PSI=y 
+                CONFIG_MEMCG=y
+                CONFIG_MEMCG_SWAP=y
+                CONFIG_MEMCG_KMEM=y
+                ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Install pre-requisites and Add the official repository
+            <S.Code>
+                ```bash
+                sudo apt install curl ca-certificates -y
+                curl -s https://repo.waydro.id | sudo bash
+                ```
+            </S.Code>
+            If the script fails to detect your distribution while adding repository, you can provide a valid option by appending -s bookworm
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Install Waydroid
+            <S.Code>
+                ```bash
+               sudo apt install waydroid -y
+                ```
+            </S.Code>
+            Then start Waydroid from the applications menu. :tada:
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            ### Manually Starting Waydroid:old_key: 
+            #### Start the container first:
+            <S.Code>
+                ```bash
+                sudo waydroid container start
+                ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### And in a new terminal tab, start the waydroid session (without sudo ):
+            <S.Code>
+                ```bash
+               waydroid session start
+                ```
+            </S.Code>
+            After that starts and you see “Android with user 0 is ready”, it is safe to launch an app from the applications menu, or Launch Waydroid In Full-Screen Mode:
+
+            (This can be run while Waydroid is running, or used to start it in full-screen mode)
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Launch Waydroid In Full-Screen Mode
+            <S.Code>
+             ```bash
+            waydroid show-full-ui
+            ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Install and Run Android Applications
+            You can install Android applications with:
+            <S.Code>
+             ```bash
+            waydroid app install xyz.apk
+            ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+
+</S>
+
+<Video src="https://web-assets.mecha.so/developers-v1/comet/waydroid-temple-run.mp4">
+        Your browser does not support the video tag.
+    </Video>
+
+This completes the setup for running Waydroid on Mecha Comet.
