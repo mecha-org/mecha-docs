@@ -1,4 +1,4 @@
-import mechaApiRefSidebar from "./apis/references/sidebar"
+import mechaApiRefSidebar from "./apis/references/sidebar";
 const sidebars = {
   mctkSidebar: [
     "mctk/intro",
@@ -6,10 +6,7 @@ const sidebars = {
     {
       type: "category",
       label: "Getting Started",
-      items: [
-        "mctk/gettingstarted/setup",
-        "mctk/gettingstarted/first-app",
-      ],
+      items: ["mctk/gettingstarted/setup", "mctk/gettingstarted/first-app"],
     },
     // "mctk/concepts",
   ],
@@ -24,7 +21,6 @@ const sidebars = {
         "comet/getting-started/using-gui",
         "comet/getting-started/connecting-to-internet",
         "comet/getting-started/things-to-do",
-        
       ],
     },
     {
@@ -40,7 +36,8 @@ const sidebars = {
             "comet/remote-access/access-remote-terminal-with-ssh/connect-to-an-ssh-server",
             "comet/remote-access/access-remote-terminal-with-ssh/configure-ssh-without-password",
           ],
-        },,
+        },
+        ,
         "comet/remote-access/screen-share-with-vnc",
         "comet/remote-access/share-files-with-scp",
         "comet/remote-access/share-files-with-kde-connect",
@@ -61,19 +58,20 @@ const sidebars = {
             "comet/developing/setting-up-environment/php",
             "comet/developing/setting-up-environment/python",
             "comet/developing/setting-up-environment/ruby",
-            "comet/developing/setting-up-environment/rust",            
-          ]
-        },{
+            "comet/developing/setting-up-environment/rust",
+          ],
+        },
+        {
           type: "category",
           label: "Machine Learning",
           items: [
             "comet/developing/machine-learning/MLintro",
-            "comet/developing/machine-learning/setting-up-pyenv",  
+            "comet/developing/machine-learning/setting-up-pyenv",
             "comet/developing/machine-learning/running-tensorflow",
             "comet/developing/machine-learning/coralinstall",
             "comet/developing/machine-learning/On-deviceLLM",
-          ]
-        }
+          ],
+        },
       ],
     },
     {
@@ -87,16 +85,49 @@ const sidebars = {
             "comet/networking/internet-sharing/ethernet-to-wireless",
             "comet/networking/internet-sharing/wireless-to-ethernet",
           ],
-        },,
+        },
+        ,
       ],
     },
     {
       type: "category",
       label: "Emulation",
       items: [
-        "comet/emulation/windows",
-        "comet/emulation/linux",
         "comet/emulation/dosbox",
+        "comet/emulation/windows",
+        "comet/emulation/android",
+      ],
+    },
+
+    {
+      type: "category",
+      label: "Advanced",
+      items: [
+        {
+          type: "category",
+          label: "Serial Console",
+          items: ["comet/advanced/serial-console/using-debug-uart-cable"],
+        },
+        {
+          type: "category",
+          label: "Bootloader",
+          items: [
+            "comet/advanced/bootloader/introduction-to-bootloader",
+            "comet/advanced/bootloader/uboot-ums",
+            "comet/advanced/bootloader/uboot-variable",
+            "comet/advanced/bootloader/working-with-usb",
+            "comet/advanced/bootloader/changing-boot-logo",
+            "comet/advanced/bootloader/building-uboot-from-source",
+          ],
+        },
+        {
+          type: "category",
+          label: "Linux kernel",
+          items: [
+            "comet/advanced/linux-kernel/building-linux-kernel",
+            "comet/advanced/linux-kernel/customise-device-tree",
+          ],
+        },
       ],
     },
   ],
@@ -255,7 +286,7 @@ const sidebars = {
         "apis/how-to-guides/prov-machine",
         "apis/how-to-guides/machine-logs-metrics",
         "apis/how-to-guides/add-virtual-ip",
-        "apis/how-to-guides/generate-grafana-sso"
+        "apis/how-to-guides/generate-grafana-sso",
       ],
     },
 
@@ -264,11 +295,9 @@ const sidebars = {
     //   type: "doc",
     //   id: "apis/references/mecha-cloud-apis",
     // },
-    ... mechaApiRefSidebar,
+    ...mechaApiRefSidebar,
 
-    
     // },
-    
   ],
 };
 
