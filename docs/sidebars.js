@@ -1,4 +1,4 @@
-import mechaApiRefSidebar from "./apis/references/sidebar"
+import mechaApiRefSidebar from "./apis/references/sidebar";
 const sidebars = {
   mctkSidebar: [
     "mctk/intro",
@@ -6,10 +6,7 @@ const sidebars = {
     {
       type: "category",
       label: "Getting Started",
-      items: [
-        "mctk/gettingstarted/setup",
-        "mctk/gettingstarted/first-app",
-      ],
+      items: ["mctk/gettingstarted/setup", "mctk/gettingstarted/first-app"],
     },
     // "mctk/concepts",
   ],
@@ -53,11 +50,11 @@ const sidebars = {
           items: [
             "comet/development/python/install",
             "comet/development/python/setting-up-pyenv",
-          ]
+          ],
         },
         "comet/development/ruby/install",
-        "comet/development/rust/install",            
-      ]
+        "comet/development/rust/install",
+      ],
     },
     {
       type: "category",
@@ -84,9 +81,40 @@ const sidebars = {
       collapsed: false,
       label: "Emulation",
       items: [
-        "comet/emulation/windows",
         "comet/emulation/dosbox",
+        "comet/emulation/windows",
         "comet/emulation/android",
+      ],
+    },
+    {
+      type: "category",
+      label: "Advanced",
+      items: [
+        {
+          type: "category",
+          label: "Serial Console",
+          items: ["comet/advanced/serial-console/using-debug-uart-cable"],
+        },
+        {
+          type: "category",
+          label: "Bootloader",
+          items: [
+            "comet/advanced/bootloader/introduction-to-bootloader",
+            "comet/advanced/bootloader/uboot-ums",
+            "comet/advanced/bootloader/uboot-variable",
+            "comet/advanced/bootloader/working-with-usb",
+            "comet/advanced/bootloader/changing-boot-logo",
+            "comet/advanced/bootloader/building-uboot-from-source",
+          ],
+        },
+        {
+          type: "category",
+          label: "Linux kernel",
+          items: [
+            "comet/advanced/linux-kernel/building-linux-kernel",
+            "comet/advanced/linux-kernel/customise-device-tree",
+          ],
+        },
       ],
     },
   ],
@@ -245,7 +273,7 @@ const sidebars = {
         "apis/how-to-guides/prov-machine",
         "apis/how-to-guides/machine-logs-metrics",
         "apis/how-to-guides/add-virtual-ip",
-        "apis/how-to-guides/generate-grafana-sso"
+        "apis/how-to-guides/generate-grafana-sso",
       ],
     },
 
@@ -254,11 +282,9 @@ const sidebars = {
     //   type: "doc",
     //   id: "apis/references/mecha-cloud-apis",
     // },
-    ... mechaApiRefSidebar,
+    ...mechaApiRefSidebar,
 
-    
     // },
-    
   ],
 };
 
