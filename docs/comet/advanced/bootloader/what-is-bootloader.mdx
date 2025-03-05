@@ -1,0 +1,67 @@
+---
+title: What is a Bootloader?
+hide_table_of_contents: false
+---
+
+
+A **bootloader** is a crucial piece of software that runs immediately when a device is powered on. It is responsible for initializing the hardware and loading the operating system (OS) into memory. Without a bootloader, the system cannot start, as it ensures that all necessary components are properly configured and the OS is loaded.
+
+This document outlines the bootloader stages for the **Mecha Comet** platform, explains the flow of the boot process, and provides an in-depth explanation of **U-Boot**, the main bootloader used in this system.
+
+---
+
+## Why is a Bootloader Needed?
+
+A bootloader serves several critical purposes:
+
+- **Hardware Initialization**: When the system powers up, the processor, memory, and peripherals are uninitialized. The bootloader configures these components to make the system functional.
+- **Loading the OS**: The OS kernel resides in non-volatile storage (e.g., eMMC or NAND flash). The bootloader loads the OS into RAM for execution.
+- **Security & Recovery**: Some bootloaders implement security features like verified boot to ensure only trusted software is loaded. They also offer recovery options in case of a boot failure.
+
+---
+
+## Bootloader Stages & Flow
+
+The boot process for the **Mecha Comet** device follows a multi-stage process, each performing specific tasks to bring the system up and running.
+
+### 1. ROM Bootloader
+
+- **Location**: Stored in the processor's ROM (Read-Only Memory).
+- **Function**: A minimal bootloader that runs first when the system is powered on. It initializes the most basic hardware components.
+- **Tasks**:
+    - Initialize the processor and essential peripherals.
+    - Load the Secondary Bootloader (SPL).
+- **Next Step**: Loads the **Secondary Bootloader (SPL)**.
+
+### 2. Secondary Bootloader (SPL)
+
+- **Location**: Typically stored in the device's storage, such as eMMC or NAND flash.
+- **Function**: A lightweight bootloader that prepares the system for the full bootloader.
+- **Tasks**:
+    - Initialize DRAM (Dynamic RAM) to allow proper system operation.
+    - Detect available storage devices (e.g., eMMC, SD card, USB).
+    - Load and transfer control to the main bootloader (U-Boot).
+- **Next Step**: Loads **U-Boot (Full Bootloader)**.
+
+### 3. U-Boot (Full Bootloader)
+
+- **Location**: Stored in non-volatile storage like eMMC, NAND flash, or SD card.
+- **Function**: A full-featured bootloader that is capable of providing complex functionalities, such as command-line interfaces (CLI), network support, and multiple OS loading options.
+
+### Key Features of U-Boot:
+
+- **Command-Line Interface (CLI)**: Allows manual control over the boot process. Users can execute commands to load different kernel images, change boot configurations, and modify system parameters.
+- **Networking**: U-Boot can use network protocols like TFTP (Trivial File Transfer Protocol) and NFS (Network File System) to load kernel images and files over the network.
+- **Kernel Loading**: It loads the OS kernel into RAM and hands control over to it to start the operating system.
+- **Device Support**: U-Boot is highly flexible and supports various storage devices (eMMC, SD card, USB, etc.) and network interfaces, making it adaptable to different hardware setups.
+- **Recovery**: U-Boot includes mechanisms to help recover from failed boots, such as fallback to a known good state.
+
+### 4. Operating System Loading
+
+- **Function**: After U-Boot has loaded the OS kernel, it transfers control to the kernel, which then initializes remaining hardware and starts services necessary for the OS to function.
+
+---
+
+## Conclusion
+
+This bootloader flow ensures that **Mecha Comet** is capable of starting correctly and provides a flexible boot process, allowing users to control system configurations and recovery options. U-Boot plays a central role in making the system adaptable to various configurations and supporting advanced features like network-based booting and system recovery.

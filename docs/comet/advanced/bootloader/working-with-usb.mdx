@@ -1,0 +1,239 @@
+# Working with USB in U-Boot on Mecha Comet Device
+
+
+U-Boot provides various commands for working with USB devices, including scanning for USB storage, retrieving device information, and mounting file systems. This document will guide developers on how to perform these USB operations on the Mecha Comet device using U-Boot.
+
+## Prerequisites
+
+- USB storage device (USB drive, external hard drive, etc.).
+- Access to U-Boot mode on the Mecha Comet device. To do this, follow the steps outlined here:
+
+[Booting into Uboot](/comet/advanced/bootloader/uboot-ums#booting-into-ums-mode-from-internal-emmc-storage)
+
+## Enabling USB in U-Boot
+
+Before interacting with USB devices, ensure that USB support is enabled in U-Boot. Run the following command to initialize the USB subsystem:
+
+```bash
+$ usb start
+```
+
+This command initializes the USB controller and detects connected USB devices. If the initialization fails, try resetting the USB subsystem with:
+
+```bash
+$ usb reset
+```
+
+This forces the re-enumeration of all connected USB devices.
+
+## Scanning for USB Devices
+
+To detect and list all connected USB devices, use:
+
+```
+$ usb tree
+```
+
+### Example Output:
+
+```
+USB device tree:
+  1  Hub (480 Mb/s, 0mA)
+  |  u-boot EHCI Host Controller
+  |
+  |+-2  Mass Storage (480 Mb/s, 500mA)
+       SRT USB 3.0 JET 16G 049113121910253634000130
+
+```
+
+If devices are not detected, ensure that they are properly connected and powered.
+
+## Getting USB Device Information
+
+To retrieve detailed information about connected USB devices, run:
+
+```bash
+$ usb info
+```
+
+### Example Output:
+
+```
+1: Hub,  USB Revision 2.0
+ - u-boot EHCI Host Controller
+ - Class: Hub
+ - PacketSize: 64  Configurations: 1
+ - Vendor: 0x0000  Product 0x0000 Version 1.0
+   Configuration: 1
+   - Interfaces: 1 Self Powered 0mA
+     Interface: 0
+     - Alternate Setting 0, Endpoints: 1
+     - Class Hub
+     - Endpoint 1 In Interrupt MaxPacket 8 Interval 255ms
+
+2: Mass Storage,  USB Revision 2.10
+ - SRT USB 3.0 JET 16G 049113121910253634000130
+ - Class: (from Interface) Mass Storage
+ - PacketSize: 64  Configurations: 1
+ - Vendor: 0x090c  Product 0x1000 Version 17.0
+   Configuration: 1
+   - Interfaces: 1 Bus Powered 500mA
+     Interface: 0
+     - Alternate Setting 0, Endpoints: 2
+     - Class Mass Storage, Transp. SCSI, Bulk only
+     - Endpoint 1 Out Bulk MaxPacket 512
+     - Endpoint 2 In Bulk MaxPacket 512
+
+```
+
+If no devices are listed, check whether USB support is properly enabled in U-Boot.
+
+## Listing USB Storage Devices
+
+If you have a USB storage device connected, list the available partitions using:
+
+```bash
+$ usb storage
+
+```
+
+To list all block devices (including USB storage), use:
+
+```bash
+$ ls usb 0
+```
+
+## Mounting a USB Storage Device
+
+To access files from a USB storage device, first check the filesystem type.
+
+For FAT-formatted partitions:
+
+```bash
+$ fatls usb 0
+```
+
+### Example Output:
+
+```
+   13012   boot.scr
+   456789   uImage
+
+```
+
+For ext4-formatted partitions:
+
+```bash
+$ ext4ls usb 0
+
+```
+
+### Example Output:
+
+```
+   20480   /boot/kernel.img
+   10240   /boot/initrd.img
+
+```
+
+## Loading a File from USB Storage
+
+To load a specific file from the USB drive into memory:
+
+For FAT-formatted partitions:
+
+```
+fatload usb 0:1 0x80000000 boot.scr
+
+```
+
+For ext4-formatted partitions:
+
+```
+ext4load usb 0:1 0x80000000 /boot/kernel.img
+
+```
+
+This loads the specified file into memory address `0x80000000` for further processing.
+
+## Booting from USB
+
+To boot a kernel or script from a USB device, follow these steps:
+
+1. Load the kernel into memory:
+    
+    ```
+    fatload usb 0:1 0x80000000 zImage
+    ```
+    
+    Or for ext4:
+    
+    ```
+    ext4load usb 0:1 0x80000000 /boot/zImage
+    
+    ```
+    
+2. Load the device tree (if required):
+    
+    ```
+    fatload usb 0:1 0x81000000 dtb
+    
+    ```
+    
+3. Boot the kernel:
+    
+    ```
+    bootz 0x80000000 - 0x81000000
+    
+    ```
+    
+    The `-` signifies that no initrd is being used.
+    
+
+## Writing to USB Storage
+
+To write a file to a USB storage device in U-Boot, prepare the file in RAM and use the `fatwrite` or `ext4write` commands:
+
+For FAT:
+
+```
+fatwrite usb 0:1 0x80000000 newfile.txt 1024
+
+```
+
+For ext4:
+
+```
+ext4write usb 0:1 0x80000000 /newfile.txt 1024
+
+```
+
+This writes 1024 bytes from memory address `0x80000000` to the specified file.
+
+## Unmounting and Stopping USB
+
+After using the USB storage device, unmount and stop the USB subsystem:
+
+```
+usb stop
+```
+
+This safely stops USB operations before rebooting or removing the device.
+
+## Troubleshooting Common USB Issues
+
+1. **USB device not detected**
+    - Ensure `usb start` is executed.
+    - Try `usb reset`.
+    - Check hardware connections.
+    - Verify U-Boot has USB support enabled.
+2. **File not found errors**
+    - Ensure the correct partition index is used (`usb 0:1`).
+    - Verify the file exists with `fatls` or `ext4ls`.
+3. **Boot failure from USB**
+    - Ensure kernel and device tree are loaded correctly.
+    - Use the correct memory addresses for `bootz`.
+
+## Conclusion
+
+This guide covers the essential U-Boot USB commands on the Mecha Comet device, helping developers manage USB operations effectively. By following these steps, you can scan, mount, retrieve information, write to USB storage, and boot from USB devices in U-Boot.
