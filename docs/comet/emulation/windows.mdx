@@ -4,6 +4,7 @@ hide_table_of_contents: false
 ---
 
 import S from "@site/components/Steps/";
+import Video from "@site/components/Video/";
 
 The purpose of this setup to run Windows (x86-64) applications on Mecha Comet using Hangover and Fex.
 
@@ -44,10 +45,10 @@ This guide will walk you through the installation process for Hangover, FEX and 
             #### Install packages
             <S.Code>
                 ```bash
-                $ sudo dpkg -i hangover-wine_10.0~bookworm_arm64.deb 
+                $ sudo dpkg -i hangover-libarm64ecfex_10.0_arm64.deb
                 ```
                 ```bash
-                $ sudo dpkg -i hangover-libarm64ecfex_10.0_arm64.deb
+                $ sudo dpkg -i hangover-wine_10.0~bookworm_arm64.deb 
                 ```
             </S.Code>
         </S.Details>
@@ -67,6 +68,10 @@ This guide will walk you through the installation process for Hangover, FEX and 
                 wine <path-to-application>
                 ```
                 **Example**: `wine npp.7.8.Installer.exe`
+
+                <Video src="https://web-assets.mecha.so/x86-on-comet.mp4">
+                Your browser does not support the video tag.
+                </Video>
             </S.Code>
         </S.Details>
     </S.Step>
