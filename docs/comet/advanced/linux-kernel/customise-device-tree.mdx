@@ -1,0 +1,186 @@
+# Modifying Device Tree Blob (DTB) for Mecha Comet Device
+
+### What is a Device Tree?
+
+A Device Tree (DT) is a data structure used in embedded Linux systems to describe hardware components and their configurations to the Linux kernel. It eliminates the need for hardcoded board-specific information in the kernel source code.
+
+### What is a Device Tree Blob (DTB)?
+
+The Device Tree Blob (DTB) is a compiled binary representation of the Device Tree Source (DTS) file. The Linux kernel reads the DTB during boot to configure hardware settings properly.
+
+### Why is the Device Tree Important?
+
+- It provides flexibility to configure hardware without modifying kernel source code.
+- It defines how peripherals (I2C, SPI, UART, etc.) interact with the SoC.
+- It allows enabling/disabling specific hardware components dynamically.
+
+---
+
+## Here is a step by step process to modify DTB for mecha comet device.
+
+### **Prerequisites for the Host Machine**
+
+Before modifying the DTB, ensure your **host machine** has the necessary tools:
+
+1. **Linux Kernel Source Code**
+
+   - You need the Linux source tree for your **Mecha Comet** device.
+   - Clone the repository if you haven’t already:
+
+     ```bash
+     $ git clone https://github.com/chiragp-mecha/linux-imx
+     $ cd linux-imx
+
+     ```
+
+2. **Device Tree Compiler (DTC)**
+
+   - Required to compile and decompile device trees.
+   - Install with:
+
+     ```bash
+     $ sudo apt install device-tree-compiler
+
+     ```
+
+3. **Cross-Compiler (if building for an embedded system)**
+
+   - Install an ARM64 cross-compiler:
+
+     ```bash
+     $ sudo apt install gcc-aarch64-linux-gnu
+
+     ```
+
+   - Ensure the cross-compiler is set in the environment:
+
+     ```bash
+     $ export CROSS_COMPILE=aarch64-linux-gnu-
+
+     ```
+
+4. **Build Essentials**
+
+   - Install necessary build dependencies:
+
+     ```bash
+     $ sudo apt install build-essential flex bison libssl-dev bc
+
+     ```
+
+---
+
+### **Steps on the Host Machine**
+
+These tasks are performed on your **development machine** where you modify and compile the DTS.
+
+### **1. Locate the Device Tree Source File**
+
+Find the DTS file for the **Mecha Comet** device:
+
+```bash
+$ cd linux
+$ nano arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dts
+
+```
+
+### **2. Modify the Device Tree**
+
+Make changes, such as enabling a hardware interface:
+
+```
+&i2c2 {
+    status = "okay";
+};
+
+```
+
+Save and exit the file.
+
+### **3. Compile the Device Tree**
+
+Convert the DTS file into a DTB:
+
+```bash
+$ make DTBS
+
+```
+
+This generates the updated DTB:
+
+```
+arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dtb
+
+```
+
+### **4. Transfer the DTB to the Target Device**
+
+Use `scp` to copy the new DTB to the **target device**:
+
+```bash
+$ scp arch/arm64/boot/dts/freescale/imx8mm-mecha-comet-m-gen1.dtb user@target:/home/mecha
+
+```
+
+---
+
+### **Steps on the Target Device**
+
+These steps are executed on the **Mecha Comet** device.
+
+### **1. Backup the Existing DTB**
+
+Before replacing the DTB, create a backup:
+
+```bash
+$ sudo cp /usr/lib/linux-image-6.6.36+mecha+/freescale/imx8mm-mecha-comet-m-gen1.dtb /usr/lib/linux-image-6.6.36+mecha+/freescale/imx8mm-mecha-comet-m-gen1.dtb.bak
+
+```
+
+### **2. Replace the DTB**
+
+Move the new DTB to the correct location:
+
+```bash
+$ mv /home/mecha/imx8mm-mecha-comet-m-gen1.dtb /usr/lib/linux-image-6.6.36+mecha+/freescale/imx8mm-mecha-comet-m-gen1.dtb
+
+```
+
+### **3. Reboot the Device**
+
+Apply the changes by rebooting:
+
+```bash
+$ sudo reboot
+
+```
+
+### **4. Verify the Changes**
+
+After the device boots, check if the modifications were applied:
+
+```bash
+$ dtc -I dtb -O dts /boot/imx8mm-mecha-comet-m-gen1.dtb -o modified.dts
+
+```
+
+Inspect `modified.dts` to confirm the changes.
+
+---
+
+## **Troubleshooting**
+
+**Device fails to boot?** Restore the backup:
+
+```bash
+mv /usr/lib/linux-image-6.6.36+mecha+/freescale/imx8mm-mecha-comet-m-gen1.dtb.bak /usr/lib/linux-image-6.6.36+mecha+/freescale/imx8mm-mecha-comet-m-gen1.dtb
+sudo reboot
+
+```
+
+**Compilation fails?** Check if `device-tree-compiler` is installed:
+
+```bash
+sudo apt install device-tree-compiler
+
+```
