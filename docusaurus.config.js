@@ -108,12 +108,12 @@ const config = {
         //   position: "left",
         //   label: "Mechanix OS",
         // },
-        {
-          type: "docSidebar",
-          sidebarId: "mechaCloudSidebar",
-          position: "left",
-          label: "Mecha Cloud",
-        },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "mechaCloudSidebar",
+        //   position: "left",
+        //   label: "Mecha Cloud",
+        // },
         {
           type: "docSidebar",
           sidebarId: "mctkSidebar",

@@ -56,17 +56,17 @@ const sidebars = {
         "comet/development/rust/install",
       ],
     },
-    {
-      type: "category",
-      collapsed: false,
-      label: "Machine Learning",
-      items: [
-        "comet/machine-learning/intro",
-        "comet/machine-learning/running-tensorflow",
-        "comet/machine-learning/installing-coral",
-        "comet/machine-learning/on-device-llm",
-      ],
-    },
+    // {
+    //   type: "category",
+    //   collapsed: false,
+    //   label: "Machine Learning",
+    //   items: [
+    //     "comet/machine-learning/intro",
+    //     "comet/machine-learning/running-tensorflow",
+    //     "comet/machine-learning/installing-coral",
+    //     "comet/machine-learning/on-device-llm",
+    //   ],
+    // },
     {
       type: "category",
       collapsed: false,
@@ -84,6 +84,15 @@ const sidebars = {
         "comet/emulation/dosbox",
         "comet/emulation/windows",
         "comet/emulation/android",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Extensions",
+      items: [
+        "comet/extensions/io-breakout",
+        "comet/extensions/gamepad",
       ],
     },
     {
@@ -132,18 +141,18 @@ const sidebars = {
         "mechanix/using-the-gui/camera",
       ],
     },
-    {
-      type: "category",
-      label: "Functions",
-      items: [
-        "mechanix/functions/wayland",
-        "mechanix/functions/network-manager",
-        "mechanix/functions/bluetooth",
-        "mechanix/functions/video",
-        "mechanix/functions/audio",
-        "mechanix/functions/key-store",
-      ],
-    },
+    // {
+    //   type: "category",
+    //   label: "Functions",
+    //   items: [
+    //     "mechanix/functions/wayland",
+    //     "mechanix/functions/network-manager",
+    //     "mechanix/functions/bluetooth",
+    //     "mechanix/functions/video",
+    //     "mechanix/functions/audio",
+    //     "mechanix/functions/key-store",
+    //   ],
+    // },
     {
       type: "category",
       label: "Installing Apps",
