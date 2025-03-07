@@ -62,19 +62,19 @@ const sidebars = {
       label: "Working with IO",
       items: ["comet/working-with-io/pin-diagram"],
     },
-    {
-      type: "category",
-      collapsed: false,
-      label: "Machine Learning",
-      items: [
-        "comet/machine-learning/intro",
-        "comet/machine-learning/running-tensorflow",
-        "comet/machine-learning/installing-coral",
-        "comet/machine-learning/on-device-llm",
-      ],
-    },
-    {
-      type: "category",
+    // {
+    //   type: "category",
+      //   collapsed: false,
+      //   label: "Machine Learning",
+      //   items: [
+      //     "comet/machine-learning/intro",
+      //     "comet/machine-learning/running-tensorflow",
+      //     "comet/machine-learning/installing-coral",
+      //     "comet/machine-learning/on-device-llm",
+      //   ],
+      // },
+      {
+        type: "category",
       collapsed: false,
       label: "Networking",
       items: [
@@ -95,8 +95,28 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      label: "Extensions",
+      items: [
+        "comet/extensions/io-breakout",
+        "comet/extensions/gamepad",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
       label: "Resources",
-      items: ["comet/resources/datasheets"],
+      items: [
+        "comet/resources/datasheets",
+        {
+          type: "category",
+          collapsed: true,
+          label: "Mechanical Files",
+          items: [
+            "comet/resources/mechanical-files/mecha-comet",
+            "comet/resources/mechanical-files/extensions",
+          ],
+        },
+      ],
     },
     {
       type: "category",
@@ -160,18 +180,18 @@ const sidebars = {
         "mechanix/using-the-gui/camera",
       ],
     },
-    {
-      type: "category",
-      label: "Functions",
-      items: [
-        "mechanix/functions/wayland",
-        "mechanix/functions/network-manager",
-        "mechanix/functions/bluetooth",
-        "mechanix/functions/video",
-        "mechanix/functions/audio",
-        "mechanix/functions/key-store",
-      ],
-    },
+    // {
+    //   type: "category",
+    //   label: "Functions",
+    //   items: [
+    //     "mechanix/functions/wayland",
+    //     "mechanix/functions/network-manager",
+    //     "mechanix/functions/bluetooth",
+    //     "mechanix/functions/video",
+    //     "mechanix/functions/audio",
+    //     "mechanix/functions/key-store",
+    //   ],
+    // },
     {
       type: "category",
       label: "Installing Apps",
