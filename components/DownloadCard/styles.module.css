@@ -1,0 +1,59 @@
+.downloadCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 12px 0px 0px 0px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  padding: 0%;
+  margin: 0%;
+}
+
+.context {
+  font-size: 12px;
+  color: var(--app-metadata-link-color);
+  margin-top: 10px;
+}
+
+.downloadButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.downloadButton {
+  background-color: var(--highlight);
+  color: white;
+  font-weight: 600;
+
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
