@@ -67,6 +67,7 @@ Now that you have `uuu` installed, lets start preparing the flash image.
   alt="mecha-comet-toggle-switch"
   style={{ maxWidth: "80%", height: "auto" }}
 />
+
 ### 2. **Connect the device to your machine:** Use a USB cable to connect the Mecha
 comet device to your host machine.
 <img
@@ -75,8 +76,10 @@ comet device to your host machine.
   alt="mecha-comet-male-cable."
   style={{ maxWidth: "80%", height: "auto" }}
 />
+
 ### 3. **Ensure the necessary files are in place:** Make sure the rootfs bundle (`debian-image-rootfs.tar.gz`)
-and the `debian-v2.auto` file are in the same directory as the flashing files. ###
+and the `debian-v2.auto` file are in the same directory as the flashing files.
+
 ### 4. **Flash the image:** Run the following command on host machine to flash the device:
 ```bash sudo uuu -v -b debian-v2.auto flash.bin debian-image-rootfs.tar.gz ``` This
 command uses the `uuu` utility to flash the `flash.bin` file and the root filesystem
