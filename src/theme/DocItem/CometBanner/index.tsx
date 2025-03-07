@@ -5,6 +5,7 @@ import styles from './styles.module.css';
 const CometBanner = () => {
   return (
     <div className={styles.bannerContainer}>
+        This doc relates to the below revision of hardware
       <div className={styles.topBanner}>
         <div className={styles.logoContainer}>
             <img src="/img/landing/comet.svg" alt='Mecha Logo' />
