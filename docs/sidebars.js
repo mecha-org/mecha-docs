@@ -60,9 +60,7 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Working with IO",
-      items: [       
-        "comet/working-with-io/pin-diagram",
-      ],
+      items: ["comet/working-with-io/pin-diagram"],
     },
     {
       type: "category",
@@ -94,6 +92,13 @@ const sidebars = {
         "comet/emulation/android",
       ],
     },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Resources",
+      items: ["comet/resources/datasheets"],
+    },
+
     {
       type: "category",
       label: "Advanced",
