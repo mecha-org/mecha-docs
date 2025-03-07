@@ -59,6 +59,14 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      label: "Working with IO",
+      items: [       
+        "comet/working-with-io/pin-diagram",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
       label: "Machine Learning",
       items: [
         "comet/machine-learning/intro",
