@@ -1,0 +1,64 @@
+---
+title: Java
+hide_table_of_contents: true
+---
+
+import S from "@site/components/Steps/";
+
+Java is a versatile, object-oriented programming language known for its "Write Once, Run Anywhere" capability through its platform-independent bytecode.
+
+## Install Java
+Launch terminal on your Comet or connect via SSH and run the below command.
+```bash
+$ sudo apt update
+$ sudo apt install default-jdk
+```
+
+After installation, verify that Java is properly installed:
+
+```bash
+$ java -version
+$ javac -version
+```
+
+## Running an example
+Let's create a simple "Hello, World!" program to test Golang on the Comet.
+
+<S>
+    <S.Step>
+        <S.Details>
+            Create a new directory, and a new source file for your go program.
+
+            ```bash
+            $ mkdir hello_world && cd hello_world
+            $ nano HelloWorld.java
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Paste the following program in the editor
+
+            ```java
+            public class HelloJava {
+                public static void main(String[] args) {
+                    System.out.println("Hello, Java!");
+                }
+            }
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Now lets compile and run the program.
+
+            ```bash
+            $ javac HelloWorld.java
+            $ java HelloWorld
+            Hello, Java!
+            ```
+        </S.Details>
+    </S.Step>
+</S>
+
+Now with `java` installed, you are ready for compiling and running `Java` programs ☕️!

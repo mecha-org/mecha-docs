@@ -1,0 +1,205 @@
+# Building the Bootloader from Source
+
+This guide will walk you through building the bootloader for the Mecha Comet platform from source. The bootloader is responsible for initializing the hardware and loading the operating system.
+
+## Prerequisites
+
+Before you begin, Its recommended to have the following:
+
+- A **host machine** running Linux (Ubuntu 20.04 recommended).
+
+
+## 1. Setting Up the Environment
+
+### Create a Working Directory
+
+First, create a dedicated directory on your **host machine** to keep everything organized for the bootloader build:
+
+```bash
+$ mkdir mecha-bootloader-bin
+$ cd mecha-bootloader-bin
+```
+
+This directory will store all the necessary files and binaries for the bootloader. 
+
+All steps outlined below should be performed on the **host machine** unless explicitly stated otherwise.
+
+## 2. Building U-Boot
+
+U-Boot is an open-source bootloader responsible for initializing the hardware and loading the operating system.
+
+If you want to explore more about U-Boot, you can refer to the **U-Boot Documentation**.
+
+### Clone the U-Boot Repository
+
+On the **host machine**, clone the U-Boot repository:
+
+```bash
+$ git clone https://github.com/chiragp-mecha/u-boot
+$ cd u-boot/
+```
+
+If you're using Ubuntu’s toolchain, make sure to install the necessary cross-compilation tools:
+
+```bash
+$ sudo apt-get install gcc-aarch64-linux-gnu
+$ export ARCH=arm64
+$ export CROSS_COMPILE=/usr/bin/aarch64-linux-gnu-
+```
+
+This sets the architecture to ARM64 and configures the cross-compilation toolchain for U-Boot.
+
+### Install Required Dependencies
+
+Install the libraries needed for U-Boot, specifically those for cryptographic functions:
+
+```bash
+$ sudo apt-get install libgnutls28-dev libghc-gnutls-dev
+```
+
+### Build U-Boot
+
+To build U-Boot on your **host machine**, run:
+
+```bash
+$ make clean
+$ make mecha_comet_defconfig
+$ make -j10
+```
+
+- `make clean`: Cleans up any previous build files.
+- `make mecha_comet_defconfig`: Loads the default configuration for the Mecha Comet board.
+- `make -j10`: Builds U-Boot using 10 threads for faster compilation.
+
+## 3. Building the ARM Trusted Firmware (ATF)
+
+ARM Trusted Firmware (ATF) handles low-level initialization, security, and power management tasks.
+
+### Clone the ATF Repository
+
+Clone the ATF repository on your **host machine**:
+
+```bash
+$ cd ..
+$ git clone https://github.com/nxp-imx/imx-atf
+$ cd imx-atf/
+```
+
+### Checkout the Required Version
+
+You can either check out the required branch or a specific commit:
+
+```bash
+$ git checkout -b lf_v2.8
+```
+
+Or:
+
+```bash
+$ git checkout 99195a23d3aef485fb8f10939583b1bdef18881c
+```
+
+### Build the Firmware
+
+To build the firmware on your **host machine**:
+
+```bash
+$ make PLAT=mecha-comet bl31
+```
+
+- `PLAT=mecha-comet`: Specifies the platform for which the firmware is being built.
+- `bl31`: Builds the BL31 firmware, which manages secure boot and system initialization.
+
+If you encounter linker errors, try clearing the `LDFLAGS`:
+
+```bash
+$ unset LDFLAGS
+$ make PLAT=mecha-comet bl31
+```
+
+## 4. Downloading LPDDR4 Training Binaries
+
+If your platform requires memory training firmware for initializing LPDDR4 RAM, you need to download and extract the appropriate binaries:
+
+```bash
+$ cd ..
+$ mkdir firmware-mecha
+$ cd firmware-mecha
+$ wget https://www.nxp.com/lgfiles/NMG/MAD/YOCTO/firmware-imx-8.20.bin
+$ chmod a+x firmware-imx-8.20.bin
+$ ./firmware-imx-8.20.bin
+```
+
+This will extract the required firmware for memory initialization.
+
+## 5. Creating the Boot Image
+
+Now, you'll need to combine the bootloader components into a single bootable image.
+
+### Clone the imx-mkimage Repository
+
+On your **host machine**, clone the `imx-mkimage` repository:
+
+```bash
+$ cd ..
+$ git clone https://github.com/nxp-imx/imx-mkimage
+$ cd imx-mkimage/
+```
+
+### Checkout the Required Version
+
+You can check out the required branch or a specific commit:
+
+```bash
+$ git checkout -b lf-6.1.1_1.0.0
+```
+
+Or:
+
+```bash
+$ git checkout d489494622585a47b4be88988595b0e4f9598f39
+```
+
+### Copy the Required Binaries
+
+Copy the relevant binaries from the previously built components into the `iMX8M/` directory:
+
+```bash
+$ cp ../u-boot/spl/u-boot-spl.bin iMX8M/
+$ cp ../u-boot/u-boot-nodtb.bin iMX8M/
+$ cp ../u-boot/arch/arm/dts/mecha-comet.dtb iMX8M/
+$ cp ../u-boot/tools/mkimage iMX8M/mkimage_uboot
+$ cp ../imx-atf/build/mecha-comet/release/bl31.bin iMX8M/
+$ cp ../firmware-mecha/firmware-imx-8.5/firmware/ddr/synopsys/lpddr4_pmu_train_* iMX8M/
+```
+
+### Build the Boot Image
+
+On your **host machine**, to  build the bootable image:
+
+```bash
+$ make SOC=mecha-comet flash_evk
+```
+
+- `SOC=mecha-comet`: Specifies the target SoC (System on Chip).
+- `flash_evk`: Creates the final bootable image.
+
+The generated boot image will be available as `./iMX8M/flash.bin`.
+
+## 6. Flashing U-Boot to eMMC
+
+Once the boot image is built, you will need to flash it onto the Mecha Comet’s eMMC storage. You can use the `uuu` tool to do this. 
+
+form your host machine trigger following command 
+
+```bash
+$ sudo uuu -b emmc_all flash.bin
+```
+
+- `uuu`: A flashing tool for NXP-based platforms.
+- `b emmc_all`: Specifies the target device (eMMC).
+- `flash.bin`: The boot image you generated.
+
+## Conclusion
+
+By following these steps, you will have successfully built and flashed the bootloader for the Mecha Comet platform. The system is now ready to boot and load an operating system.

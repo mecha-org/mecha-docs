@@ -61,13 +61,21 @@ const config = {
     ],
   ],
 
-  themes: [["docusaurus-theme-openapi-docs", {}]],
-  
+ 
+  themes: [
+    "@docusaurus/theme-mermaid",  // ✅ Added Mermaid support
+    ["docusaurus-theme-openapi-docs", {}],
+  ],
+
+  markdown: {
+    mermaid: true,  // ✅ Enables Mermaid in Markdown files
+  },
+
   themeConfig: {
     algolia: {
-      appId: "HZJ4XG1ZJJ", // cspell: disable-line
-      apiKey: "75ca7bc62c992a3b2e7e0d86b531b333",
-      indexName: "developers_mecha_so_hzj4xg1zjj_pages",
+      appId: process.env['ALOGLIA_APP_ID'] || 'DUMMY_APP_ID', // cspell: disable-line
+      apiKey: process.env['ALOGLIA_API_KEY'] || 'DUMMY_API_KEY',
+      indexName: process.env['ALOGLIA_INDEX_NAME'] || 'DUMMY_INDEX_NAME',
       placeholder: "Search Mecha Documentation"
     },
     image: "img/mecha-social-card.jpg",
@@ -108,12 +116,12 @@ const config = {
         //   position: "left",
         //   label: "Mechanix OS",
         // },
-        {
-          type: "docSidebar",
-          sidebarId: "mechaCloudSidebar",
-          position: "left",
-          label: "Mecha Cloud",
-        },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "mechaCloudSidebar",
+        //   position: "left",
+        //   label: "Mecha Cloud",
+        // },
         {
           type: "docSidebar",
           sidebarId: "mctkSidebar",
@@ -153,7 +161,7 @@ const config = {
       ],
     },
     footer: {
-      copyright: `Copyright © ${new Date().getFullYear()} Mecha Systems Inc.`,
+      copyright: `© ${new Date().getFullYear()} Mecha Systems Inc.`,
       links: [
         {
           items: [
@@ -179,8 +187,9 @@ const config = {
       ],
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: prismThemes.oneDark,
+      darkTheme: prismThemes.oneDark,
+      additionalLanguages: ['bash', 'java', 'shell-session'],
     },
   },
 };

@@ -1,0 +1,69 @@
+---
+title: Rust
+hide_table_of_contents: true
+---
+
+import S from "@site/components/Steps/";
+
+Rust is a systems programming language that emphasizes performance, reliability, and productivity. It provides memory safety without garbage collection and supports concurrent programming without data races. Rust is particularly well-suited for developing system tools, embedded systems, and performance-critical applications.
+
+## Install rust using rustup
+
+Rustup is the official installer and version management tool for Rust. To install `rustup` run the below command.
+
+```bash
+# Download and run the rustup installer script
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Load Rust environment variables into current shell session
+. "$HOME/.cargo/env"
+```
+
+After installation, verify that Rust is properly installed
+
+```bash
+$ rustc --version
+$ cargo --version
+```
+
+## Running an example
+
+Let's create a simple Hello World program to test the installation:
+
+
+<S>
+    <S.Step>
+        <S.Details>
+            Create a new directory, and a new source file for your rust program.
+
+            ```bash
+            $ mkdir hello_rust && cd hello_rust
+            $ nano main.rs
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Paste the following program in the editor
+
+            ```rust
+            fn main() {
+                println!("Hello, Rust!");
+            }
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Now lets compile and run the program.
+
+            ```bash
+            $ rustc main.rs
+            $ ./main 
+            Hello, Rust!
+            ```
+        </S.Details>
+    </S.Step>
+</S>
+
+You are now ready to run our favorite crustacean compiler 🦀!

@@ -1,0 +1,75 @@
+---
+title: Node.js
+hide_table_of_contents: true
+---
+
+import S from "@site/components/Steps/";
+
+Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. It is commonly used for developing server-side applications, tools, and APIs. Node.js also includes `npm`, a package manager for JavaScript libraries.
+
+## Install Node.js
+
+We will be using the NodeSource repository that provides up-to-date versions of Node.js. Launch terminal on your Comet or connect via SSH and run the following commands
+
+1. Add the `NodeSource` debian repository
+```bash
+# replace <version> with the desired version, e.g., 20.x)
+$ curl -fsSL https://deb.nodesource.com/setup_<version>.x | sudo -E bash -
+
+# Example for Nodejs 20.x
+$ curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+```
+
+2. Now lets install `nodejs` from the repository.
+
+```bash
+$ sudo apt install -y nodejs
+```
+
+3. After installation, verify that `node` and `npm` are properly installed, by running the commands below.
+
+```
+$ node --version
+$ npm --version
+```
+
+## Running an example
+Let's build a simple "Hello, World!" app to test Node.js on the Comet.
+
+
+<S>
+    <S.Step>
+        <S.Details>
+            Create a new directory, and a new source file for your go program.
+
+            ```bash
+            $ mkdir hello_node && cd hello_node
+            $ nano main.js
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Paste the following program in the editor
+
+            ```js
+            const main = () => {
+                console.log('Hello, Node.js!');
+            };
+            main();
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Now lets compile and run the program.
+
+            ```bash
+            $ node main.js
+            Hello, Node.js!
+            ```
+        </S.Details>
+    </S.Step>
+</S>
+
+You are now ready to build and run Node.js based applications 🎉! 

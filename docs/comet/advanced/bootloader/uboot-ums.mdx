@@ -1,0 +1,33 @@
+---
+title: UMS Mode with U-Boot
+hide_table_of_contents: false
+---
+
+**USB Mass Storage (UMS)** mode is a feature that allows a device to function like an external USB storage device when connected to a host computer.
+
+In UMS mode, the device’s internal storage, such as eMMC (embedded MultiMediaCard), is made accessible to the host computer, similar to how you would connect a USB drive or SD card to your host machine.
+
+This mode is useful for tasks like transferring files, flashing firmware, or writing disk images to the device’s storage.
+
+Now, here are the steps for booting into UMS mode from either internal eMMC storage or SD card:
+
+
+## **Booting into UMS Mode from Internal eMMC Storage**
+
+1. Connect the Mecha comet device to a host machine using a USB male to male cable.
+2. Connect the Serial to TTL converter (FTDI) to your Mecha comet and to the host machine.
+3. Open the serial monitor application on your host machine.
+4. Power on the Mecha comet device.
+5. Quickly press Any key  to enter the U-Boot console.
+6. From U-Boot console type `ums 1 mmc <dev number>`, where is the device number for MMC card.
+
+    
+    ![image.png](/assets/advanced/uboot-ums.png)
+    
+
+After completing these steps, your Mecha Comet device should be visible as a USB storage device on your host machine.
+
+:::note
+- `mmc 1` is the device number for SD-Card.
+- `mmc 2` is the device number for eMMC.
+:::
