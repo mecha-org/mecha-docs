@@ -105,7 +105,18 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Resources",
-      items: ["comet/resources/datasheets"],
+      items: [
+        "comet/resources/datasheets",
+        {
+          type: "category",
+          collapsed: true,
+          label: "Mechanical Files",
+          items: [
+            "comet/resources/mechanical-files/mecha-comet",
+            "comet/resources/mechanical-files/extensions",
+          ],
+        },
+      ],
     },
     {
       type: "category",
