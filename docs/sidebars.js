@@ -98,7 +98,13 @@ const sidebars = {
       label: "Resources",
       items: ["comet/resources/datasheets"],
     },
-
+    {
+      type: "category",
+      label: "Benchmarks",
+      items: [
+        "benchmarks/mecha-comet-benchmark",
+      ],
+    },
     {
       type: "category",
       label: "Advanced",
@@ -137,16 +143,6 @@ const sidebars = {
             "comet/advanced/building-debian-rootfs/flash-rootfs",
           ],
         },
-      ],
-    },
-  ],
-  benchmarkSidebar: [
-      //we need only one sidebar for all the sections that that is called benchmark
-    {
-      type: "category",
-      label: "Benchmarks",
-      items: [
-        "benchmarks/mecha-comet-benchmark",
       ],
     },
   ],
