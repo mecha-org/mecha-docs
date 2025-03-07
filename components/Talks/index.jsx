@@ -8,7 +8,7 @@ const Talks = ({children}) => (
       {children}
     </div>
     <iframe
-      style={{ borderRadius: "0.4rem" }}
+      style={{ borderRadius: "0.4rem", marginTop: -24 }}
       width="100%"
       height="350px"
       src="https://www.youtube.com/embed/DRNV1-9S0kQ"

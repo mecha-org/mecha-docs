@@ -1,0 +1,59 @@
+---
+title: Ruby
+hide_table_of_contents: true
+---
+
+import S from "@site/components/Steps/";
+
+Ruby is a dynamic, object-oriented programming language known for its simplicity and productivity. It powers frameworks like Ruby on Rails and is widely used for web development, scripting, and automation tasks. Ruby's elegant syntax and robust ecosystem make it a popular choice for developers.
+
+## Install Ruby
+
+Run the below command to install Ruby in Mechanix OS (or any debian based distro)
+
+```bash
+$ sudo apt install ruby-full
+```
+
+After installation, verify that `ruby` and `gem` are properly installed:
+
+```
+$ ruby --version
+$ gem --version
+```
+
+## Running an example
+Let's create a simple hello world program to test our Ruby installation.
+
+<S>
+    <S.Step>
+        <S.Details>
+            Create a new directory, and a new source file for your Ruby program.
+
+            ```bash
+            $ mkdir hello_ruby && cd hello_ruby
+            $ nano main.rb
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Paste the following program in the editor
+
+            ```ruby
+            puts "Hello, Ruby!"
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Now lets run the program using `ruby`.
+
+            ```bash
+            ruby hello.rb!
+            ```
+        </S.Details>
+    </S.Step>
+</S>
+
+You have now successfully configured Ruby on your Comet ✨!

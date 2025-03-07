@@ -1,0 +1,74 @@
+---
+title: Find your IP Address
+hide_table_of_contents: false
+---
+
+Any device connected to a network is assigned an IP address. In order to connect to your Mecha Comet from another machine, you will need to know its assigned IP address, this guide will quickly help you identify. 
+
+:::tip[mDNS Address]
+    Alternatively if your network supports mDNS which modern local network routers usually do, you can substitute the IP address with - `mecha-comet.local`. Check [`Resolve using mDNS`](#resolve-using-mdns) section below for more details.
+:::
+
+### Homescreen
+
+On the Homescreen you can find the IP address on the right-hand side, as shown below. The wireless IP has a priority over a wired connection.
+
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+  <img src="/assets/comet/network-access/comet-homescreen-ip-address.png" alt="Comet Homescreen" width="480" height="480" style={{ maxWidth: '100%', height: 'auto' }} />
+</div>
+
+### Terminal
+
+Launch the **Terminal** app from the Homescreen or the Quick Settings drawer. On the terminal, run the below command to list all the IP addresses for your device.
+
+```bash
+$ hostname -I
+
+192.168.24.11
+```
+
+Alternatively, using `nmcli` you can access details about your device's network information. Try to run the command as shown below
+
+```bash
+$ nmcli device show | grep "IP4.ADDRESS"
+
+GENERAL.DEVICE:                         wlan0
+GENERAL.TYPE:                           wifi
+GENERAL.HWADDR:                         XX:XX:XX:XX:XX:XX
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected)
+GENERAL.CONNECTION:                     Mecha-1
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/2
+IP4.ADDRESS[1]:                         192.168.24.11/24
+IP4.GATEWAY:                            192.168.29.1
+IP4.ROUTE[1]:                           dst = 192.168.24.0/24, nh = 0.0.0.0, mt = 600
+IP4.ROUTE[2]:                           dst = 0.0.0.0/0, nh = 192.168.24.1, mt = 600
+IP4.DNS[1]:                             192.168.29.1
+IP6.ADDRESS[1]:                         2405:201:2011:e903:d2c5:d3ff:fed0:9b9d/64
+IP6.ADDRESS[2]:                         fe80::d2c5:d3ff:fed0:9b9d/64
+IP6.GATEWAY:                            fe80::b6a7:c6ff:feaf:b3c5
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256
+IP6.ROUTE[2]:                           dst = ::/0, nh = fe80::b6a7:c6ff:feaf:b3c5, mt = 1024
+IP6.ROUTE[3]:                           dst = 2405:201:2011:e903::/64, nh = ::, mt = 256
+...
+```
+
+Notice the `GENERAL.DEVICE` and `GENERAL.TYPE` that corresponds to the Wireless interface. Similarly you can find IP addresses for other interfaces such as a wired connection or VPN.
+
+## Resolve using mDNS
+
+If your device supports mDNS, you can reach your Mecha Comet by using its hostname and the `.local` suffix. The default hostname set on the Mechanix OS for the Mecha Comet is `mecha-comet`.
+
+If the Mecha Comet is connected in the same network, you should be able `ping`.
+
+```bash
+$ ping mecha-comet.local
+
+PING mecha-comet.local (192.168.24.11): 56 data bytes
+64 bytes from 192.168.24.11: icmp_seq=0 ttl=255 time=2.618 ms
+```
+
+:::tip[Hostname]
+
+Changing the hostname by editing `/etc/hostname`, updates the `.local` mDNS address. 
+:::

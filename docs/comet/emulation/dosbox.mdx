@@ -4,8 +4,10 @@ hide_table_of_contents: false
 ---
 
 import S from "@site/components/Steps/";
+import Video from "@site/components/Video/";
 
 The purpose of this setup is to install and configure DOSBox for running DOS games.
+
 <S>
     <S.Step>
         <S.Details>
@@ -22,7 +24,7 @@ The purpose of this setup is to install and configure DOSBox for running DOS gam
             #### Generate DOSBox default configuration file
             <S.Code>
                 ```bash
-                dosbox -printconf
+                $ dosbox -printconf
                 ```
             </S.Code>
             This will generate a default configuration file and will print the path to the file.
@@ -34,7 +36,7 @@ The purpose of this setup is to install and configure DOSBox for running DOS gam
             #### Update configuration file
             <S.Code>
                 ```bash
-                nano <path-to-config-file>
+                $ nano <path-to-config-file>
                 ```
             </S.Code>
             Replace `<path-to-config-file>` with the path to the configuration file printed in Step 2.
@@ -59,7 +61,7 @@ The purpose of this setup is to install and configure DOSBox for running DOS gam
             #### Start DOSBox
             <S.Code>
                 ```bash
-                dosbox
+                $ dosbox
                 ```
             </S.Code>
         </S.Details>
@@ -70,7 +72,7 @@ The purpose of this setup is to install and configure DOSBox for running DOS gam
             Inside DOSBox, mount the game directory to a drive letter
             <S.Code>
                 ```bash
-                mount c <path-to-game>
+                $ mount c <path-to-game>
                 ```
                 Replace `<path-to-game>` with the path to the game folder.
                 Above command will mount the letter `c` to the game directory.
@@ -83,17 +85,18 @@ The purpose of this setup is to install and configure DOSBox for running DOS gam
         <S.Details>
             #### Run exe file
             Run the game executable file by entering the name of file without `exe` followed by enter.
-            
+
             **Example**: If the game executable file is `skyroads.exe`, then enter `skyroads` and press enter.
             <S.Code>
              ```bash
-            skyroads
+            $ skyroads
             ```
             </S.Code>
+            <Video src="https://web-assets.mecha.so/developers-v1/comet/dosbox-demo.mp4">
+                Your browser does not support the video tag.
+            </Video>
         </S.Details>
     </S.Step>
+</S>
 
-    <br />
-    <br />
-    This completes the setup for running DOS games using DOSBox.
-</S>    
+This completes the setup for running DOS games using DOSBox.

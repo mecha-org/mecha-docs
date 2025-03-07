@@ -1,0 +1,204 @@
+---
+title: Building Debian Rootfs Manually
+hide_table_of_contents: true
+---
+
+This guide details the steps to manually build a Debian-based root filesystem tailored for the **Mecha Comet** that  runs on arm platform. The process leverages `debootstrap` for system initialization, configures essential packages, and ensures compatibility with the Mecha ecosystem. The final root filesystem is bundled into a compressed tar archive for easy deployment.
+
+---
+
+## **Prerequisites**
+
+This guide assumes you are running a Debian-based Linux system as the host. Root privileges are required for most steps.
+we also assume that system is running on x86_64 architecture that is mostly to be the platform for **host environment**. 
+
+
+### **1. Install Required Packages**
+
+These tools are necessary for setting up a Debian root filesystem and enabling execution of ARM binaries on an x86_64 host.
+
+```bash
+sudo apt install debootstrap qemu-user-static
+```
+
+### **2. Set Up the Root Directory**
+
+We create a directory to hold the root filesystem and set an environment variable for convenience.
+
+```bash
+mkdir target
+export ROOTDIR=$(realpath target)
+```
+
+### **3. Bootstrap Debian (Bookworm)**
+
+`debootstrap` is a tool used to install a Debian-based root filesystem. It operates in two stages:
+
+- **First stage (executed on the host machine):** Downloads and extracts base system packages.
+- **Second stage (executed inside the chroot environment):** Configures and installs remaining system components.
+
+We use the `--foreign` flag because we are cross-building for an ARM64 architecture on an x86_64 host.
+
+```bash
+sudo debootstrap --arch=arm64 --foreign --no-check-gpg --include=eatmydata,gnupg bookworm $ROOTDIR http://deb.debian.org/debian
+
+```
+
+### **4. Enable ARM Execution Support**
+
+To execute ARM64 binaries within the chroot environment, we copy `qemu-aarch64-static` into the root filesystem.
+
+```bash
+sudo cp /usr/bin/qemu-aarch64-static $ROOTDIR/usr/bin/
+
+```
+
+## **5. Complete Debootstrap Installation**
+
+`chroot` changes the apparent root directory for processes, allowing us to simulate running commands inside the target system. This is necessary when setting up a root filesystem on a different architecture or preparing it for deployment.
+
+At this point, we enter the chroot environment to complete the Debian setup.
+
+```bash
+export CHROOTCMD="eval LC_ALL=C LANGUAGE=C LANG=C sudo chroot $ROOTDIR"
+$CHROOTCMD /debootstrap/debootstrap --second-stage
+
+```
+
+*Explanation:* The `--second-stage` completes the installation of essential Debian packages inside the chroot environment.
+
+### **6. Set Up Networking**
+
+To enable networking inside the chroot environment, we bind essential virtual filesystems and copy network configuration from the host.
+
+```bash
+sudo mkdir -p $ROOTDIR/home/root
+sudo mount -t sysfs sysfs $ROOTDIR/sys
+sudo mount -t proc proc $ROOTDIR/proc
+
+# Backup and apply host networking configuration
+cp $ROOTDIR/etc/environment{,.sav}
+cp $ROOTDIR/etc/resolv.conf{,.sav}
+cp $ROOTDIR/etc/hosts{,.sav}
+cp /etc/resolv.conf $ROOTDIR/etc/resolv.conf
+cp /etc/hosts $ROOTDIR/etc/hosts
+
+```
+
+### **7. Configure Package Sources**
+
+To ensure seamless package availability and optimal performance on Mecha Comet devices, we recommend adding the Mecha Debian repository to your system. This repository hosts essential kernel and firmware Debian packages, specifically tailored for Mecha Comet devices.
+
+Additionally, the Mecha Debian repository serves as a central hub for our in-house developed GUI and pre-built applications, carefully crafted to enhance the Mecha Comet user experience.
+
+By adding this repository, you'll gain access to:
+
+Optimized kernel and firmware packages
+
+- Optimized kernel and firmware packages
+
+Exclusive GUI and application packages designed for Mecha Comet
+
+- Exclusive GUI and application packages designed for Mecha Comet
+
+```bash
+echo "deb http://debian.mecha.build apollo main" | sudo tee -a $ROOTDIR/etc/apt/sources.list
+$CHROOTCMD apt-get update
+
+```
+
+### **8. Install Essential Packages**
+
+We install core system packages required for the Mecha Comet platform. These include installing firmware, kernel, utilities, networking tools, display managers, and audio support in order to ensure the platform's robust operation.
+
+You can also add the packages as needed to make the OS/image unique to your preferences.
+
+```bash
+$CHROOTCMD apt-get install -y initramfs-tools imx-sdma-firmware bluez-firmware u-boot-tools
+$CHROOTCMD apt-get install -y linux-image-6.6.36+mecha+ linux-headers-6.6.36+mecha+ linux-libc-dev=6.6.36-g00659ceb855e-1
+$CHROOTCMD apt-get install -y dbus nano openssh-server sudo bash-completion dosfstools cpufrequtils upower libglib2.0-0
+$CHROOTCMD apt-get install -y bluez hostapd file ethtool network-manager net-tools curl wget unzip
+$CHROOTCMD apt-get install -y systemd-timesyncd locales
+$CHROOTCMD apt-get install -y xwayland xorg libwlroots12t64 labwc weston
+$CHROOTCMD apt-get install -y greetd
+$CHROOTCMD apt-get install -y pulseaudio mpg123 pulseaudio-module-bluetooth alsa-tools alsa-utils libasound2 libasound2-plugins
+$CHROOTCMD apt-get install -y mechanix-launcher mechanix-keyboard mechanix_desktop_dbus_server mechanix_system_dbus_server mechanix-camera mechanix-files mechanix-settings mecha-connect mecha-agent
+
+```
+
+### **9. Configure Users**
+
+We create a `mecha` user with password `mecha`, granting it sudo and network privileges for target device 
+
+```bash
+$CHROOTCMD useradd -m -u 1001 -p '\$5\$11223344\$Qi1UvJ46XO2CCaKoCyuMjV4cPu7YWZYWoSJpu3gdGsD' mecha
+$CHROOTCMD adduser mecha sudo
+$CHROOTCMD adduser mecha netdev
+$CHROOTCMD chsh -s /bin/bash mecha
+
+```
+
+### **10. Set Hostname**
+
+we need to set `hostname` for our target device, you can select the name you want.
+
+```bash
+echo "127.0.0.1 localhost.localdomain mecha-comet" >> $ROOTDIR/etc/hosts
+echo "mecha-comet" > $ROOTDIR/etc/hostname
+
+```
+
+### **11. Configure Filesystem**
+
+The `fstab` file defines how disk partitions and other file systems should be mounted at boot.
+
+```bash
+cp fstab $ROOTDIR/etc/fstab
+
+```
+
+### **12. Final Cleanup**
+
+We restore networking configurations and unmounted virtual filesystems before packaging the root filesystem.
+
+```bash
+$CHROOTCMD apt-get clean
+mv $ROOTDIR/etc/environment.sav $ROOTDIR/etc/environment
+mv $ROOTDIR/etc/resolv.conf.sav $ROOTDIR/etc/resolv.conf
+mv $ROOTDIR/etc/hosts.sav $ROOTDIR/etc/hosts
+
+```
+
+Unmount filesystems:
+
+```bash
+umount -l -f $ROOTDIR/sys
+umount -l -f $ROOTDIR/proc
+rm -rf $ROOTDIR/tmp/deb
+
+```
+
+### **13. Bundle Root Filesystem**
+
+Finally, we package the root filesystem into a compressed archive for deployment.
+
+```bash
+tar -czf mecha-comet-rootfs.tar.gz -C $ROOTDIR .
+
+```
+
+## Conclusion
+
+After following the steps in this guide, you will have successfully built a Debian-based root filesystem for the Mecha Comet on an ARM64 architecture. This root filesystem is now ready for deployment to the target device.
+
+### **Next Steps**:
+
+1. Extract the root filesystem archive to the target device's root partition:
+    
+    ```bash
+    
+    $ tar -xzf mecha-comet-rootfs.tar.gz -C /mnt/rootfs
+    ```
+    
+2. Ensure that the bootloader and kernel are properly configured for the Mecha Comet platform.
+3. Once everything is set up, reboot the device, and the new system will be ready for use!

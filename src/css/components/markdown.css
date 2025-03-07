@@ -41,6 +41,7 @@
 }
 .markdown > ul {
   margin-top: var(--ifm-leading);
+  margin-left: var(--ifm-pre-padding);
 }
 .markdown ul:not(.tabs) > li {
   padding-left: var(--spacer-3);
