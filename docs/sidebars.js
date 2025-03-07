@@ -113,7 +113,7 @@ const sidebars = {
           label: "Mechanical Files",
           items: [
             "comet/resources/mechanical-files/mecha-comet",
-            "comet/resources/mechanical-files/extensions",
+            "comet/resources/mechanical-files/comet-extensions"
           ],
         },
       ],
