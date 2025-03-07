@@ -98,7 +98,13 @@ const sidebars = {
       label: "Resources",
       items: ["comet/resources/datasheets"],
     },
-
+    {
+      type: "category",
+      label: "Benchmarks",
+      items: [
+        "benchmarks/mecha-comet-benchmark",
+      ],
+    },
     {
       type: "category",
       label: "Advanced",
@@ -126,6 +132,15 @@ const sidebars = {
           items: [
             "comet/advanced/linux-kernel/building-linux-kernel",
             "comet/advanced/linux-kernel/customise-device-tree",
+          ],
+        },
+        {
+          type: "category",
+          label: "Buiding Rootfs",
+          items: [
+            "comet/advanced/building-debian-rootfs/using-mecha-make",
+            "comet/advanced/building-debian-rootfs/build-rootfs-manually",
+            "comet/advanced/building-debian-rootfs/flash-rootfs",
           ],
         },
       ],
