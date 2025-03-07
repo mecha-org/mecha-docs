@@ -56,6 +56,14 @@ const sidebars = {
         "comet/development/rust/install",
       ],
     },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Working with IO",
+      items: [       
+        "comet/working-with-io/pin-diagram",
+      ],
+    },
     // {
     //   type: "category",
     //   collapsed: false,
