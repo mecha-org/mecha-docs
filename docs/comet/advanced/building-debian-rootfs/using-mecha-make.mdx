@@ -1,0 +1,125 @@
+---
+title: Building Debian Rootfs with Mecha Make
+hide_table_of_contents: true
+---
+
+Mecha Make is designed to simplify and modularize the process of building a customized Debian-based Linux distribution for the **Mecha Comet** device. Written in Nushell, Mecha Make uses a series of modules that cover all aspects of system configuration and package installation, enabling you to:
+
+- Configure network settings, audio, Bluetooth, and more.
+- Manage package sources and installations both on the host and target systems.
+- Automate the entire build process, from setting up a base system with debootstrap to finalizing the root filesystem packaging.
+
+## Prerequisites
+
+### Host System Requirements
+
+1. Debian-based Linux system (recommended)
+2. Nushell
+    
+    Install the latest version of [Nushell](https://github.com/nushell/nushell). 
+    
+3. Install required tools:
+    
+    ```bash
+    $ sudo apt-get update
+    $ sudo apt-get install -y \
+      debootstrap \
+      qemu-user-static \
+      wget \
+      dpkg
+    
+    ```
+    
+
+## Getting Started
+
+**1. Clone the Repository**
+
+```bash
+git clone https://github.com/mecha-org/mecha-make.git
+cd mecha-make
+
+```
+
+### 2. Customize Configuration
+
+### Key Configuration Files to Modify
+
+- `conf/build.yml`: Core system settings
+    - Change hostname
+    - Set timezone
+    - Configure user details
+    - Modify package sources
+- `conf-packages/target.yml`: Package selection
+    - Add or remove package groups
+    - Customize installed packages
+
+### Example Customization
+
+```yaml
+# In conf/build.yml
+hostname: my-custom-machine
+user:
+  name: myuser
+  password: mypassword
+
+# In conf-packages/target.yml
+# To add a package group
+package_groups:
+  - name: development
+    packages:
+      - git
+      - build-essential
+
+```
+
+### 3. Build the System
+
+```bash
+nu build-debian.nu mecha-comet-m-gen1 /path/to/build/directory
+
+```
+
+This process will generate final rootfs bundle that you can flash to your **Mecha comet** device.
+
+## Customization Tips
+
+### Package Management
+
+- Add packages by editing `conf-packages/target.yml`
+- Create new package groups for specific use cases
+- Remove unnecessary packages to reduce image size
+
+### System Configuration
+
+- Modify `build.yml` to:
+    - Change keyboard layout
+    - Set locale
+    - Configure SSH settings
+    - Adjust OS release information
+
+### Troubleshooting
+
+- Check build logs for any installation issues
+- Ensure `qemu-user-static` is installed
+- Validate YAML configuration files
+
+## Quick Modifications Checklist
+
+1. ✅ Change hostname
+2. ✅ Set user credentials
+3. ✅ Configure network sources
+4. ✅ Select desired packages
+5. ✅ Customize system locale
+6. ✅ Set up SSH preferences
+
+## Warning
+
+- Always backup your configuration files
+- Test configurations in a controlled environment
+- Verify package compatibility
+
+## Resources
+
+- Documentation: [Mecha Make GitHub Repository](https://github.com/mecha-org/mecha-make)
+- Community Support: https://forum.mecha.so/
