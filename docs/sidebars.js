@@ -60,23 +60,21 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Working with IO",
-      items: [       
-        "comet/working-with-io/pin-diagram",
-      ],
+      items: ["comet/working-with-io/pin-diagram"],
     },
     // {
     //   type: "category",
-    //   collapsed: false,
-    //   label: "Machine Learning",
-    //   items: [
-    //     "comet/machine-learning/intro",
-    //     "comet/machine-learning/running-tensorflow",
-    //     "comet/machine-learning/installing-coral",
-    //     "comet/machine-learning/on-device-llm",
-    //   ],
-    // },
-    {
-      type: "category",
+      //   collapsed: false,
+      //   label: "Machine Learning",
+      //   items: [
+      //     "comet/machine-learning/intro",
+      //     "comet/machine-learning/running-tensorflow",
+      //     "comet/machine-learning/installing-coral",
+      //     "comet/machine-learning/on-device-llm",
+      //   ],
+      // },
+      {
+        type: "category",
       collapsed: false,
       label: "Networking",
       items: [
@@ -102,6 +100,12 @@ const sidebars = {
         "comet/extensions/io-breakout",
         "comet/extensions/gamepad",
       ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Resources",
+      items: ["comet/resources/datasheets"],
     },
     {
       type: "category",
