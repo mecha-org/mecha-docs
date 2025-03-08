@@ -1,0 +1,50 @@
+---
+title: Writing a Component
+hide_table_of_contents: true
+---
+
+Components are the building blocks of an mctk application.  There are three
+types of components: widgets, root components, and simple components.
+
+## Widget
+
+A widget is a component with rendering capabilities.  Many built-in widgets are
+provided with mctk, such as button, text, image, and div.
+
+Refer to the guide on building custom widgets for more information.
+
+## Simple Component
+
+A simple component acts as a parent to a tree of widgets and other components.
+
+```rust
+#[derive(Default, Debug)]
+struct OurComponent {}
+
+impl Component for OurComponent {}
+```
+
+## Root Component
+
+As the name suggests, a root component has no parent. It is the top-level
+component rendered in an mctk application.
+
+```rust
+#[derive(Default, Debug)]
+struct OurComponent {}
+struct ComponentParams;
+
+impl Component for OurComponent {}
+impl RootComponent<ComponentParams> for OurComponent {}
+```
+
+Component parameters are passed when the window is opened. These parameters can
+be accessed in the `root` function.
+
+```rust
+impl RootComponent<ComponentParams> for App {
+    fn root(&mut self, w: &dyn std::any::Any, component_params: &dyn Any) {
+        let component_params = component_params.downcast_ref::<ComponentParams>().unwrap();
+    }
+}
+```

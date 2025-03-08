@@ -1,0 +1,208 @@
+---
+title: Connect via SSH
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps/";
+
+You can connect to the Mecha Comet remotely from another computer on the same network using the Secure Shell (SSH) protocol. Follow the steps shown below to quickly get connected.
+
+<S>
+    <S.Step>
+        <S.Details>
+           Launch the `Terminal` app on your computer (even Windows now has a Terminal app, what a time to be alive!)
+
+           <img className="img-rounded" src="/assets/comet/network-access/ubuntu-launch-terminal.png" alt="Launch Terminal" style={{ maxWidth: '100%', height: 'auto' }} />
+        </S.Details>
+    </S.Step>  
+    <S.Step>
+        <S.Details>
+           Run the below command, this should work out-of-the-box for the Mechanix OS.
+           ```bash
+            $ ssh mecha@mecha-comet.local
+            ```
+           Alternatively, if you know the IP address ([here](./find-ip-address)) you can run the command below, replacing the `<ip address>` placeholder.
+           ```bash
+           $ ssh mecha@<ip address>
+           ```
+            :::info
+            The default username and password for your Mecha Comet is `mecha`, once connected you maybe asked to change the password.
+            :::
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           If you are connecting for the first time, `OpenSSH` might throw a warning about the authenticity of the host. Don't worry, `OpenSSH` is trying to keep you secure from connecting to unknown hosts.
+
+            ```bash
+            $ ssh mecha@mecha-comet.local
+
+            The authenticity of host '192.168.24.11 (192.168.24.11)' can't be established.
+            ED25519 key fingerprint is SHA256:xXxyyyZxxxxYYYYxxxzzXXXyyyyyXXZZZxzzxxxxx.
+            This key is not known by any other names
+            Are you sure you want to continue connecting (yes/no/[fingerprint])?
+            ```
+
+           Just enter *`yes`* and proceed 👍
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+        You should now see the prompt on your terminal change to the Comet. You can now start firing away your commands.
+
+        ```bash
+        mecha@mecha-comet:~$ echo "hello world"
+        hello world
+        ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+        That's it, you are now connected to your Mecha Comet via SSH 🎉 ! 
+        </S.Details>
+    </S.Step>
+</S>
+---
+
+## Configure SSH without password
+
+It is recommended to use a Public-Private Key-pair to authenticate while connecting via SSH. This tutorial will help you set up Public Key Authentication for your Comet.
+
+<S>
+    <S.Step>
+        <S.Details>
+            **Generate a new keypair**
+           On your local machine, open a terminal and run the below command. You can skip this step if you already have a keypair generated (for Github, or any other SSH connections).
+
+            ```bash
+            $ ssh-keygen -t rsa -b 4096
+            ```
+
+            :::warning
+            Never share your private key, always ensure you keep it safe and local to your system.
+            :::
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            You'll be prompted to enter the directory where you'd like to store the key pair. If you're happy with the default directory (`~/.ssh`), just press `Enter`.
+
+            ```bash
+            $ ssh-keygen -t rsa -b 4096
+
+            Generating public/private rsa key pair.
+            Enter file in which to save the key (/Users/megamecha/.ssh/id_rsa):
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            After choosing the key storage directory, you'll be asked to enter a passphrase. This is an extra layer of security, but it's optional. If you don't want to use a passphrase, you can leave it blank.
+
+            ```bash
+            $ ssh-keygen -t rsa -b 4096
+
+            Generating public/private rsa key pair.
+            Enter file in which to save the key (/home/megamecha/.ssh/id_rsa):
+            Enter passphrase (empty for no passphrase):
+            Enter same passphrase again:
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            The key generation is an important process. Below is the complete output of the `ssh-keygen` command, make special note of the `public key` and `private key` paths.
+            ```bash
+            $ ssh-keygen -t rsa -b 4096
+
+            Generating public/private rsa key pair.
+            Enter file in which to save the key (/home/megamecha/.ssh/id_rsa):
+            Enter passphrase (empty for no passphrase):
+            Enter same passphrase again:
+            # highlight-next-line
+            Your identification has been saved in /home/megamecha/.ssh/id_rsa
+            # highlight-next-line
+            Your public key has been saved in /home/megamecha/.ssh/id_rsa.pub
+            The key fingerprint is:
+            xXxyyyZxxxxYYYYxxxzzXXXyyyyyXXZZZxzzxxxxx megamecha@mecha-land.local
+            The key's randomart image is:
+            ...
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Copy your new (or existing) public key to the device, use the below command
+
+            ```bash
+            # To copy all identities in the ~/.ssh
+            $ ssh-copy-id -i /path/to/pub mecha@<ip address>
+
+            # Example
+            $ ssh-copy-id -i /home/megamecha/.ssh/id_rsa mecha@<ip address>
+            ```
+
+            You'll be prompted to enter your password. Once that's done, your public key will be copied to the server.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Try connecting to the device with the following command:
+            
+            ```bash
+            $ ssh mecha@<ip address>
+            ```
+
+            If everything is set up correctly, you should be logged in without entering your password. That's it! 🎉
+        </S.Details>
+    </S.Step>
+</S>
+
+## Disabling Password Authentication
+
+Once you have successfully set up SSH key-based authentication, you can increase your device security by disabling password authentication. Here's how you can do it.
+
+<S>
+    <S.Step>
+        <S.Details>
+            Login to your Mecha Comet using SSH
+            
+            ```bash
+            $ ssh mecha@<ip address>
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Open the SSH daemon configuration file using a text editor of your choice. We'll use nano for this example:
+            
+            ```bash
+            $ sudo nano /etc/ssh/sshd_config
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Find the line that says `#PasswordAuthentication yes` and change it to `PasswordAuthentication no`. If the line doesn't exist, you can add it. Make sure to remove the `#` to uncomment the line.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Save and exit the file. In nano, you can do this by pressing `Ctrl + X`, then `Y` to confirm saving the changes, and then `Enter` to confirm the file name.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Restart the SSH service to apply the changes.
+
+            ```bash
+            $ sudo systemctl restart sshd
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Exit the SSH connection (using `Ctrl+C`) and try logging in again with SSH. You should be able to log in only with your SSH key, and the server won't accept password authentication.
+        </S.Details>
+    </S.Step>
+</S>

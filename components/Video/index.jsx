@@ -7,11 +7,13 @@ const Video = ({ src }) => {
     <div className={styles.wrapper}>
       <iframe
         src={src}
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        title="video player"
+        allow="accelerometer;clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
         className={styles.iframe}
-      ></iframe>
+        width="750" height="510"
+      >
+      </iframe>
     </div>
   );
 };

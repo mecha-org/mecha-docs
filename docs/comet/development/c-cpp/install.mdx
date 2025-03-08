@@ -1,0 +1,85 @@
+---
+title: C / C++
+hide_table_of_contents: true
+---
+
+import S from "@site/components/Steps/";
+
+C and C++ are powerful programming languages commonly used for system-level programming, embedded systems, and performance-critical applications. Both languages can be compiled using `GCC` (GNU Compiler Collection) or `Clang` (LLVM-based compiler).
+
+## Using GCC
+Launch terminal on your Comet or connect via SSH and run the below command.
+
+```bash
+$ sudo apt update
+$ sudo apt install -y build-essential
+```
+
+This installs GCC along with common tools like make and libraries required for compilation. Run the below command to verify if `gcc` is installed and configured correctly.
+
+```bash
+$ gcc --version
+$ g++ --version
+```
+
+## Using Clang
+Launch terminal on your Comet or connect via SSH and run the below command.
+
+```bash
+$ sudo apt update
+$ sudo apt install -y clang
+```
+
+This installs `Clang` along with common tools like make and libraries required for compilation. Run the below command to verify if `clang` is installed and configured correctly.
+
+```bash
+$ clang --version
+$ clang++ --version
+```
+
+## Running an example
+Let's create a simple "Hello, World!" program to test the installation for both compilers.
+<S>
+    <S.Step>
+        <S.Details>
+            Create a new directory, and a new source file.
+
+            ```bash
+            $ mkdir hello_world && cd hello_world
+            $ nano main.c
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Paste the following program in the editor
+
+            ```c
+            #include <stdio.h>
+            int main() {
+                printf("Hello, C!\n");
+                return 0;
+            }
+           ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Now lets compile and run the program.
+
+            ```bash
+            # Using gcc
+            $ gcc main.c -o hello_world
+            $ ./hello_world
+            Hello, C!
+
+            # Using clang
+            $ clang main.c -o hello_world
+            $ ./hello_world
+            Hello, C!
+           ```
+        </S.Details>
+    </S.Step>
+</S>
+
+That's it now with `gcc` or `clang` installed, you are ready for compiling and running C programs!

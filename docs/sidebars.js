@@ -1,4 +1,4 @@
-import mechaApiRefSidebar from "./apis/references/sidebar"
+import mechaApiRefSidebar from "./apis/references/sidebar";
 const sidebars = {
   mctkSidebar: [
     "mctk/intro",
@@ -6,97 +6,171 @@ const sidebars = {
     {
       type: "category",
       label: "Getting Started",
+      items: ["mctk/gettingstarted/setup", "mctk/gettingstarted/first-app"],
+    },
+    {
+      type: "category",
+      label: "Guides",
       items: [
-        "mctk/gettingstarted/setup",
-        "mctk/gettingstarted/first-app",
+        "mctk/guides/setting-up-application-root",
+        "mctk/guides/writing-a-component",
+        "mctk/guides/handling-input-events",
       ],
     },
-    // "mctk/concepts",
   ],
   cometSidebar: [
     "comet/intro",
     {
       type: "category",
       label: "Getting Started",
+      collapsed: false,
       items: [
         "comet/getting-started/quick-start",
         "comet/getting-started/form-factor",
         "comet/getting-started/using-gui",
-        "comet/getting-started/connecting-to-internet",
-        "comet/getting-started/things-to-do",
-        
       ],
     },
     {
       type: "category",
-      label: "Remote Access",
+      label: "Access via network",
+      collapsed: false,
       items: [
-        "comet/remote-access/introduction-to-remote-access",
-        "comet/remote-access/find-ip-address",
+        "comet/network-access/find-ip-address",
+        "comet/network-access/connect-via-ssh",
+        "comet/network-access/share-files-with-scp",
+        "comet/network-access/screen-share-with-vnc",
+        // "comet/network-access/share-files-with-kde-connect",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Development",
+      items: [
+        "comet/development/c-cpp/install",
+        "comet/development/go/install",
+        "comet/development/java/install",
+        "comet/development/nodejs/install",
         {
           type: "category",
-          label: "Access a remote terminal with SSH",
+          collapsed: true,
+          label: "Python",
           items: [
-            "comet/remote-access/access-remote-terminal-with-ssh/connect-to-an-ssh-server",
-            "comet/remote-access/access-remote-terminal-with-ssh/configure-ssh-without-password",
+            "comet/development/python/install",
+            "comet/development/python/setting-up-pyenv",
           ],
-        },,
-        "comet/remote-access/screen-share-with-vnc",
-        "comet/remote-access/share-files-with-scp",
-        "comet/remote-access/share-files-with-kde-connect",
+        },
+        "comet/development/ruby/install",
+        "comet/development/rust/install",
       ],
     },
     {
       type: "category",
-      label: "Developing",
-      items: [
-        {
-          type: "category",
-          label: "Environment Setup",
-          items: [
-            "comet/developing/setting-up-environment/cpp",
-            "comet/developing/setting-up-environment/go",
-            "comet/developing/setting-up-environment/java",
-            "comet/developing/setting-up-environment/nodejs",
-            "comet/developing/setting-up-environment/php",
-            "comet/developing/setting-up-environment/python",
-            "comet/developing/setting-up-environment/ruby",
-            "comet/developing/setting-up-environment/rust",            
-          ]
-        },{
-          type: "category",
-          label: "Machine Learning",
-          items: [
-            "comet/developing/machine-learning/MLintro",
-            "comet/developing/machine-learning/setting-up-pyenv",  
-            "comet/developing/machine-learning/running-tensorflow",
-            "comet/developing/machine-learning/coralinstall",
-            "comet/developing/machine-learning/On-deviceLLM",
-          ]
-        }
-      ],
+      collapsed: false,
+      label: "Working with IO",
+      items: ["comet/working-with-io/pin-diagram"],
     },
-    {
-      type: "category",
+    // {
+    //   type: "category",
+      //   collapsed: false,
+      //   label: "Machine Learning",
+      //   items: [
+      //     "comet/machine-learning/intro",
+      //     "comet/machine-learning/running-tensorflow",
+      //     "comet/machine-learning/installing-coral",
+      //     "comet/machine-learning/on-device-llm",
+      //   ],
+      // },
+      {
+        type: "category",
+      collapsed: false,
       label: "Networking",
       items: [
-        {
-          type: "category",
-          label: "Internet Sharing",
-          items: [
-            "comet/networking/internet-sharing/ethernet-to-wireless",
-            "comet/networking/internet-sharing/wireless-to-ethernet",
-          ],
-        },,
+        "comet/networking/ethernet-to-wireless",
+        "comet/networking/wireless-to-ethernet",
       ],
     },
     {
       type: "category",
+      collapsed: false,
       label: "Emulation",
       items: [
-        "comet/emulation/windows",
-        "comet/emulation/linux",
         "comet/emulation/dosbox",
+        "comet/emulation/windows",
+        "comet/emulation/android",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Extensions",
+      items: [
+        "comet/extensions/io-breakout",
+        "comet/extensions/gamepad",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Resources",
+      items: [
+        "comet/resources/datasheets",
+        {
+          type: "category",
+          collapsed: true,
+          label: "Mechanical Files",
+          items: [
+            "comet/resources/mechanical-files/mecha-comet",
+            "comet/resources/mechanical-files/comet-extensions"
+          ],
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Benchmarks",
+      items: [
+        "benchmarks/mecha-comet-benchmark",
+      ],
+    },
+    {
+      type: "category",
+      label: "Advanced",
+      items: [
+        {
+          type: "category",
+          label: "Serial Console",
+          items: ["comet/advanced/serial-console/using-debug-uart-cable"],
+        },
+        {
+          type: "category",
+          label: "Bootloader",
+          items: [
+            "comet/advanced/bootloader/introduction-to-bootloader",
+            "comet/advanced/bootloader/uboot-ums",
+            "comet/advanced/bootloader/uboot-variable",
+            "comet/advanced/bootloader/working-with-usb",
+            "comet/advanced/bootloader/changing-boot-logo",
+            "comet/advanced/bootloader/building-uboot-from-source",
+          ],
+        },
+        {
+          type: "category",
+          label: "Linux kernel",
+          items: [
+            "comet/advanced/linux-kernel/building-linux-kernel",
+            "comet/advanced/linux-kernel/customise-device-tree",
+          ],
+        },
+        {
+          type: "category",
+          label: "Buiding Rootfs",
+          items: [
+            "comet/advanced/building-debian-rootfs/using-mecha-make",
+            "comet/advanced/building-debian-rootfs/build-rootfs-manually",
+            "comet/advanced/building-debian-rootfs/flash-rootfs",
+          ],
+        },
       ],
     },
   ],
@@ -114,18 +188,18 @@ const sidebars = {
         "mechanix/using-the-gui/camera",
       ],
     },
-    {
-      type: "category",
-      label: "Functions",
-      items: [
-        "mechanix/functions/wayland",
-        "mechanix/functions/network-manager",
-        "mechanix/functions/bluetooth",
-        "mechanix/functions/video",
-        "mechanix/functions/audio",
-        "mechanix/functions/key-store",
-      ],
-    },
+    // {
+    //   type: "category",
+    //   label: "Functions",
+    //   items: [
+    //     "mechanix/functions/wayland",
+    //     "mechanix/functions/network-manager",
+    //     "mechanix/functions/bluetooth",
+    //     "mechanix/functions/video",
+    //     "mechanix/functions/audio",
+    //     "mechanix/functions/key-store",
+    //   ],
+    // },
     {
       type: "category",
       label: "Installing Apps",
@@ -255,7 +329,7 @@ const sidebars = {
         "apis/how-to-guides/prov-machine",
         "apis/how-to-guides/machine-logs-metrics",
         "apis/how-to-guides/add-virtual-ip",
-        "apis/how-to-guides/generate-grafana-sso"
+        "apis/how-to-guides/generate-grafana-sso",
       ],
     },
 
@@ -264,11 +338,9 @@ const sidebars = {
     //   type: "doc",
     //   id: "apis/references/mecha-cloud-apis",
     // },
-    ... mechaApiRefSidebar,
+    ...mechaApiRefSidebar,
 
-    
     // },
-    
   ],
 };
 

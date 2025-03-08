@@ -1,0 +1,72 @@
+---
+title: Transfer files with SCP
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps/";
+
+Secure Copy Protocol (scp) sends files over SSH. You can use `scp` to copy files between your Mecha Comet and another computer. Follow the instructions for sending and receiving files between the Comet and your computer.
+
+<S>
+    <S.Step>
+        <S.Details>
+           Launch the `Terminal` app on your computer.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            **Copying files to your Mecha Comet**
+            Run the below command, replacing the `/path/to/src` with your file and the `<ip address>` ([here](./find-ip-address)) - to send the file to your Mecha Comet's destination directory.
+
+            ```bash
+            $ scp /path/to/src mecha@<ip address>:/path/to/dest
+
+            # Example
+            $ scp ~/Documents/myfile.txt mecha@<ip address>:/home/mecha
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            **Copying files from your Mecha Comet**
+            Run the below command, replacing the `/path/to/src` with your file to receive from the Comet in your destination directory.
+
+            ```bash
+            $ cd /path/to/dest
+            $ scp mecha@mecha-comet.local:/path/to/src .
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+        You are now a file copying ninja 🥷!
+        </S.Details>
+    </S.Step>
+</S>
+
+---
+
+### Copying multiple files
+To copy multiple files, list the file names in a single command, separated by spaces:
+
+```bash
+# Sending
+$ scp file1.txt file2.txt mecha@<ip address>:/path/to/dest
+
+# Receiving
+$ scp mecha@<ip address>:{/path/to/src/1,/path/to/src/2} .
+```
+
+### Copy files matching a pattern
+Use a wildcard to copy all files matching a particular filter. The following command copies all files that end with .txt:
+
+```bash
+$ scp *.txt mecha@<ip address>:/path/to/dest
+```
+
+### Copying an entire folder (recursively)
+To copy a folder and all of its contents, pass the folder name with the `-r` (recursive) flag:
+
+```bash
+$ scp -r /path/to/folder mecha@<ip address>:/path/to/dest
+```

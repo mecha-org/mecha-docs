@@ -1,0 +1,106 @@
+---
+title: Screen Share with VNC
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps/";
+
+Access your Mecha Comet's desktop remotely via the VNC (Virtual Network Computing) protocol using `wayvnc`. Follow the instructions below for setting up VNC connection between your Mecha Comet and your computer.
+
+## Setting up VNC Server
+
+<S>
+    <S.Step>
+        <S.Details>
+           Connect to your Mecha Comet using SSH ([here](./find-ip-address)).
+
+           ```bash
+           $ ssh mecha@<ip address>
+           ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Run the following command to install `wayvnc`.
+                
+            ```bash
+            $ sudo apt update
+            $ sudo apt install wayvnc
+            ```
+
+            WayVNC is a VNC server for wlroots-based Wayland compositors, in our case we are currently using [labwc](https://github.com/labwc/labwc) as the compositor.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Run `wayvnc`, this will start a VNC server on the port 5900 listening on all interfaces.
+    
+            ```bash
+            $ export WAYLAND_DISPLAY=wayland-1
+            $ wayvnc 0.0.0.0 5900
+            ```
+
+            Setting `WAYLAND_DISPLAY` in the environments tells any Wayland client launched from the shell, which compositor to connect to.
+
+            :::warning[Security Risk]
+                Binding to the 0.0.0.0 interface exposes VNC on all your network interfaces creating a security risk, better approach is to bind to your network's assigned IP address or use 127.0.0.1 and using Tunneling via SSH for secure access.
+            :::
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            You now have a VNC server running on your Comet. Now lets try to connect using your computer.
+        </S.Details>
+    </S.Step>
+</S>
+
+## Installing a VNC Client
+
+You can follow the guide below to install a VNC client for your Linux machine.
+
+<S>
+    <S.Step>
+        <S.Details>
+           Launch the `Terminal` app on your computer.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Install the `TigerVNC` client to connect to your Mecha Comet.
+
+            ```bash
+            $ sudo apt update
+            $ sudo apt tigervnc-viewer
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Once the installation is complete, you can start the TigerVNC viewer by running the command below
+
+            ```bash
+            $ vncviewer
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            In the VNC viewer, enter your Comet's IP address ([here](./find-ip-address)) and the VNC Server's port number (`5900`) and press `Connect`. After that, you should be connected to your VNC server running on the Comet.
+
+            <img className="img-rounded" src="/assets/comet/network-access/ubuntu-tigervnc-viewer.png" alt="TigerVNC Viewer on Ubuntu" style={{ maxWidth: '100%', height: 'auto' }} />
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            You should now see the Mecha Comet's display on your computer, and even control using your mouse and keyboard.
+        </S.Details>
+    </S.Step>
+</S>
+
+### Other Operating Systems
+
+For MacOS and Windows, you can install the `RealVNC Viewer` using the links below and follow similar steps as above.
+
+[RealVNC Viewer for MacOS](https://www.realvnc.com/en/connect/download/viewer/macos/)
+
+[RealVNC Viewer for Windows](https://www.realvnc.com/en/connect/download/viewer/macos/)
