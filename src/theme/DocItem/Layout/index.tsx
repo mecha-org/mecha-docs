@@ -73,8 +73,8 @@ export default function DocItemLayout({children}: Props): JSX.Element {
       {
         (isComet || docTOC.desktop) &&
         <div className="col col--3">
+      <div>{isDesktopWidth && isComet && <CometBanner />}</div>
       {docTOC.desktop && <div> {docTOC.desktop} </div>}
-      <div>{isDesktopWidth && <CometBanner />}</div>
       </div>
       }
     </div>

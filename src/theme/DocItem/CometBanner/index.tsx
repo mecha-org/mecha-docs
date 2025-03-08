@@ -12,7 +12,7 @@ const CometBanner = () => {
             <img src="/img/landing/comet.svg" alt='Mecha Logo' />
         </div>
         <div className={styles.bannerContent}>
-          <h2 className={styles.bannerTitle}>Comet-Rev5</h2>
+          <h2 className={styles.bannerTitle}>Comet (rev5)</h2>
           {/* <p className={styles.bannerSubtitle}></p> */}
           <div className={styles.bannerPilot}>For Pilot users</div>
         </div>
@@ -21,7 +21,7 @@ const CometBanner = () => {
       <div className={styles.bottomBanner}>
         <div className={styles.imageContainer}>
           {/* Placeholder for image */}
-            <img src='/img/landing/comet-rev6.png'/>
+            <img src='/img/landing/comet-rev6.png' style={{width: '100%', height: '100%'}}/>
         </div>
         <h3 className={styles.newTitle}>The all new Mecha Comet</h3>
         <p className={styles.newDescription}>
