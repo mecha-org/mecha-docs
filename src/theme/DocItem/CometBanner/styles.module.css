@@ -27,7 +27,12 @@
 }
 
 .logoContainer {
-  margin-right: 1rem;
+  margin-right: 1.5rem;
+  height: 60px;
+  width: 60px;
+  padding: 0.2rem;
+  background-color:#fff197;
+  border-radius: 0.25rem;
 }
 
 .logoPlaceholder {
@@ -68,7 +73,7 @@
 }
 
 .imageContainer {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   border-radius: 0.5rem;
   overflow: hidden;
 }
