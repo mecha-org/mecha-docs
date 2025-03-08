@@ -135,6 +135,7 @@ const sidebars = {
     },
     {
       type: "category",
+      collapsed: false,
       label: "Advanced",
       items: [
         {

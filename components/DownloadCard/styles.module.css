@@ -57,3 +57,8 @@
   cursor: pointer;
   font-size: 14px;
 }
+
+.downloadButton:disabled {
+  background-color: #ccc; /* Grey color when disabled */
+  cursor: not-allowed;
+}
