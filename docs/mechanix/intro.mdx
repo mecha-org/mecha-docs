@@ -1,0 +1,50 @@
+---
+slug: /mechanix
+title: Mechanix OS
+hide_table_of_contents: true
+description: Learn about Mecha Comet using tutorials, API reference, and developer guides.
+pagination_next: null
+pagination_prev: null
+---
+
+<style>
+  {`
+    /* Hack to prevent overflow, not possible to have it on other pages due to position sticky used in TOC */
+    main .container {
+        position: relative;
+        overflow: hidden;
+    }
+`}
+</style>
+
+import { Block } from "@site/components/Block/Block";
+import Apps from "@site/components/Apps/Apps";
+import Chapters from "@site/components/Chapters";
+import { Icon32 } from "@site/components/Icons/icons";
+import SmallGrid from "@site/components/SmallGrid";
+import Tiles from "@site/components/Tiles";
+import Banner from "@site/components/Banner";
+
+import {
+  Tag,
+  BadgePercent,
+  Split,
+  ShoppingBag,
+  TableProperties,
+  CreditCard,
+} from "lucide-react";
+
+<Banner path="/assets/comet/mechanix-os.png" title="Mechanix OS" />
+Learn to develop applications using our own RUST based GUI library , MCTK, customization, and integration with the Mechanix ecosystem.
+
+<SmallGrid>
+
+    [**Using the GUI**](mechanix/using-the-gui/mechanix-shell)
+
+    [**Installing Apps** ](mechanix/installing-apps/package-manager)
+
+    [**Services** ](mechanix/services/system/server)
+
+    [**Building the Image** ](comet/advanced/bootloader/building-uboot-from-source)
+
+</SmallGrid>

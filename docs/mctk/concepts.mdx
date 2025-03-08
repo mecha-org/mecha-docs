@@ -1,0 +1,114 @@
+---
+title: Concepts of MCTK
+hide_table_of_contents: true
+---
+
+## Messages
+
+All events within the application are handled by sending messages. These messages are then processed in the update function of the component.
+
+```rust
+// App Messages
+#[derive(Debug)]
+pub enum AppMessage {
+    Exit,
+}
+```
+The update function of the `Component` trait receives a mutable reference to itself.
+```rust
+impl Component for App { 
+    ...
+    fn update(&mut self, message: Message) -> Vec<Message> {
+        match message.downcast_ref::<HelloEvent>() {
+            Some(HelloEvent::Exit) => {}
+            _ => (),
+        }
+        vec![]
+    }
+    ...
+}
+```
+
+## State
+
+Every component possesses a state. The component will only re-render if its state or a child component's state is updated. 
+
+```rust
+#[derive(Debug, Default)]
+pub struct AppState {
+    window_sender: Option<Sender<XdgWindowMessage>>,
+    app_channel: Option<Sender<AppMessage>>,
+}
+```
+
+## Components
+
+Components are created using the `component` macro. The UI is constructed using nodes, where each node has an associated component.
+
+```rust
+#[component(State = "AppState")]
+#[derive(Debug, Default)]
+pub struct App {}
+```
+
+The `node!()` macro is used to create nodes, which can have child nodes.
+
+```rust
+ node!(
+      Div::new().bg(Color::rgb(0., 0., 0.)),
+      lay![
+          size: size_pct!(100.0),
+          direction: Direction::Column
+      ]
+  )
+  .push(node!(Text::new(txt!("Hello, Mecha!")))),
+```
+
+The root component lacks parent components, and the node tree originates from this component. 
+
+```rust
+impl RootComponent<AppParams> for App {
+    fn root(&mut self, w: &dyn std::any::Any, app_params: &dyn Any) {
+      // Called while RootComponent is initialized
+      ...
+    }
+}
+```
+
+## Context
+
+The Context provides a thread-safe mechanism for passing data throughout the application. It can hold any type of data, and you can access this data using the `fn get() -> RwLockReadGuard<T>` method, which returns a read guard (`RwLockReadGuard`). The `fn set(data: T)` method is used to set the data. 
+
+You can attach callback functions using the `fn register_on_change(callback: F)` method. These callbacks will be invoked when the context is modified. 
+
+## Model
+
+A Model is a collection of contexts that can hold a set of contexts. Registering a callback function on the Model registers it to all the associated contexts. The `derive` macro can be used to implement the `Model` trait.
+
+```rust
+#[derive(Model)]
+struct DataModel {
+  data: Context<u64>
+}
+```
+
+## Context Handler
+
+A context handler can be used to manage all callback functions and register them to models as shown below.
+
+```rust
+let context_handler = context::get_static_context_handler();
+context_handler.register_on_change(Box::new(move || {
+    window_tx_channel
+        .send(WindowMessage::RedrawRequested)
+        .unwrap();
+}));
+SoundModel::get().register_context_handler(context_handler);
+WirelessModel::get().register_context_handler(context_handler);
+BatteryModel::get().register_context_handler(context_handler);
+```
+
+## Widgets
+
+Widgets are pre-built sets of Components provided by MCTK. They include Button, Div, Text, Textbox, and more.
+

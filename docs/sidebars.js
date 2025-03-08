@@ -1,126 +1,220 @@
-import mechaApiRefSidebar from "./apis/references/sidebar"
+import mechaApiRefSidebar from "./apis/references/sidebar";
 const sidebars = {
-  hardwareSidebar: [
+  mctkSidebar: [
+    "mctk/intro",
+    "mctk/introduction",
     {
       type: "category",
       label: "Getting Started",
+      items: ["mctk/gettingstarted/setup", "mctk/gettingstarted/first-app"],
+    },
+    // "mctk/concepts",
+  ],
+  cometSidebar: [
+    "comet/intro",
+    {
+      type: "category",
+      label: "Getting Started",
+      collapsed: false,
       items: [
-        "hardware/gettingstarted/quickstart",
-        "hardware/gettingstarted/specifications",
+        "comet/getting-started/quick-start",
+        "comet/getting-started/form-factor",
+        "comet/getting-started/using-gui",
       ],
     },
     {
       type: "category",
-      label: "Connectivity",
+      label: "Access via network",
+      collapsed: false,
       items: [
-        "hardware/connectivity/connecting-via-ssh",
-        "hardware/connectivity/via-serial-console",
-        "hardware/connectivity/using-public-key-auth",
-        "hardware/connectivity/using-putty-on-windows",
+        "comet/network-access/find-ip-address",
+        "comet/network-access/connect-via-ssh",
+        "comet/network-access/share-files-with-scp",
+        "comet/network-access/screen-share-with-vnc",
+        // "comet/network-access/share-files-with-kde-connect",
       ],
     },
     {
       type: "category",
-      label: "Kernel",
+      collapsed: false,
+      label: "Development",
       items: [
-        "hardware/kernel/connecting-basics",
-        "hardware/kernel/device-tree",
-        "hardware/kernel/working-with-kernel",
-        "hardware/kernel/build-from-source",
-      ],
-    },
-    {
-      type: "category",
-      label: "Bootloader",
-      items: [
-        "hardware/bootloader/basics-in-bootloader",
+        "comet/development/c-cpp/install",
+        "comet/development/go/install",
+        "comet/development/java/install",
+        "comet/development/nodejs/install",
         {
           type: "category",
-          label: "Working with U-Boot",
+          collapsed: true,
+          label: "Python",
           items: [
-            "hardware/bootloader/working-with-u-boot/u-boot-commands",
-            "hardware/bootloader/working-with-u-boot/mount-usb-storage",
-            "hardware/bootloader/working-with-u-boot/working-with-variables",
-            "hardware/bootloader/working-with-u-boot/change-boot-logo",
+            "comet/development/python/install",
+            "comet/development/python/setting-up-pyenv",
           ],
         },
-        "hardware/bootloader/debugging-u-boot",
-        "hardware/bootloader/build-from-source-bootloader",
+        "comet/development/ruby/install",
+        "comet/development/rust/install",
       ],
     },
     {
       type: "category",
-      label: "Peripherals",
+      collapsed: false,
+      label: "Working with IO",
+      items: ["comet/working-with-io/pin-diagram"],
+    },
+    // {
+    //   type: "category",
+      //   collapsed: false,
+      //   label: "Machine Learning",
+      //   items: [
+      //     "comet/machine-learning/intro",
+      //     "comet/machine-learning/running-tensorflow",
+      //     "comet/machine-learning/installing-coral",
+      //     "comet/machine-learning/on-device-llm",
+      //   ],
+      // },
+      {
+        type: "category",
+      collapsed: false,
+      label: "Networking",
       items: [
-        "hardware/peripherals/soc",
-        "hardware/peripherals/wireless",
-        "hardware/peripherals/camera",
-        "hardware/peripherals/audio",
-        "hardware/peripherals/display",
-        "hardware/peripherals/pcle",
-        "hardware/peripherals/motion",
-        "hardware/peripherals/rgb",
-        "hardware/peripherals/rtc",
-        "hardware/peripherals/security",
-        "hardware/peripherals/power",
-        "hardware/peripherals/ethernet",
-        "hardware/peripherals/usb",
-        "hardware/peripherals/gpio",
-        "hardware/peripherals/mikrobus",
+        "comet/networking/ethernet-to-wireless",
+        "comet/networking/wireless-to-ethernet",
       ],
     },
     {
       type: "category",
-      label: "Mechanicals",
+      collapsed: false,
+      label: "Emulation",
       items: [
-        "hardware/mechanicals/3d-drawings",
-        "hardware/mechanicals/schematics",
-        "hardware/mechanicals/extensions",
-        "hardware/mechanicals/mounting-system",
-        "hardware/mechanicals/revisions",
+        "comet/emulation/dosbox",
+        "comet/emulation/windows",
+        "comet/emulation/android",
       ],
     },
     {
       type: "category",
-      label: "Labs",
+      collapsed: false,
+      label: "Extensions",
       items: [
-        "hardware/labs/yocto",
-        "hardware/labs/android",
-        "hardware/labs/cortex-m4",
+        "comet/extensions/io-breakout",
+        "comet/extensions/gamepad",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Resources",
+      items: [
+        "comet/resources/datasheets",
+        {
+          type: "category",
+          collapsed: true,
+          label: "Mechanical Files",
+          items: [
+            "comet/resources/mechanical-files/mecha-comet",
+            "comet/resources/mechanical-files/comet-extensions"
+          ],
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Benchmarks",
+      items: [
+        "benchmarks/mecha-comet-benchmark",
+      ],
+    },
+    {
+      type: "category",
+      label: "Advanced",
+      items: [
+        {
+          type: "category",
+          label: "Serial Console",
+          items: ["comet/advanced/serial-console/using-debug-uart-cable"],
+        },
+        {
+          type: "category",
+          label: "Bootloader",
+          items: [
+            "comet/advanced/bootloader/introduction-to-bootloader",
+            "comet/advanced/bootloader/uboot-ums",
+            "comet/advanced/bootloader/uboot-variable",
+            "comet/advanced/bootloader/working-with-usb",
+            "comet/advanced/bootloader/changing-boot-logo",
+            "comet/advanced/bootloader/building-uboot-from-source",
+          ],
+        },
+        {
+          type: "category",
+          label: "Linux kernel",
+          items: [
+            "comet/advanced/linux-kernel/building-linux-kernel",
+            "comet/advanced/linux-kernel/customise-device-tree",
+          ],
+        },
+        {
+          type: "category",
+          label: "Buiding Rootfs",
+          items: [
+            "comet/advanced/building-debian-rootfs/using-mecha-make",
+            "comet/advanced/building-debian-rootfs/build-rootfs-manually",
+            "comet/advanced/building-debian-rootfs/flash-rootfs",
+          ],
+        },
       ],
     },
   ],
   mechanixSidebar: [
+    "mechanix/intro",
     {
       type: "category",
       label: "Using the GUI",
       items: [
         "mechanix/using-the-gui/mechanix-shell",
+        "mechanix/using-the-gui/launcher",
+        "mechanix/using-the-gui/keyboard",
         "mechanix/using-the-gui/settings-app",
+        "mechanix/using-the-gui/file-manager",
+        "mechanix/using-the-gui/camera",
       ],
     },
-    {
-      type: "category",
-      label: "Functions",
-      items: [
-        "mechanix/functions/wayland",
-        "mechanix/functions/network-manager",
-        "mechanix/functions/bluetooth",
-        "mechanix/functions/video",
-        "mechanix/functions/audio",
-        "mechanix/functions/key-store",
-      ],
-    },
+    // {
+    //   type: "category",
+    //   label: "Functions",
+    //   items: [
+    //     "mechanix/functions/wayland",
+    //     "mechanix/functions/network-manager",
+    //     "mechanix/functions/bluetooth",
+    //     "mechanix/functions/video",
+    //     "mechanix/functions/audio",
+    //     "mechanix/functions/key-store",
+    //   ],
+    // },
     {
       type: "category",
       label: "Installing Apps",
       items: [
         "mechanix/installing-apps/package-manager",
         "mechanix/installing-apps/using-flatpak",
+        "mechanix/installing-apps/using-snap",
+        "mechanix/installing-apps/adding-source",
+      ],
+    },
+    {
+      type: "category",
+      label: "Services",
+      items: [
+        "mechanix/services/system/server",
+        "mechanix/services/system/client",
+        "mechanix/services/desktop/server",
+        "mechanix/services/desktop/client",
       ],
     },
   ],
   mechaCloudSidebar: [
+    "mecha-cloud/intro",
     {
       type: "category",
       label: "Console",
@@ -218,8 +312,6 @@ const sidebars = {
     // {
     "apis/first-request",
     "apis/api-authentication",
-
-    
     {
       type: "category",
       label: "How-to Guides",
@@ -229,7 +321,7 @@ const sidebars = {
         "apis/how-to-guides/prov-machine",
         "apis/how-to-guides/machine-logs-metrics",
         "apis/how-to-guides/add-virtual-ip",
-        "apis/how-to-guides/generate-grafana-sso"
+        "apis/how-to-guides/generate-grafana-sso",
       ],
     },
 
@@ -238,11 +330,9 @@ const sidebars = {
     //   type: "doc",
     //   id: "apis/references/mecha-cloud-apis",
     // },
-    ... mechaApiRefSidebar,
+    ...mechaApiRefSidebar,
 
-    
     // },
-    
   ],
 };
 

@@ -1,0 +1,102 @@
+---
+title: DOSBox
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps/";
+import Video from "@site/components/Video/";
+
+The purpose of this setup is to install and configure DOSBox for running DOS games.
+
+<S>
+    <S.Step>
+        <S.Details>
+            #### Install DOSBox
+            <S.Code>
+                ```bash
+                $ sudo apt install dosbox
+                ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Generate DOSBox default configuration file
+            <S.Code>
+                ```bash
+                $ dosbox -printconf
+                ```
+            </S.Code>
+            This will generate a default configuration file and will print the path to the file.
+            Copy the path to the configuration file for updating the configuration.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Update configuration file
+            <S.Code>
+                ```bash
+                $ nano <path-to-config-file>
+                ```
+            </S.Code>
+            Replace `<path-to-config-file>` with the path to the configuration file printed in Step 2.
+            Update the following lines to configure screen resolution as per Mecha Comet :
+            ```conf
+            fullscreen=true
+            fulldouble=false
+            fullresolution=480x480
+            windowresolution=480x480
+            output=opengl
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Download DOS game
+            Download a DOS game from the internet and extract it to a folder
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Start DOSBox
+            <S.Code>
+                ```bash
+                $ dosbox
+                ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Setup mount directory
+            Inside DOSBox, mount the game directory to a drive letter
+            <S.Code>
+                ```bash
+                $ mount c <path-to-game>
+                ```
+                Replace `<path-to-game>` with the path to the game folder.
+                Above command will mount the letter `c` to the game directory.
+
+                **Example**: If the game directory is `/home/mecha/skyroads`, then enter `mount c /home/mecha/skyroads`.
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Run exe file
+            Run the game executable file by entering the name of file without `exe` followed by enter.
+
+            **Example**: If the game executable file is `skyroads.exe`, then enter `skyroads` and press enter.
+            <S.Code>
+             ```bash
+            $ skyroads
+            ```
+            </S.Code>
+            <Video src="https://web-assets.mecha.so/developers-v1/comet/dosbox-demo.mp4">
+                Your browser does not support the video tag.
+            </Video>
+        </S.Details>
+    </S.Step>
+</S>
+
+This completes the setup for running DOS games using DOSBox.

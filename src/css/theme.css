@@ -22,9 +22,26 @@
 @import url("components/container.css");
 @import url("components/layout.css");
 @import url("components/landing-page.css");
+@import url("components/img.css");
+
 :root {
   --ifm-spacing-horizontal: var(--spacer-5);
+  --ifm-font-weight-semibold: 600;
 }
+
+.footer {
+  background-color: transparent;
+  border-top: 1px var(--gray5) solid;
+}
+
+.footer__title{
+  display: none
+}
+
+.footer__links {
+  width: 100%
+}
+
 /*Default variables for reference*/
 
 /*:root {*/

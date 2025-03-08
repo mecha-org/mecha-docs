@@ -1,0 +1,119 @@
+---
+title: Changing Boot Logo in U-Boot
+hide_table_of_contents: false
+---
+
+This guide explains how to load and display a custom boot logo in U-Boot on the target machine. You can load the splash screen from different storage devices, such as MMC/SD, USB, or use a preloaded image stored in the U-Boot binary.
+
+---
+## **Prerequisites**
+
+Before proceeding, ensure that you have access to U-Boot mode on the Mecha Comet device. To do this, follow the steps outlined here:
+
+[Booting into Uboot](/comet/advanced/bootloader/uboot-ums#booting-into-ums-mode-from-internal-emmc-storage)
+
+---
+
+## **1. Loading and Displaying a Boot Logo in U-Boot**
+
+### **1.1 Loading from MMC/SD Card**
+
+To load a BMP image from an MMC/SD card:
+
+```bash
+$ mmc dev 0          # Select MMC/SD card
+$ mmc rescan         # Rescan for storage devices
+$ load mmc 0 ${loadaddr} <bmp file name>  # Load BMP file into memory
+$ bmp display ${loadaddr}  # Display the image
+
+```
+
+**Example:**
+
+```bash
+$ mmc dev 2
+$ mmc rescan
+$ load mmc 2 ${loadaddr} splash/logo.bmp
+$ bmp display ${loadaddr}
+
+```
+
+### **1.2 Loading from USB Storage**
+
+To load a BMP image from a USB storage device:
+
+```bash
+$ usb start          # Start USB subsystem
+$ load usb <device number> ${loadaddr} <bmp file name>  # Load BMP file
+$ bmp display ${loadaddr}  # Display the image
+
+```
+
+**Example:**
+
+```bash
+$ usb start
+$ load usb 0 ${loadaddr} splash/logo.bmp
+$ bmp display ${loadaddr}
+
+```
+
+---
+
+## **2. Preloading Splash Screen from eMMC/SD/USB**
+
+Instead of embedding the splash screen in the U-Boot binary, you can configure U-Boot to automatically load the logo from a FAT partition on an eMMC, SD card, or USB storage.
+
+### **2.1 Setting Up Automatic Splash Screen Loading**
+
+To configure U-Boot to load a splash screen automatically:
+
+1. Ensure the splash screen file is stored in a FAT partition.
+2. Set the `splashfile` variable to point to the splash screen image.
+3. Set the `splashsource` variable to specify the storage device.
+4. Save the environment variables.
+5. Restart the system.
+
+```bash
+$ setenv splashfile /boot/logo.bmp  # Set splash screen file path
+$ setenv splashsource mmc_fs        # Specify source storage (e.g., mmc_fs, usb_fs)
+$ saveenv                            # Save environment settings
+$ reset                              # Reboot to apply changes
+
+```
+
+**Example for eMMC:**
+
+```bash
+$ setenv splashfile /boot/logo.bmp
+$ setenv splashsource mmc_fs
+$ saveenv
+$ reset
+
+```
+
+**Example for USB:**
+
+```bash
+$ setenv splashfile /boot/logo.bmp
+$ setenv splashsource usb_fs
+$ saveenv
+$ reset
+
+```
+
+---
+
+## **3. Additional Notes**
+
+- Ensure that the BMP file is in a compatible format (e.g., 24-bit uncompressed BMP).
+- `loadaddr` should be set to a valid memory address where the image will be loaded.
+- Use `printenv` to check current environment variables.
+- If the splash screen does not appear, check the storage device and file path.
+
+---
+
+## **Conclusion**
+
+This guide provides a step-by-step approach to changing the boot logo in U-Boot using different methods. Depending on your use case, you can either load the logo manually or configure it for automatic loading during boot.
+

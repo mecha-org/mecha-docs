@@ -1,0 +1,70 @@
+---
+title: Go (Golang)
+hide_table_of_contents: true
+---
+
+import S from "@site/components/Steps/";
+
+Go (also known as Golang) is a statically typed, compiled programming language designed by Google.
+
+## Install Go
+Launch terminal on your Comet or connect via SSH and run the below command.
+```bash
+$ wget https://go.dev/dl/go1.23.6.linux-arm64.tar.gz
+$ tar -C /usr/local -xzf go1.23.6.linux-amd64.tar.gz
+```
+
+**Add `/usr/local/go/bin` to the PATH environment variable**
+
+You can do this by adding the following line to your `$HOME/.profile` or `/etc/profile` (for a system-wide installation):
+
+```bash
+$ export PATH=$PATH:/usr/local/go/bin
+```
+
+After installation, verify that Go is properly installed:
+
+```bash
+$ go version
+```
+
+## Running an example
+Let's create a simple "Hello, World!" program to test Golang on the Comet.
+
+<S>
+    <S.Step>
+        <S.Details>
+            Create a new directory, and a new source file for your go program.
+
+            ```bash
+            $ mkdir hello_world && cd hello_world
+            $ nano main.go
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            Paste the following program in the editor
+
+            ```go
+            import "fmt"
+
+            func main() {
+                fmt.Println("Hello, Go!")
+            }
+            ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+           Now lets compile and run the program.
+
+            ```bash
+            $ go run main.go
+            Hello, Go!
+            ```
+        </S.Details>
+    </S.Step>
+</S>
+
+You are all set now, you are ready for compiling and running `Go` programs ☄️!

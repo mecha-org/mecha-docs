@@ -1,0 +1,53 @@
+---
+slug: /comet
+title: Mecha Comet
+hide_table_of_contents: true
+description: Discover the Mecha Comet, learn how-to-use, understand its peripherals and find out how you can build and run applications.
+pagination_next: null
+---
+
+<style>
+  {`
+    /* Hack to prevent overflow, not possible to have it on other pages due to position sticky used in TOC */
+    main .container {
+        position: relative;
+        overflow: hidden;
+    }
+`}
+</style>
+
+import { Block } from "@site/components/Block/Block";
+import Apps from "@site/components/Apps/Apps";
+import Chapters from "@site/components/Chapters";
+import { Icon32 } from "@site/components/Icons/icons";
+import SmallGrid from "@site/components/SmallGrid";
+import Banner from "@site/components/Banner";
+import Tiles from "@site/components/Tiles";
+import {
+  Tag,
+  BadgePercent,
+  Split,
+  ShoppingBag,
+  TableProperties,
+  CreditCard,
+} from "lucide-react";
+
+<Banner path="/assets/comet/comet-banner.png" title="Mecha Comet" />
+Discover the Mecha Comet, learn how-to-use, understand its peripherals and find out how you can build and run applications. The sections available within this documentation are shown below.
+
+
+<SmallGrid>
+
+    [**Quickstart** A quick and easy guides on how to get started.](comet/getting-started/quick-start)
+
+    [**Remote Access** Ways and options to remotely access your device.](comet/network-access/find-ip-address)
+
+    [**Building Apps** Language or platform wise development guides.](comet/development/c-cpp/install)
+
+    [**Emulation** Configure the Comet to run different platform binaries and games ](comet/emulation/windows)
+
+    [**Networking** Advanced networking related guides and references ](comet/networking/ethernet-to-wireless)
+
+    [**Machine Learning** Setup and run different ML platforms such as Tensorflow and LLMs](comet/machine-learning/intro)
+
+</SmallGrid>

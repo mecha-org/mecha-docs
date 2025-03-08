@@ -1,0 +1,61 @@
+---
+title: PHP
+hide_table_of_contents: true
+---
+
+PHP is a popular server-side scripting language designed for web development. It is widely used for creating dynamic web pages, backend APIs, and content management systems.
+
+## Install using apt
+
+To install PHP on systems that use `apt` (such as Ubuntu or Debian), follow these steps:
+
+**Step 1: Update the package list**
+
+```bash
+sudo apt update
+```
+
+Step 2: Install PHP
+
+```
+# Install PHP and common extensions
+sudo apt install -y php php-cli php-mbstring php-xml php-curl
+```
+
+You can replace or add specific PHP extensions as needed.
+
+**Optional: Install additional PHP packages**
+
+```
+# Example of additional PHP modules
+sudo apt install -y php-mysql php-gd php-zip
+```
+
+## Verify Installation
+After installation, verify that PHP is properly installed:
+
+```
+php --version
+```
+
+## Hello World Example
+Let's create a simple Hello World script to test the installation:
+
+**Create a new directory for your project**
+
+```
+mkdir hello_php
+cd hello_php
+```
+
+**Create a new PHP file**
+
+```
+echo '<?php echo "Hello, PHP!\n"; ?>' > hello.php
+```
+
+**Run the script**
+
+```
+php hello.php
+```

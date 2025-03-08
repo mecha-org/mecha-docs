@@ -1,0 +1,80 @@
+---
+title: Running TinyLlama
+hide_table_of_contents: false
+---
+
+TinyLlama is a lightweight language model that can be run on edge devices. This guide walks you through installing and running TinyLlama using Ollama on your Comet.
+
+## Installing Ollama
+
+Download and install Ollama using the following command:
+
+```sh
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+## Running Ollama
+
+Start the Ollama service:
+
+```sh
+ollama serve
+```
+
+If you encounter the error:
+
+```sh
+Error: listen tcp 127.0.0.1:11434: bind: address already in use
+```
+
+This means the Ollama server is already running.
+
+## Checking Installed Version
+
+To confirm Ollama is installed correctly, check the version:
+
+```sh
+ollama -v
+```
+
+## Downloading and Running TinyLlama
+
+Pull the TinyLlama model:
+
+```sh
+ollama pull tinyllama
+```
+
+Once the download is complete, run the model:
+
+```sh
+ollama run tinyllama
+```
+
+This will start the model and allow you to interact with it.
+
+
+To exit, use `Ctrl + D` or type `/bye`.
+
+## Example Query
+
+```
+>>> What is AI in answer 50 words?
+AI stands for "Artificial Intelligence," a term used to describe computer systems that have the capability of
+performing tasks similar to human intelligence and decision-making. This includes reasoning, problem-solving,
+learning, and planning abilities, among others. AI can be utilized in various fields, including business,
+healthcare, education, and engineering.
+```
+
+![Image](assets\screenshot.png)
+
+## Use Cases
+
+TinyLlama can be used in various real-world applications, such as:
+
+- **On-Device AI Assistants**: Running conversational AI models locally without relying on cloud services.
+- **Privacy-Preserving AI**: Keeping sensitive data on the device rather than sending it to external servers.
+- **AI in IoT**: Enhancing smart home devices, industrial automation, and robotics with AI capabilities.
+- **Education & Research**: Using lightweight models like TinyLlama for studying AI models and experimenting with natural language processing.
+
+With this, you have a lightweight AI model directly on your Comet! Which is completely on device.

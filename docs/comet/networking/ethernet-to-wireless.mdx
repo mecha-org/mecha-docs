@@ -1,0 +1,134 @@
+---
+title: Ethernet to Wireless 
+hide_table_of_contents: true
+---
+import S from "@site/components/Steps/";
+
+The purpose of this setup is to share an Ethernet internet connection over a wireless hotspot, enabling other devices to access the internet via the Wireless hotspot created on Mecha Comet.
+
+{/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0', width: '100%' }}>
+
+<video controls autoPlay loop muted width="510" height="510">
+
+<source src="https://web-assets.mecha.so/developers-v1/peripherals/wireless/ethernet-to-wireless.mp4" type="video/mp4" />
+
+Your browser does not support the video tag.
+
+</video>
+
+</div> */}
+
+
+### Prerequisites
+
+- Ensure `nmcli` and `nftables` are installed on Mecha Comet.
+- Replace `wlan0` and `end0` with your actual **Wireless interface** and **outbound network interface** names.
+- Ensure mecha comet is connected to the **Ethernet network**.
+
+
+<S.Column>
+  ### Steps
+</S.Column>
+
+<S>
+    <S.Step>
+        <S.Details>
+            #### Create a Wireless Hotspot
+            <S.Code>
+            ```bash
+            $ sudo nmcli device wifi hotspot \
+              ifname <wireless-interface> \
+              con-name <connection-name> \
+              ssid <ssid-name> \
+              password "<password>"
+            ```
+            </S.Code>
+            
+            Replace the placeholders:
+
+            `<wireless-interface>`: Your Wireless interface name (e.g., `wlan0`).
+            `<connection-name>`: Desired connection name (e.g., `comet-hotspot`).
+            `<ssid-name>`: Desired hotspot name (e.g., `CometHotspot`).
+            `<password>`: Desired password for the hotspot.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Configure IPv4 Method to Shared
+
+            <S.Code>
+            ```bash
+            $ sudo nmcli connection modify <connection-name> ipv4.method shared
+            ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Bring Up the Hotspot Connection
+
+            <S.Code>
+            ```bash
+            $ sudo nmcli connection up <connection-name>
+            ```
+            </S.Code>
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+            #### Configure NAT with nftables
+
+            **Create a NAT Table**
+
+            <S.Code>
+            ```bash
+            $ sudo nft add table ip nat
+            ```
+            </S.Code>
+
+            **Add a NAT Chain**
+
+            <S.Code>
+            ```bash
+            $ sudo nft add chain ip nat POSTROUTING { type nat hook postrouting priority 100 \; }
+            ```
+            </S.Code>
+
+            **Add a Masquerade Rule**
+
+            <S.Code>
+            ```bash
+            $ sudo nft add rule ip nat POSTROUTING oif "end0" masquerade
+            ```
+            </S.Code>
+
+        </S.Details>
+    </S.Step>
+</S>
+
+### Verification
+
+Check the Hotspot Status
+
+```bash
+$ nmcli device status
+```
+
+Verify nftables Rules
+
+```bash
+$ sudo nft list table ip nat
+```
+
+
+### Notes
+
+- Replace interface names (`wlan0`, `end0`) as needed for your setup.
+- This setup assumes the Mecha Comet's outbound interface is `end0`. Adjust accordingly.
+
+
+### Troubleshooting
+
+- If the hotspot fails to start, ensure the Wireless adapter is **not connected** to another network.
+- Verify that `nftables` is enabled and properly configured.
+By following these steps, you should now have a functioning **Wireless hotspot** with NAT configured. 🎉

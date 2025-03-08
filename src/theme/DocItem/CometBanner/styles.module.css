@@ -1,0 +1,110 @@
+.bannerContainer {
+  margin-bottom: var(--spacer-5);
+  font-family: var(--ifm-font-family-base);
+  position: relative;
+  margin-top: 1rem;
+  /* padding-top: 2rem; */
+}
+
+.bannerHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.9rem;
+  color: var(--gray10);
+  margin-bottom: 0.5rem;
+}
+
+.topBanner {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 1rem;
+  border: 1px solid var(--gray5);
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 0.2rem;
+}
+
+.logoContainer {
+  margin-right: 1rem;
+}
+
+.logoPlaceholder {
+  width: 80px;
+  height: 80px;
+  border: 1px solid var(--gray6);
+  border-radius: 0.25rem;
+}
+
+.bannerContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.bannerTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--gray12);
+}
+
+.bannerSubtitle {
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  color: var(--gray11);
+}
+
+.bannerPilot {
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+.bottomBanner {
+  padding: 1rem;
+  border: 1px solid var(--gray5);
+  border-radius: 0.5rem;
+  background-color: white;
+}
+
+.imageContainer {
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 180px;
+  border: 1px solid var(--gray6);
+  border-radius: 0.25rem;
+}
+
+.newTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--gray12);
+}
+
+.newDescription {
+  font-size: 0.9rem;
+  margin: 0;
+  color: var(--gray10);
+}
+
+/* Dark mode adjustments */
+html[data-theme="dark"] .bannerHeader,
+html[data-theme="dark"] .newDescription {
+  color: var(--gray9);
+}
+
+html[data-theme="dark"] .topBanner,
+html[data-theme="dark"] .bottomBanner {
+  border-color: var(--gray3);
+}
+
+html[data-theme="dark"] .logoPlaceholder,
+html[data-theme="dark"] .imagePlaceholder {
+  border-color: var(--gray4);
+} 

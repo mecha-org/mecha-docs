@@ -1,0 +1,100 @@
+---
+slug: /
+title: Welcome to Mecha
+hide_table_of_contents: true
+description: Discover guides, tutorials and references for the Mecha platform including hardware and software
+---
+
+<style>
+  {`
+    /* Hack to prevent overflow, not possible to have it on other pages due to position sticky used in TOC */
+    main .container {
+        position: relative;
+        overflow: hidden;
+    }
+`}
+</style>
+
+import { Block } from "@site/components/Block/Block";
+import Apps from "@site/components/Apps/Apps";
+import Chapters from "@site/components/Chapters";
+import { Icon32 } from "@site/components/Icons/icons";
+import CardGrid from "@site/components/CardGrid";
+import SmallGrid from "@site/components/SmallGrid";
+import Talks from "@site/components/Talks";
+import Tiles from "@site/components/Tiles";
+
+import {
+  Tag,
+  BadgePercent,
+  Split,
+  ShoppingBag,
+  TableProperties,
+  CreditCard,
+} from "lucide-react";
+
+import Comet from "../static/img/landing/comet.svg";
+import Mechanix from "../static/img/landing/mechanix.svg";
+import Cloud from "../static/img/landing/cloud.svg";
+
+import MechanixGui from "../static/img/opensource-projects/mechanix-gui.svg";
+import MCTK from "../static/img/opensource-projects/mctk.svg";
+import MechaAgent from "../static/img/opensource-projects/mecha-agent.svg";
+import Linux from "../static/img/opensource-projects/linux.svg";
+import UBoot from "../static/img/opensource-projects/uboot.svg";
+import MechaMake from "../static/img/opensource-projects/mecha-make.svg";
+
+Discover guides, tutorials and references for the Mecha platform including hardware and software.
+
+<Block>
+
+<CardGrid>
+
+    [<Comet/> **Mecha Comet** Set up the Mecha Comet, learn to use its peripherals and navigate through guides to help you get the most from your hardware.](comet/intro.mdx)
+
+    [<Mechanix /> **Mechanix OS**  Get hands-on with the launcher UI, installing and running apps. Learn how to build and customize the OS on your own. ](mechanix/intro.mdx)
+
+    [<Cloud /> **Mecha Cloud** Discover Mecha's cloud services for the edge powered by a single binary agent for easier connectivity, remote access and diagnostics.](mecha-cloud/intro.mdx)
+
+</CardGrid>
+
+</Block>
+
+<Block title="Open Source Projects" direction="vertical">
+
+<SmallGrid>
+
+    [<MechanixGui/> **Mechanix GUI**](https://github.com/mecha-org/mechanix-gui/tree/dev/)
+
+    [<MCTK /> **MCTK**](https://github.com/mecha-org/mctk)
+
+    [<MechaMake /> **Mecha Make**](https://github.com/mecha-org/mecha-make)
+
+    [<MechaAgent /> **Mecha Agent**](https://github.com/mecha-org/mecha-agent)
+
+    [<Linux /> **Linux**](https://github.com/mecha-org/linux-imx)
+
+    [<UBoot /> **U-Boot**](https://github.com/mecha-org/u-boot/tree/imx-2023.04.y)
+
+</SmallGrid>
+
+</Block>
+
+<Block title="Mecha - Build Computing in the real world" direction="vertical">
+
+  <Talks>
+
+
+**All Things Open 2024** | 29th October, 2024. Raleigh, North Carolina
+
+At Mecha, we are building open computing hardware backed with extensive open-source software support – our first hardware Mecha Comet is a programmable handheld computer.
+
+This talk will explore building on hardware for everyone, starting from hobbyist projects to scaling up real-world applications combined with telemetry, networking and transparent security that merges edge and cloud computing in a unified computing fabric.
+
+  </Talks>
+
+</Block>
+
+<Block title={"Community"}>
+  <Apps />
+</Block>

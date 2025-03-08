@@ -1,0 +1,186 @@
+---
+title: Connecting via Serial Console
+hide_table_of_contents: false
+---
+
+import S from "@site/components/Steps/";
+
+Sometimes, your Mecha Comet just won't boot. Other times, it boots but behaves strangely-and when SSH access isn't an option, troubleshooting becomes even more challenging.
+
+Fortunately, the Mecha Comet has a built-in Serial Console that you can access using a UART cable. This can be a **Hail Mary** solution when SSH or any other form of connectivity fails.
+
+## What is the UART
+
+Embedded systems often need communication with external devices for data transfer, command exchange, or debugging. One of the most common interfaces for this is the Universal Asynchronous Receiver/Transmitter (UART). When a board reaches the software or firmware team, the first priority is usually setting up the debug console.
+
+UART (Universal Asynchronous Receiver-Transmitter) supports various serial communication protocols for transmitting and receiving data. In serial communication, data is sent bit by bit over a single wire. For two-way communication, two wires are used—one for transmission and one for reception.
+
+[Simply Embedded has a great overview of UART](http://www.simplyembedded.org/tutorials/msp430-uart/) if you want to learn more.
+
+
+### **Option 1: Connect the USB to UART Cable**
+You will need a USB-to-UART cable to connect to the Mecha Comet. you can check the link for ref [Amazon link](https://www.amazon.co.uk/WELLDOER-Interfaces-Debugging-Connection-Development/dp/B0D48928M5)
+
+For Mecha Comet, the UART port is located on the backside. Simply remove the back cover to access it.
+
+<img className="img-rounded" src="/assets/advanced/serial-console/connect-uart.png" alt="Launch Terminal" style={{ maxWidth: '100%', height: 'auto' }} />
+
+
+### **Option 2: Connect USB-C Cable (Breakout Extension)**
+
+You will need a USB-C cable to connect to the Mecha Comet. you can check the link for ref [Amazon link](https://www.amazon.in/Wayona-Braided-Charger-Charging-Samsung/dp/B081FH7R7D)
+
+<img className="img-rounded" src="/assets/advanced/serial-console/breakout-extension.png" alt="Launch Terminal" style={{ maxWidth: '100%', height: 'auto' }} />
+
+
+<br/>
+<br/>
+<br/>
+:::info
+The default username and password for your Mecha Comet is `mecha`.
+:::
+
+## Connect to Serial Console on Linux
+<S>
+    <S.Step>
+        <S.Details>
+          Open the Terminal on your Linux machine.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Get list the connected devices. Your UART bridge will appear as something like `/dev/ttyUSB0`.
+          ```bash
+          $ sudo dmesg | grep tty
+            [90797.684048] usb 5-2: cp210x converter now attached to ttyUSB0
+            [95515.675293] cp210x ttyUSB0: cp210x converter now disconnected from ttyUSB0
+            [97068.662492] usb 5-1: cp210x converter now attached to ttyUSB0
+          ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Connect to your device using the **screen** command, followed by the device path and the baud rate, which is typically `115200`.
+          ```bash
+          $ sudo screen /dev/ttyUSB0 115200
+          ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Once you start the Mecha Comet, you should see the boot logs on your linux terminal. It will ask you to the provide your Comet login credentials.
+
+
+          ```bash
+          Welcome Mechanix V1.1 
+          comet login: mecha
+          Password:
+          ```
+
+        </S.Details>
+    </S.Step>
+</S>
+If everything is done correctly, you should now be connected to the device via the UART cable. :tada:
+
+## Connect to Serial Console on MacOS
+
+<S>
+    <S.Step>
+        <S.Details>
+          Open the Terminal on your Mac.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Get the list of the connected devices.
+          ```bash
+          $ ls /dev/cu.*
+
+          /dev/cu.Bluetooth-Incoming-Port /dev/cu.usbserial-XXXX
+          ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Identify the device that represents your UART bridge. It should look something like `/dev/cu.usbserial-XXXX`.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Connect to the device using the **screen** command followed by the device path and the baud rate i.e. `115200`.
+
+          ```bash
+          $ screen /dev/cu.usbserial-XXXX 115200 
+          ```
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Once you start the Mecha Comet, you should see the boot logs on your linux terminal. It will ask you to the provide your Comet login credentials.
+
+          
+          ```bash
+          Welcome Mechanix V1.1 
+          comet login: mecha
+          Password:
+          ```
+        </S.Details>
+    </S.Step>
+</S>
+
+5. If everything is done correctly, you should now be connected to the device via the UART cable. :tada:
+
+## Connect to Serial Console on Windows
+
+### Identify the COM Port
+<S> 
+    <S.Step>
+        <S.Details>
+          Right click on "This PC" and select Manager and then navigate to **Device Manager**.
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+         Expand the Ports (COM & LPT) section. (if not visible then click view and Show hidden items from menubar).
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+         Note the COM port number assigned to the USB-to-UART cable (e.g., COM3).
+         <img className="img-rounded" src="/assets/advanced/serial-console/device-manager-com-port.png" alt="Device Manager" style={{ maxWidth: '100%', height: 'auto' }} />
+        </S.Details>
+    </S.Step>
+</S>
+
+
+### Configure and Open PuTTY
+<S> 
+    <S.Step>
+        <S.Details>
+          Install and Launch PuTTY ([Download from here](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Under Connection Type, select Serial and enter the COM port number (e.g., COM3).
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Set the Speed (baud rate) to 115200.
+          <img className="img-rounded" src="/assets/advanced/serial-console/putty-configuration.png" alt="Putty Configuration" style={{ maxWidth: '100%', height: 'auto' }} />
+        </S.Details>
+    </S.Step>
+    <S.Step>
+        <S.Details>
+          Once you start the Mecha Comet, you should see the boot logs on your linux terminal. It will ask you to the provide your Comet login credentials.
+
+          
+          ```bash
+          Welcome Mechanix V1.1 
+          comet login: mecha
+          Password:
+          ```
+        </S.Details>
+    </S.Step>
+</S>
