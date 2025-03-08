@@ -6,16 +6,16 @@ const CometBanner = () => {
   return (
     <div className={styles.bannerContainer}>
         This doc relates to the below revision of hardware
-      <div className={styles.topBanner}>
+      <a href='https://mecha.so/pilot' target='_blank' rel='noopener noreferrer' className={styles.topBanner}>
         <div className={styles.logoContainer}>
             <img src="/img/landing/comet.svg" alt='Mecha Logo' />
         </div>
         <div className={styles.bannerContent}>
-          <h2 className={styles.bannerTitle}>Mecha Comet</h2>
-          <p className={styles.bannerSubtitle}>Revision 5</p>
-          <a href='https://mecha.so/pilot' target='_blank' rel='noopener noreferrer' className={styles.bannerPilot}>For Pilot users</a>
+          <h2 className={styles.bannerTitle}>Comet-Rev5</h2>
+          {/* <p className={styles.bannerSubtitle}></p> */}
+          <div className={styles.bannerPilot}>For Pilot users</div>
         </div>
-      </div>
+      </a>
       
       <div className={styles.bottomBanner}>
         <div className={styles.imageContainer}>
