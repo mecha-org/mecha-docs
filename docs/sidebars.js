@@ -8,7 +8,15 @@ const sidebars = {
       label: "Getting Started",
       items: ["mctk/gettingstarted/setup", "mctk/gettingstarted/first-app"],
     },
-    // "mctk/concepts",
+    {
+      type: "category",
+      label: "Guides",
+      items: [
+        "mctk/guides/setting-up-application-root",
+        "mctk/guides/writing-a-component",
+        "mctk/guides/handling-input-events",
+      ],
+    },
   ],
   cometSidebar: [
     "comet/intro",

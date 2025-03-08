@@ -1,47 +1,61 @@
 ---
 title: File Manager
-hide_table_of_contents: true
+hide_table_of_contents: false
 ---
-The Mecha Comet comes equipped with a versatile and user-friendly File Manager application, designed to simplify file management tasks.
+The File Manager app comes pre-installed on your Mecha Comet, designed to simplify file management tasks with a user-friendly interface.  
 
-## Key Features
+### Accessing the File Manager  
 
-### 1. **Intuitive Interface**
+You can access the File Manager using the following methods:  
 
-- The File Manager provides a clean and responsive interface optimized for the 3.4-inch IPS touch display.
-- Supports both touch gestures and hardware input (via the keyboard extension).
+- **App Drawer** – Swipe up on homescreen and tap on File Manager app.  
+- **Terminal Command** – Open a terminal and run:  
 
-### 2. **File Operations**
+  ```sh
+  $ mechanix-file
+  ```   
 
-- Perform common file operations such as:
-    - **Create**: Generate new files and folders.
-    - **Rename**: Rename files and directories.
-    - **Copy/Paste**: Organize files across directories or storage devices.
-    - **Delete**: Remove files and folders permanently or send them to the Trash.
+### Navigating the File Manager  
 
-### 3. **Multi-Format Support**
+default dir 'mecha' open - contents visible. Scroll, sub dir, parent dir 
 
-- The File Manager supports a wide range of file formats, including:
-    - Text files (e.g., `.txt`, `.log`)
-    - Media files (e.g. `.jpg`, `.png`)
+<!--
+<img src="/img/mechanix-os/file-manager.jpeg" alt="File manager" width="700" style={{ filter: 'brightness(2.5)' }} />
+-->
+<iframe
+  width="560"
+  height="315"
+  src="https://web-assets.mecha.so/developers-v1/launcher/file-manager.mp4"
+  title="Mecha Comet Camera"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe> 
 
-### 4. **Storage Management**
+To interact with files and folders, use the **three dots menu** (⋮) next to the item or the options available within the app interface.  
 
-- Provides a detailed view of:
-    - **Internal Storage**: Displays usage and availability.
-    - **~~External Storage**: Supports SD cards, USB drives, and M.2 expansions.~~
-    - **~~Cloud Integration**: Enables access to popular cloud services like Google Drive and Dropbox (requires extensions or apps).~~
+#### Folder Options  
+- **View** – Click on a folder to open and explore its contents.  
+- **Create** – Use the '+' icon at the top to create a new folder within the current directory.  
+- **Rename** – Update the folder name by selecting the **Rename** option from the top-right menu.  
+- **Paste** – Insert files previously copied using this option.  
+- **Delete** – Permanently remove the folder from the device's storage.  
 
+#### File Options  
+- **View** – Open files directly within the File Manager. Supported formats include:  
+  - **Text Files** – (.txt, .log)  
+  - **Media Files** – (.jpg, .png)  
+- **Rename** – Change the name of the selected file.  
+- **Copy** – Copy the file to paste it into another directory.  
+- **Delete** – Permanently delete the file.  
 
-## How to Access the File Manager
+<!--
+### Storage Management  
 
-- **Pre-installed**: The File Manager comes pre-installed on the Mecha Comet.
-- **Launch Options**:
-    - Via the main menu.
-    - ~~Via terminal: file-manager~~
+The File Manager provides insights into your storage usage:  
 
-## Use Cases
+- **Internal Storage** – View current usage and available space.  -->
+<!-- Removed features for now -->
+<!-- - ~~External Storage~~ – ~~Supports SD cards, USB drives, and M.2 expansions.~~ -->  
+<!-- - ~~Cloud Integration~~ – ~~Access popular cloud services like Google Drive and Dropbox (requires extensions or apps).~~ -->  
 
-- **Daily Tasks**: Organizing documents, photos, and videos.
-- **Development**: Managing code files, logs, and scripts.
-- **Media Playback**: Browsing and playing audio/video files.

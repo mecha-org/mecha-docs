@@ -1,0 +1,43 @@
+---
+title: Handling User Input
+hide_table_of_contents: true
+---
+
+## User Events in Widgets
+
+All widgets possess member variables for the user events they provide,
+following the naming conventions of the DOM in JavaScript. For instance,
+`on_click` handles clicks on a button.
+
+These events are easily handled by setting these variables with a callback
+function. These events are of type `Box<Fn() -> Box<Message>>`. When the event
+occurs, the callback function is invoked, and the returned message is
+propagated to the application.
+
+
+The example below demonstrates a back button that changes the route to Home.
+```rust
+IconButton::new("back_icon").on_click(Box::new(|| msg!(Message::ChangePage {
+  page: crate::gui::Pages::Home
+})));
+```
+
+## User Events in Components
+
+User input events are handled differently in Components compared to Widgets.
+The `Component` trait contains functions for user input, sharing the same names
+as widget events. These functions are called when the corresponding events are
+received.
+
+```rust
+impl Component for BackButton {
+
+  ... 
+
+  fn on_click(&mut self, event: &mut event::Event<event::Click>) {
+      event.emit(msg!(Message::ChangePage {
+        page: crate::gui::Pages::Home
+      }));
+  }
+}
+```
