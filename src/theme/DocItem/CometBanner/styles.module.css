@@ -94,7 +94,7 @@
 
 .newDescription {
   font-size: 0.9rem;
-  margin: 0;
+  margin-bottom: 0.5rem;
   color: var(--gray10);
 }
 
@@ -113,3 +113,24 @@ html[data-theme="dark"] .logoPlaceholder,
 html[data-theme="dark"] .imagePlaceholder {
   border-color: var(--gray4);
 } 
+
+.learnMore {
+  font-size: 0.9rem;
+  width: 100%;
+  background-color: #006FDE;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.25rem;
+  color: white;
+  display: block;
+  text-align: center;
+}
+
+.learnMore:hover {
+  background-color: #0056b3;
+  text-decoration: none;
+  color: white;
+}
+

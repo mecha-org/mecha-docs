@@ -19,14 +19,15 @@ const CometBanner = () => {
       </a>
       
       <div className={styles.bottomBanner}>
-        <div className={styles.imageContainer}>
+        <a href="https://mecha.so/comet" target='_blank' className={styles.imageContainer}>
           {/* Placeholder for image */}
-            <img src='/img/landing/comet-rev6.png' style={{width: '100%', height: '100%'}}/>
-        </div>
+            <img src='/img/landing/comet-rev6.png' style={{width: '100%', height: '100%', borderRadius: '0.5rem'}}/>
+        </a>
         <h3 className={styles.newTitle}>The all new Mecha Comet</h3>
         <p className={styles.newDescription}>
           Better in all ways, the next revision of Mecha Comet, coming soon.
         </p>
+        <a href="https://mecha.so/comet" target='_blank' className={styles.learnMore}>Learn more</a>
       </div>
       
  
