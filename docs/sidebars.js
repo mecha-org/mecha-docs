@@ -69,7 +69,23 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Working with IO",
-      items: ["comet/working-with-io/pin-diagram"],
+      items: ["comet/working-with-io/pin-diagram",
+        {
+          type: "category",
+          collapsed: true,
+          label: "GPIO",
+          items: [
+            "comet/working-with-io/usb-over-gpio",
+            "comet/working-with-io/pwm",
+            "comet/working-with-io/i2c",
+            "comet/working-with-io/spi",
+            "comet/working-with-io/uart",
+            "comet/working-with-io/dbg",
+          ],
+        },
+
+      ],
+      
     },
     // {
     //   type: "category",
