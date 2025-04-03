@@ -16,7 +16,9 @@ const DownloadCard = ({ title, subtitle, context, downloadLink }) => {
         <p className={styles.context}>{context}</p>
       </div>
       <div className={styles.downloadButtonContainer}>
-        <button className={styles.downloadButton} onClick={handleDownload}>
+        <button className={styles.downloadButton} onClick={handleDownload} 
+        disabled={!downloadLink} // Disable button if downloadLink is empty
+        >
           Download
         </button>
       </div>

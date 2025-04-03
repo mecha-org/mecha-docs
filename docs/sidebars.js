@@ -2,13 +2,22 @@ import mechaApiRefSidebar from "./apis/references/sidebar";
 const sidebars = {
   mctkSidebar: [
     "mctk/intro",
-    "mctk/introduction",
     {
       type: "category",
+      collapsed: false,
       label: "Getting Started",
       items: ["mctk/gettingstarted/setup", "mctk/gettingstarted/first-app"],
     },
-    // "mctk/concepts",
+    {
+      type: "category",
+      collapsed: false,
+      label: "Guides",
+      items: [
+        "mctk/guides/setting-up-application-root",
+        "mctk/guides/writing-a-component",
+        "mctk/guides/handling-input-events",
+      ],
+    },
   ],
   cometSidebar: [
     "comet/intro",
@@ -127,6 +136,7 @@ const sidebars = {
     },
     {
       type: "category",
+      collapsed: false,
       label: "Advanced",
       items: [
         {
@@ -170,6 +180,7 @@ const sidebars = {
     "mechanix/intro",
     {
       type: "category",
+      collapsed: false,
       label: "Using the GUI",
       items: [
         "mechanix/using-the-gui/mechanix-shell",
@@ -194,6 +205,7 @@ const sidebars = {
     // },
     {
       type: "category",
+      collapsed: false,
       label: "Installing Apps",
       items: [
         "mechanix/installing-apps/package-manager",
@@ -204,6 +216,7 @@ const sidebars = {
     },
     {
       type: "category",
+      collapsed: false,
       label: "Services",
       items: [
         "mechanix/services/system/server",
