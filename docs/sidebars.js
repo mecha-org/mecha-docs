@@ -75,12 +75,13 @@ const sidebars = {
           collapsed: true,
           label: "GPIO",
           items: [
+            "comet/working-with-io/gpio",
             "comet/working-with-io/usb-over-gpio",
             "comet/working-with-io/pwm",
             "comet/working-with-io/i2c",
             "comet/working-with-io/spi",
             "comet/working-with-io/uart",
-            "comet/working-with-io/dbg",
+            "comet/working-with-io/dbg",            
           ],
         },
 
