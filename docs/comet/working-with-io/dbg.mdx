@@ -1,0 +1,109 @@
+---
+title: Debug Pins (DBG)
+description: Debug Pins (DBG) on Mecha Comet
+keywords: [DBG, GPIO, Mecha Comet]
+hide_table_of_contents: true
+---
+
+## Introduction
+
+Debug pins (DBG) are specialized GPIO pins that provide a low-level serial interface for debugging, system monitoring, and recovery operations on the Mecha Comet. These pins enable direct communication with the system's bootloader and operating system, facilitating effective diagnostics and troubleshooting.
+
+## Purpose of Debug Pins
+
+1. **Low-Level System Logging:** DBG pins provide access to critical system information, including boot messages, kernel logs, and system status, aiding in diagnosing boot failures and runtime issues.
+2. **Bootloader Interaction:** They allow direct interaction with the U-Boot bootloader, enabling firmware debugging, boot parameter modification, and firmware flashing.
+3. **System Recovery:** DBG pins can be used for emergency recovery operations, such as reflashing firmware or loading alternative bootloaders when standard boot methods fail.
+4. **Headless Debugging:** They enable remote debugging and system monitoring without requiring a graphical interface, crucial for embedded and headless environments.
+
+## Mecha Comet Debug Pin Mapping
+
+On the Mecha Comet device, the debug pins are mapped as follows:
+
+| Signal | Pin | Function |
+| --- | --- | --- |
+| DBG TX | GPIOX | UART Transmit |
+| DBG RX | GPIOY | UART Receive |
+
+### Accessing the Debug Interface
+
+1. **Hardware Connection**
+    - Use a USB-to-serial adapter (e.g., FTDI, CP2102) to connect the DBG TX and RX pins to Mecha comet device.
+    - Connect:
+        - **DBG TX** → **USB-Serial RX**
+        - **DBG RX** → **USB-Serial TX**
+        - **GND** → **GND**
+    - Set the baud rate (typically **115200** baud) for communication.
+2. **Software Setup**
+    - On Linux, use `screen` or `minicom`:
+        
+        ```bash
+        $ screen /dev/ttyUSB0 115200
+        ```
+        
+    - On Windows, use PuTTY or Tera Term.
+
+## Debug Pin Usage in Mecha Comet
+
+**Debug Pin Usage on Mecha Comet**
+
+- **Serial Console Access:** DBG pins provide access to the U-Boot bootloader and Linux kernel logs.
+- **U-Boot Interaction:** Interrupt the boot process by pressing a key during startup to enter U-Boot mode, allowing for firmware flashing and boot parameter modification.
+- **Kernel Debugging:** Use `dmesg` to view real-time kernel logs and debug boot failures.
+
+---
+
+## Example Code for Debugging
+
+### C Example (UART Communication)
+
+```c
+#include <stdio.h>
+#include <fcntl.h>
+#include <termios.h>
+#include <unistd.h>
+
+int main() {
+    int fd = open("/dev/ttyS0", O_RDWR | O_NOCTTY);
+    struct termios tty;
+    tcgetattr(fd, &tty);
+    cfsetispeed(&tty, B115200);
+    cfsetospeed(&tty, B115200);
+    tcsetattr(fd, TCSANOW, &tty);
+    write(fd, "Hello, Debug!", 13);
+    close(fd);
+    return 0;
+}
+
+```
+
+### Rust Example
+
+```rust
+use std::fs::OpenOptions;
+use std::io::Write;
+
+fn main() {
+    let mut serial = OpenOptions::new().write(true).open("/dev/ttyS0").unwrap();
+    serial.write_all(b"Hello, Debug!\n").unwrap();
+}
+
+```
+
+### Python Example
+
+```python
+import serial
+ser = serial.Serial('/dev/ttyS0', 115200)
+ser.write(b'Hello, Debug!\n')
+ser.close()
+
+```
+
+---
+
+## Use Cases
+
+1. **Real-Time System Health Monitoring:** DBG pins enable continuous logging of critical system events, providing valuable insights into system health and performance. This facilitates early detection of potential issues, aiding in proactive maintenance and troubleshooting.
+2. **Remote Headless System Debugging and Management:** DBG pins provide a reliable serial console for remote access to headless systems, eliminating the need for physical access. This allows for efficient debugging, configuration, and management of systems deployed in remote or inaccessible locations.
+3. **Emergency Firmware Recovery and System Restoration:** In critical situations where standard boot methods fail due to firmware corruption or system instability, DBG pins offer a reliable pathway for restoring or reflashing firmware via UART. This ensures system resilience and minimizes downtime.

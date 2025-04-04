@@ -1,0 +1,247 @@
+---
+title: Pulse Width Modulation (PWM)
+description: PWM over GPIO
+keywords: [PWM, GPIO, Mecha Comet]
+hide_table_of_contents: true
+---
+
+## Overview
+
+Pulse Width Modulation (PWM) is a technique used to control the power delivered to electrical devices by modulating the duty cycle of a signal. It is widely used in embedded systems and computing for applications such as motor control, LED dimming, and signal generation.
+
+### What is PWM?
+
+PWM is a method for generating an analog-like signal using digital means. Instead of varying the voltage continuously, PWM rapidly switches the signal between high and low states at a fixed frequency. The proportion of time the signal stays in the high state (duty cycle) determines the effective power delivered to the device.
+
+### How PWM Works?
+
+PWM signals are defined by:
+
+- **Frequency**: The number of times the signal repeats per second (Hz).
+- **Duty Cycle**: The percentage of time the signal stays high in a single cycle.
+
+For example, a PWM signal with a period of 1ms and a duty cycle of 50% means the signal stays high for 0.5ms and low for 0.5ms in each cycle.
+
+### Why is PWM Useful?
+
+PWM is crucial in embedded systems for various reasons:
+
+- **Energy Efficiency**: Allows control of power without excessive heat dissipation.
+- **Motor Speed Control**: Adjusting the duty cycle alters motor speed.
+- **LED Dimming**: Changing the duty cycle controls brightness levels.
+- **Signal Processing**: Can be used to generate analog signals from digital sources.
+
+## PWM Pins
+
+The Mecha Comet device provides two PWM-capable GPIO pins:
+
+| PWM Channel | GPIO Pin |
+| --- | --- |
+| PWM1 | GPIO1_IO01 |
+| PWM2 | GPIO5_IO04 |
+
+### Accessing PWM on Using gpiod
+
+Since the Mecha Comet device runs a newer Linux kernel, we will use the `gpiod` library instead of the deprecated sysfs interface.
+
+### Installing gpiod
+
+Ensure `gpiod` tools and libraries are installed:
+
+```
+$ sudo apt update && sudo apt install gpiod libgpiod-dev python3-libgpiod
+
+```
+
+### Enabling and Configuring PWM
+
+To use PWM with `gpiod`, follow these steps:
+
+1. **Identify the PWM line** using `gpioinfo`:
+    
+    ```
+    $ gpioinfo | grep pwm
+    
+    ```
+    
+2. **Configure the PWM pin using `gpioset`**:
+    
+    ```
+    $ gpioset --mode=time --sec=5 gpiochip0 1=1
+    
+    ```
+    
+3. Adjust the duty cycle dynamically by modifying the pulse width in a loop.
+
+---
+
+## Example of Controlling LED Brightness with PWM
+
+This example demonstrates the implementation of Pulse Width Modulation (PWM) to control the brightness of an LED. PWM is a technique used to generate an analog-like signal from a digital output by varying the duty cycle of a square wave. This method allows for fine-grained control of the LED's brightness, and the same principle can be applied to regulate other devices requiring variable power or signal levels, such as motor speed, audio output, or servo positioning.
+
+```c
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+// Function declarations
+void export_pwm0();
+void set_period(int period);
+void set_duty_cycle(int duty_cycle);
+void enable_pwm0();
+void disable_pwm0();
+void unexport_pwm0();
+
+int main() {
+    // Initialize PWM0
+    export_pwm0();
+    set_period(10000);  // Set initial period
+    set_duty_cycle(0);  // Start with 0% duty cycle
+    enable_pwm0();
+
+    // Modify duty cycle values over time
+    int duty_cycles[] = {100, 1000, 2000, 5000, 10000};
+    size_t num_cycles = sizeof(duty_cycles) / sizeof(duty_cycles[0]);
+    
+    for (size_t i = 0; i < num_cycles; i++) {
+        set_duty_cycle(duty_cycles[i]);
+        sleep(1);
+    }
+
+    // Disable and unexport PWM
+    disable_pwm0();
+    unexport_pwm0();
+
+    return 0;
+}
+
+// Function to export PWM0
+void export_pwm0() {
+    int fd = open("/sys/class/pwm/pwmchip0/export", O_WRONLY);
+    if (fd == -1) {
+        perror("Error: Unable to open export file");
+        exit(EXIT_FAILURE);
+    }
+    if (write(fd, "0", 2) != 2) {
+        perror("Error: Writing to export file failed");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+}
+
+// Function to set PWM period
+void set_period(int period) {
+    char buf[20];
+    snprintf(buf, sizeof(buf), "%d", period);
+    int fd = open("/sys/class/pwm/pwmchip0/pwm0/period", O_WRONLY);
+    if (fd == -1) {
+        perror("Error: Unable to open period file");
+        exit(EXIT_FAILURE);
+    }
+    if (write(fd, buf, strlen(buf)) != (ssize_t)strlen(buf)) {
+        perror("Error: Writing to period file failed");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+}
+
+// Function to set PWM duty cycle
+void set_duty_cycle(int duty_cycle) {
+    char buf[20];
+    snprintf(buf, sizeof(buf), "%d", duty_cycle);
+    int fd = open("/sys/class/pwm/pwmchip0/pwm0/duty_cycle", O_WRONLY);
+    if (fd == -1) {
+        perror("Error: Unable to open duty_cycle file");
+        exit(EXIT_FAILURE);
+    }
+    if (write(fd, buf, strlen(buf)) != (ssize_t)strlen(buf)) {
+        perror("Error: Writing to duty_cycle file failed");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+}
+
+// Function to enable PWM0
+void enable_pwm0() {
+    int fd = open("/sys/class/pwm/pwmchip0/pwm0/enable", O_WRONLY);
+    if (fd == -1) {
+        perror("Error: Unable to open enable file");
+        exit(EXIT_FAILURE);
+    }
+    if (write(fd, "1", 2) != 2) {
+        perror("Error: Writing to enable file failed");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+}
+
+// Function to disable PWM0
+void disable_pwm0() {
+    int fd = open("/sys/class/pwm/pwmchip0/pwm0/enable", O_WRONLY);
+    if (fd == -1) {
+        perror("Error: Unable to open enable file");
+        exit(EXIT_FAILURE);
+    }
+    if (write(fd, "0", 2) != 2) {
+        perror("Error: Writing to enable file failed");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+}
+
+// Function to unexport PWM0
+void unexport_pwm0() {
+    int fd = open("/sys/class/pwm/pwmchip0/unexport", O_WRONLY);
+    if (fd == -1) {
+        perror("Error: Unable to open unexport file");
+        exit(EXIT_FAILURE);
+    }
+    if (write(fd, "0", 2) != 2) {
+        perror("Error: Writing to unexport file failed");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+}
+
+```
+
+### Compiling and Running the Code
+
+To compile and run the provided C code on mecha comet, follow these steps:
+
+1. Save the code to a file, for example, `pwm_example.c`.
+2. Open a terminal and navigate to the directory containing the file.
+3. Compile the code using `gcc`:
+
+    ```
+    $ gcc -o pwm_example pwm_example.c
+    ```
+
+4. Run the compiled program with appropriate permissions (e.g., as root if required):
+
+    ```
+    $ sudo ./pwm_example
+    ```
+Ensure you have the necessary permissions to access the `/sys/class/pwm` directory and modify the PWM settings.
+
+---
+## Use Cases
+
+1. **Direct Current (DC) Motor Speed Regulation**
+Pulse Width Modulation (PWM) offers precise control over the rotational speed of Direct Current (DC) motors. By adjusting the duty cycle of the applied PWM signal, the average voltage delivered to the motor is varied. An increased duty cycle results in a higher average voltage, thereby increasing the motor's speed.
+
+2. **Servo Motor Angular Positioning**
+Servo motors necessitate specific Pulse Width Modulation (PWM) signals to accurately control their angular position. The duty cycle of the PWM signal directly correlates with the desired angular displacement of the servo motor's shaft.
+
+3. **Light Emitting Diode (LED) Brightness Control**
+The perceived brightness of a Light Emitting Diode (LED) can be smoothly adjusted by modulating the duty cycle of the applied Pulse Width Modulation (PWM) signal. An elevated duty cycle results in a higher average power delivered to the LED, leading to increased brightness.

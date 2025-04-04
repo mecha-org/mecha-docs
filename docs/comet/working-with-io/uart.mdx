@@ -1,0 +1,124 @@
+---
+title: Universal Asynchronous Receiver-Transmitter (UART)
+description: UART over GPIO
+keywords: [UART, GPIO, Mecha Comet]
+hide_table_of_contents: true
+---
+
+## **Introduction to UART**
+
+The Universal Asynchronous Receiver-Transmitter (UART) is a widely used serial communication protocol for exchanging data between devices. Unlike synchronous protocols like SPI and I2C, UART operates asynchronously, eliminating the need for a shared clock signal. Synchronization is achieved through predefined baud rates.
+
+### How Does UART Work?
+
+- **Two-Wire Communication:** UART utilizes two data lines:
+  - **TX (Transmit):** The transmitting device sends data over this line.
+  - **RX (Receive):** The receiving device receives data over this line.
+- **Data Framing:** Data is transmitted in packets, comprising:
+  - **Start bit:** Indicates the beginning of a data frame.
+  - **Data bits:** The actual data being transmitted.
+  - **Parity bit (optional):** Used for error checking.
+  - **Stop bits:** Indicate the end of a data frame.
+- **Baud Rate Synchronization:** Both communicating devices must be configured with the same baud rate to ensure accurate data transmission and reception.
+
+## UART Over GPIO
+
+### UART Pin Mapping
+
+Mecha comet provides hardware UART functionality through the following GPIO pins:
+
+| UART Interface | TX Pin     | RX Pin     |
+| -------------- | ---------- | ---------- |
+| UART3          | GPIO5_IO27 | GPIO5_IO26 |
+| UART4          | GPIO5_IO28 | GPIO5_IO29 |
+
+These pins are dedicated for hardware UART communication, offering robust and efficient serial data transfer.
+
+### Enabling UART on GPIO
+
+1.  **Check Available UART Interfaces:**
+
+    ```bash
+    $ ls /dev/serial*
+    ```
+
+    or
+
+    ```bash
+    $ ls /dev/ttyS*
+    ```
+
+2.  **Enable UART if Necessary:**
+
+    - On some SBCs, additional configuration may be required in `/boot/config.txt` or `device tree overlays`.
+    - Example for enabling UART:
+
+    Add the following line:
+
+    Save and reboot:
+
+        ```bash
+        $ sudo nano /boot/config.txt
+        ```
+
+        ```bash
+        $ enable_uart=1
+        ```
+
+        ```bash
+        $ sudo reboot
+        ```
+
+3.  **Configure UART Baud Rate:**
+
+    ```bash
+    $ stty -F /dev/ttyS3 115200
+    ```
+
+---
+
+## Accessing UART for User Applications
+
+### Connecting to a Terminal
+
+Users can communicate with UART devices using terminal applications like `minicom`, `screen`, or `picocom`.
+
+```bash
+$ sudo apt install minicom
+$ minicom -b 115200 -D /dev/ttyS3
+```
+
+### Using Python to Read/Write Data
+
+Python's `pyserial` library allows direct UART access.
+
+### Install pyserial:
+
+```python
+$ pip install pyserial
+```
+
+### Example Python Script:
+
+```python
+import serial
+
+ser = serial.Serial('/dev/ttyS3', 115200, timeout=1)
+ser.write(b'Hello UART!\n')
+data = ser.readline()
+print("Received:", data.decode())
+ser.close()
+```
+
+---
+
+## Use Cases
+
+1. **Robotics and Motion Control**
+   UART facilitates precise control of robotic systems by interfacing with motor controllers and servo drivers. This enables accurate navigation for rovers and precise camera angle adjustments in pan-tilt mechanisms, crucial for autonomous navigation and visual tracking.
+2. **System Debugging and Remote Access**
+   UART provides a reliable serial console for debugging embedded systems and enabling remote access. This is essential for diagnosing hardware and software issues, monitoring system performance, and performing remote maintenance without direct physical access.
+3. **Serial Terminal Interface**
+   UART can be used to establish a direct serial terminal for interactive control and debugging of the SBC. This allows developers to send commands, receive system feedback, and monitor real-time data, streamlining development and troubleshooting.
+4. **Wireless Communication Integration**
+   UART serves as a vital interface for integrating wireless communication modules, such as Bluetooth (e.g., HC-05) and LoRa radios. This enables wireless data transfer for applications like remote sensor networks, wireless control systems, and long-range communication.
