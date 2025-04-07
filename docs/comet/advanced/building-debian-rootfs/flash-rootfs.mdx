@@ -1,14 +1,29 @@
 ---
-title: Flashing the Rootfs Image
+title: Flashing the Debian Rootfs
+description: Flashing the Debian Rootfs on Mecha Comet
+tags: [debian, rootfs, flashing]
 hide_table_of_contents: true
 ---
 
+This guide provides step-by-step instructions for flashing the Debian root filesystem onto the Mecha Comet device. The process involves using the `uuu` (Universal Update Utility) tool to flash the root filesystem image and other necessary files.
+The flashing process is crucial for ensuring that the Mecha Comet runs the desired operating system and software stack. This guide assumes you have already have Debian root filesystem and have the necessary files ready for flashing. (link are provided in the prerequisites section).
+
+
 ### Prerequisites
 
-1. `uuu` tool on your host machine.
-2. **Prepare the rootfs bundle:**
-   Make sure you have the following files available in the same folder as the flashing files on the host machine: - `debian-v2.auto` (this is the configuration file for the flashing process). - `flash.bin` (the flash binary file). - `debian-image-rootfs.tar.gz` (the root filesystem image to flash).
-3. Male to Male USB cable
+1.  **`uuu` Tool:** Installed on your host machine. Follow the instructions in the "[Installing the Flash Utility](#installing-the-flash-utility)" section below.
+2.  **Mecha Flash Utilities:** Download the necessary flashing files (`debian-flashing.auto` and `flash.bin`) and potentially the Device Tree Blob (`DTB`) from the [Mecha Flash Utilities repository](https://github.com/dhruveshb-mecha/mecha-flash-utilities/archive/refs/heads/main.zip). Extract the contents of this archive to a local folder on your host machine. This archive typically contains:
+    * `debian-flashing.auto`: The configuration file that guides the flashing process.
+    * `flash.bin`: The flash binary file.
+    * `DTB` (Device Tree Blob): A file that describes the hardware configuration of your Mecha Comet.
+3.  **Debian Rootfs Image:** Download the `debian-image-rootfs.tar.gz` file. At the time of writing, a pre-built image can be found as an artifact from the Debian build workflow in the `mecha-org/mecha-make` repository. For the latest version, follow these steps:
+    1.  Go to [https://github.com/mecha-org/mecha-make/actions/workflows/debian-build.yml](https://github.com/mecha-org/mecha-make/actions/workflows/debian-build.yml).
+    2.  Click on the most recent successful workflow run (indicated by a green checkmark).
+    3.  Scroll down to the "**Artifacts**" section and download the `debian-image-rootfs.tar.gz` file.
+    Place this file in the same directory where you extracted the Mecha Flash Utilities.
+4.  **USB Cable:** A male-to-male USB cable to connect your Mecha Comet to your host machine.
+
+**Important:** Ensure that the `debian-flashing.auto`, `flash.bin`, `DTB` (if present in the utilities archive), and `debian-image-rootfs.tar.gz` files are all located in the same directory on your host machine before proceeding with the flashing steps.
 
 ---
 
@@ -21,30 +36,31 @@ Follow the steps below to install the `uuu` utility on your host machine.
 ### Linux
 
 1. If Running Ubutnu LTS / Debian
-
-   Install the `uuu` utility using the following command:
-
-   ```bash
-   sudo apt-get install uuu
-   ```
-
+    
+    Install the `uuu` utility using the following command:
+    
+    ```bash
+    $ sudo apt-get install uuu
+    ```
+    
 2. Use Precompiled Binaries for any linux distro
-   
-   Download the precompiled binaries from the [official GitHub page](https://github.com/nxp-imx/mfgtools/releases).
+    
+    Download the precompiled binaries from the [official GitHub page](https://github.com/nxp-imx/mfgtools/releases).
+    
 
 ### MacOS
 
-1.  Using home brew
+1. Using home brew
     
     Install the `uuu` utility using the following command:
-        ```bash
-        brew install uuu
-        ```
-2.  Use Precompiled Binaries for mac
+    `bash brew install uuu`
+    
+2. Use Precompiled Binaries for mac
     
     For Intel Macs, download from the [official GitHub page](https://github.com/nxp-imx/mfgtools/releases/download/uuu_1.5.201/uuu_mac_x86).
     
     For M1 Macs, download from the [official GitHub page](https://github.com/nxp-imx/mfgtools/releases/download/uuu_1.5.201/uuu_mac_arm)
+    
 
 ### Windows
 
@@ -56,42 +72,81 @@ Now that you have `uuu` installed, lets start preparing the flash image.
 
 ## Steps to Flash the Image Bundle
 
-### 1.**Put the device into fastboot mode:**
+### 1. **Put the Mecha Comet into Fastboot Mode:**
 
-    Locate the switch provided on the back of your Mecha comet device and toggle it to enter fastboot mode.
-
+- Ensure your Mecha Comet device is powered off.
+- Locate the toggle switch on the back of the device.
+- **Toggle the switch to the position that enables fastboot mode.** This position might be indicated by labels or diagrams near the switch. Refer to the images below for visual guidance.
 
 <img
-  className="img-rounded"
-  src="/assets/advanced/building-debian-rootfs/mecha-comet-toggle-switch.jpg"
-  alt="mecha-comet-toggle-switch"
-  style={{ maxWidth: "80%", height: "auto" }}
+className="img-rounded"
+src="/assets/advanced/building-debian-rootfs/mecha-comet-toggle-switch.jpg"
+alt="mecha-comet-toggle-switch"
+style={{ maxWidth: "80%", height: "auto" }}
 />
 
-### 2. **Connect the device to your machine:** Use a USB cable to connect the Mecha
-comet device to your host machine.
 <img
-  className="img-rounded"
-  src="/assets/advanced/building-debian-rootfs/mecha-comet-male-cable.jpg"
-  alt="mecha-comet-male-cable."
-  style={{ maxWidth: "80%", height: "auto" }}
+className="img-rounded"
+src="/assets/advanced/building-debian-rootfs/toggle-switch.png"
+alt="mecha-comet-switch-diagram"
+style={{ maxWidth: "80%", height: "auto" }}
 />
 
-### 3. **Ensure the necessary files are in place:** Make sure the rootfs bundle (`debian-image-rootfs.tar.gz`)
-and the `debian-v2.auto` file are in the same directory as the flashing files.
+### 2. **Connect the Mecha Comet to Your Host Machine:**
 
-### 4. **Flash the image:** Run the following command on host machine to flash the device:
-```bash sudo uuu -v -b debian-v2.auto flash.bin debian-image-rootfs.tar.gz ``` This
-command uses the `uuu` utility to flash the `flash.bin` file and the root filesystem
-image (`debian-image-rootfs.tar.gz`) to the device in fastboot mode.
+- Use the male-to-male USB cable to connect one end to the USB port on your Mecha Comet device (typically the one designated for data transfer or flashing) and the other end to a USB port on your host machine.
+
 <img
-  className="img-rounded"
-  src="/assets/advanced/building-debian-rootfs/mecha-comet-flashing.jpg"
-  alt="mecha-comet-flashing"
-  style={{ maxWidth: "80%", height: "auto" }}
+className="img-rounded"
+src="/assets/advanced/building-debian-rootfs/mecha-comet-male-cable.jpg"
+alt="mecha-comet-male-cable."
+style={{ maxWidth: "80%", height: "auto" }}
 />
+
+### 3. **Navigate to the Flashing Files:**
+
+- Open a terminal or command prompt on your host machine.
+- In your terminal or command prompt, navigate to the directory where you extracted the Mecha Flash Utilities and placed the `debian-image-rootfs.tar.gz` file.
+
+and the `debian-flashing.auto` file are in the same directory as the flashing files.
+
+### 4. **Flash the Image:**
+
+- Execute the following command to initiate the flashing process:
+    
+    ```bash
+    $ sudo uuu -v -b debian-flashing.auto flash.bin debian-image-rootfs.tar.gz
+    ```
+    
+    - `sudo`: May be required on Linux and macOS for sufficient permissions.
+    - `uuu`: The Universal Update Utility command.
+    - `v`: Enables verbose output, providing more details about the flashing process.
+    - `b debian-flashing.auto`: Specifies the configuration file that guides the flashing process.
+    - `flash.bin`: The flash binary file.
+    - `debian-image-rootfs.tar.gz`: The root filesystem image file.
+
+<img
+className="img-rounded"
+src="/assets/advanced/building-debian-rootfs/mecha-comet-flashing.jpg"
+alt="mecha-comet-flashing"
+style={{ maxWidth: "80%", height: "auto" }}
+/>
+
+### 5. **Wait for the Flashing to Complete:**
+
+- The flashing process will begin automatically after you execute the command.
+- Monitor the terminal output carefully. It will display the progress of the flashing operation.
+- **Do not disconnect the USB cable or power off the Mecha Comet during the flashing process.** This could lead to a corrupted installation.
+- The process can take several minutes to complete.
+
+### 6. **Reboot Your Mecha Comet:**
+
+- Once the flashing is successful, you can disconnect the USB cable from your host machine.
+- Toggle the fastboot switch on the back of the Mecha Comet back to its normal operating position.
+- Power on your Mecha Comet device. It should now boot into the newly flashed root filesystem.
 
 ### Final Notes
 
-- The flashing process will begin once the command is executed, and it will use the `debian-v2.auto` configuration file for the process.
-- Monitor the terminal output to ensure that the flashing completes successfully. If there are any errors during the flashing, they will be displayed in the terminal.
+- The `debian-flashing.auto` configuration file contains the instructions that `uuu` follows to flash the different partitions on the Mecha Comet.
+- Pay close attention to the terminal output for any error messages during the flashing process. If you encounter errors, double-check your prerequisites, connections, and the commands you executed.
+- If the flashing fails, consult the documentation or seek support from the Mecha Comet community.
