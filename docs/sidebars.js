@@ -131,7 +131,7 @@ const sidebars = {
       type: "category",
       label: "Benchmarks",
       items: [
-        "benchmarks/mecha-comet-benchmark",
+        "comet/benchmarks/geekbench",
       ],
     },
     {
@@ -166,13 +166,13 @@ const sidebars = {
         },
         {
           type: "category",
-          label: "Buiding Rootfs",
+          label: "Building Rootfs",
           items: [
             "comet/advanced/building-debian-rootfs/using-mecha-make",
-            "comet/advanced/building-debian-rootfs/build-rootfs-manually",
-            "comet/advanced/building-debian-rootfs/flash-rootfs",
+            "comet/advanced/building-debian-rootfs/build-rootfs-manually",           
           ],
         },
+        "comet/advanced/building-debian-rootfs/flash-rootfs",
       ],
     },
   ],
