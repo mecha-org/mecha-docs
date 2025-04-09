@@ -1,0 +1,226 @@
+---
+title: GPIO
+description: General-Purpose Input/Output (GPIO) on Mecha Comet
+keywords: [GPIO, Mecha Comet]
+hide_table_of_contents: true
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# General-Purpose Input/Output (GPIO)
+
+### What is GPIO?
+
+General-Purpose Input/Output (GPIO) refers to the configurable digital pins available on the Mecha Comet. These pins can be individually programmed to function as either inputs or outputs, providing a flexible interface to interact with external electronic components. Unlike dedicated communication interfaces (such as UART, I2C, and SPI) with fixed protocols, GPIO pins are versatile and their behavior is determined by user configuration.
+
+### Why Use GPIO?
+
+GPIOs are fundamental in embedded systems for a wide range of tasks, including:
+
+- **Controlling Peripherals:** Driving external devices like LEDs, motors, relays, and actuators.
+- **Reading Sensor Input:** Receiving digital signals from sensors, switches, and buttons.
+- **Low-Level Hardware Interaction:** Enabling direct digital communication with external circuits.
+- **Interrupt Handling:** Configuring pins to detect external events and trigger interrupts.
+- **Software-Defined Protocols:** Implementing custom communication protocols through bit-banging.
+
+### GPIO vs. Dedicated Interfaces
+
+Dedicated interfaces like I2C and UART adhere to specific communication protocols, simplifying interaction with devices designed for those protocols. GPIOs, however, offer greater flexibility. They can be configured to act as simple digital controls or be manipulated at the bit level to emulate other communication protocols when dedicated hardware is not available or suitable.
+
+### GPIO Usage on Mecha Comet
+
+The Mecha Comet provides a number of general-purpose GPIO pins for flexible hardware interfacing. The specific mapping of these GPIOs to physical pin numbers and their associated names is crucial for proper configuration.
+
+| Pin Number | Name       | Description                       |
+| ---------- | ---------- | --------------------------------- |
+| 7          | GPIO2_IO12 | General-purpose GPIO (active low) |
+| 16         | GPIO2_IO15 | General-purpose GPIO (active low) |
+| 17         | GPIO2_IO16 | General-purpose GPIO (active low) |
+| 18         | GPIO2_IO17 | General-purpose GPIO (active low) |
+| 19         | GPIO2_IO18 | General-purpose GPIO (active low) |
+| 20         | GPIO4_IO28 | General-purpose GPIO (active low) |
+| 24         | GPIO2_IO20 | General-purpose GPIO (active low) |
+| 31         | GPIO1_IO13 | General-purpose GPIO (active low) |
+| 36         | GPIO2_IO14 | General-purpose GPIO (active low) |
+| 37         | GPIO2_IO13 | General-purpose GPIO (active low) |
+
+---
+
+## Accessing GPIO on Linux with libgpiod
+
+On Linux-based systems, including the Mecha Comet, the `libgpiod` library is the recommended and modern way to interact with GPIO pins. It provides a stable and efficient user-space interface to the kernel's GPIO subsystem.
+
+## Listing Available GPIOs
+
+To view the available GPIO lines, their current state, and their consumer (if any), use the `gpioinfo` command:
+
+```bash
+$ sudo gpioinfo
+```
+
+This command provides a comprehensive list of GPIO chips and the individual lines they manage.
+
+### Controlling GPIOs from the Command Line
+
+The `gpioset` and `gpioget` utilities (part of the `libgpiod-utils` package) allow basic control of GPIOs from the command line.
+
+Setting a GPIO as output and controlling its state:
+
+```bash
+$ gpioset gpiochip0 12=1  # Set GPIO line 12 on gpiochip0 to high (1)
+$ gpioset gpiochip0 12=0  # Set GPIO line 12 on gpiochip0 to low (0)
+```
+
+Reading the state of a GPIO configured as input:
+
+```bash
+gpioget gpiochip0 12  # Read GPIO12 state
+```
+
+### Configuring GPIO as Output Using `gpiod`
+
+1. **Finding a GPIO line by name**
+
+   ```bash
+   $ gpiofind "GPIO2_IO12"
+   ```
+
+2. **Monitoring GPIO events**
+
+   ```bash
+   $ gpiomon gpiochip0 12
+   ```
+
+---
+
+## Example Use Case: LED Control (libgpiod)
+
+<Tabs
+ defaultValue="python"
+  values={[
+    {label: 'Python', value: 'python'},
+    {label: 'C', value: 'c'},
+ 
+  ]}
+>
+  <TabItem value="python">    
+        ### Using Python
+
+        ```python
+        import gpiod
+        import time
+
+        def toggle_gpio(chip_name, line_num, state):
+            chip = gpiod.Chip(chip_name)
+            line = chip.get_line(line_num)
+            config = gpiod.LineSettings()
+            config.direction = gpiod.LINE_DIR_OUT
+            line.request(config)
+            line.set_value(state)
+            line.release()
+
+        toggle_gpio("gpiochip0", 12, 1)  # Turn on LED
+        time.sleep(1)
+        toggle_gpio("gpiochip0", 12, 0)  # Turn off LED
+
+        ```
+
+        ### To Run the Python Script on the Mecha Comet:
+
+        1. Save the script as `toggle_gpio.py`.
+        2. Make sure you have `gpiod` installed:
+           ```bash
+           $ sudo apt install gpiod python3-gpiod
+           ```
+        3. Run the script:
+           ```bash
+           $ python3 toggle_gpio.py
+           ```
+        4. Ensure you have the necessary permissions to access GPIO lines. You may need to run the script with `sudo` or add your user to the `gpio` group.
+        5. Check the LED connected to GPIO line 12 to see if it toggled on and off.
+     </TabItem>
+
+  <TabItem value="c" >
+
+        ### Using C
+
+        ```c
+        #include <gpiod.h>
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <unistd.h>
+
+        int main() {
+            const char *chipname = "gpiochip0"; // Replace if necessary
+            unsigned int line_num = 12;        // Replace with the desired GPIO line number
+            struct gpiod_chip *chip;
+            struct gpiod_line *line;
+            int ret;
+
+            chip = gpiod_chip_open_by_name(chipname);
+            if (!chip) {
+                perror("Failed to open gpiochip");
+                return 1;
+            }
+
+            line = gpiod_chip_get_line(chip, line_num);
+            if (!line) {
+                perror("Failed to get GPIO line");
+                gpiod_chip_close(chip);
+                return 1;
+            }
+
+            ret = gpiod_line_request_output(line, "gpio-example", 0);
+            if (ret < 0) {
+                perror("Failed to set GPIO as output");
+                gpiod_line_release(line);
+                gpiod_chip_close(chip);
+                return 1;
+            }
+
+            printf("Toggling GPIO line %u on %s...\n", line_num, chipname);
+            ret = gpiod_line_set_value(line, 1); // Set High (On)
+            if (ret < 0)
+                perror("Failed to set GPIO value");
+            sleep(1);
+            ret = gpiod_line_set_value(line, 0); // Set Low (Off)
+            if (ret < 0)
+                perror("Failed to set GPIO value");
+
+            gpiod_line_release(line);
+            gpiod_chip_close(chip);
+            printf("GPIO toggling complete.\n");
+
+            return 0;
+        }
+        ```
+
+        ### To Compile and Run the C Program on the Mecha Comet:
+
+        1. Save the code as `gpio_example.c`.
+        2. Open a terminal and navigate to the directory containing the file.
+        3. Compile the code using `gcc`:
+           ```bash
+           $ gcc -o gpio_example gpio_example.c
+           ```
+        4. Run the compiled program with appropriate permissions:
+           ```bash
+           $ sudo ./gpio_example
+           ```
+        5. Ensure you have the necessary permissions to access GPIO lines. You may need to run the program with `sudo` or add your user to the `gpio` group.
+    </TabItem>
+
+  <TabItem value="rust" >
+    Rust Code Example
+  </TabItem>
+</Tabs>
+---
+## Use Cases
+
+GPIOs are fundamental building blocks for Internet of Things (IoT) devices. They enable direct interaction with the physical world by:
+
+- **Interfacing with Sensors:** Reading data from a wide variety of sensors (temperature, humidity, motion, light, pressure, etc.).
+- **Controlling Actuators:** Driving motors, solenoids, valves, and other output devices.
+- **Implementing Low-Power Features:** Utilizing GPIOs for wake-up signals to conserve power.
+- **Enabling Event-Driven Processing:** Configuring GPIOs for edge-triggered interrupts to respond efficiently to external events.

@@ -1,0 +1,237 @@
+---
+title: UART
+description: UART over GPIO
+keywords: [UART, GPIO, Mecha Comet]
+hide_table_of_contents: true
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## **Introduction to UART**
+
+The Universal Asynchronous Receiver-Transmitter (UART) is a widely used serial communication protocol for exchanging data between devices. Unlike synchronous protocols like SPI and I2C, UART operates asynchronously, eliminating the need for a shared clock signal. Synchronization is achieved through predefined baud rates.
+
+### How Does UART Work?
+
+- **Two-Wire Communication:** UART utilizes two data lines:
+  - **TX (Transmit):** The transmitting device sends data over this line.
+  - **RX (Receive):** The receiving device receives data over this line.
+- **Data Framing:** Data is transmitted in packets, comprising:
+  - **Start bit:** Indicates the beginning of a data frame.
+  - **Data bits:** The actual data being transmitted.
+  - **Parity bit (optional):** Used for error checking.
+  - **Stop bits:** Indicate the end of a data frame.
+- **Baud Rate Synchronization:** Both communicating devices must be configured with the same baud rate to ensure accurate data transmission and reception.
+
+## UART Over GPIO
+
+### UART Pin Mapping
+
+Mecha comet provides hardware UART functionality through the following GPIO pins:
+
+| UART Interface | TX Pin     | RX Pin     |
+| -------------- | ---------- | ---------- |
+| UART3          | GPIO5_IO27 | GPIO5_IO26 |
+| UART4          | GPIO5_IO28 | GPIO5_IO29 |
+
+These pins are dedicated for hardware UART communication, offering robust and efficient serial data transfer.
+
+### Enabling UART on GPIO
+
+1.  **Check Available UART Interfaces:**
+
+    ```bash
+    $ ls /dev/serial*
+    ```
+
+    or
+
+    ```bash
+    $ ls /dev/ttyS*
+    ```
+
+2.  **Enable UART if Necessary:**
+
+    - On some SBCs, additional configuration may be required in `/boot/config.txt` or `device tree overlays`.
+    - Example for enabling UART:
+
+    Add the following line:
+
+    Save and reboot:
+
+        ```bash
+        $ sudo nano /boot/config.txt
+        ```
+
+        ```bash
+        $ enable_uart=1
+        ```
+
+        ```bash
+        $ sudo reboot
+        ```
+
+3.  **Configure UART Baud Rate:**
+
+    ```bash
+    $ stty -F /dev/ttyS3 115200
+    ```
+
+---
+
+## Accessing UART for User Applications
+
+### Connecting to a Terminal
+
+Users can communicate with UART devices using terminal applications like `minicom`, `screen`, or `picocom`.
+
+```bash
+$ sudo apt install minicom
+$ minicom -b 115200 -D /dev/ttyS3
+```
+
+---
+
+### Example to Read/Write Data
+
+
+<Tabs
+ defaultValue="python"
+  values={[
+    {label: 'Python', value: 'python'},
+    {label: 'C', value: 'c'},
+ 
+  ]}
+>
+  <TabItem value="python">    
+        ### Using Python
+
+        ```python
+        import serial
+        ser = serial.Serial('/dev/ttyS3', 115200, timeout=1)
+        ser.write(b'Hello UART!\n')
+        data = ser.readline()
+        print("Received:", data.decode())
+        ser.close()
+        ```
+
+        ### To Run the Python Script on the Mecha Comet:
+
+        1. Save the script as `uart_example.py`.
+        2. Make sure you have `pyserial` installed:
+           ```bash
+           $  pip install pyserial
+           ```
+        3. Run the script:
+           ```bash
+           $ python3 uart_example.py
+           ```
+        4. Ensure you have the necessary permissions to access UART. You may need to run the script with `sudo`.
+     </TabItem>
+
+  <TabItem value="c" >
+
+        ### Using C
+
+        ```c
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <string.h>
+        #include <fcntl.h>
+        #include <termios.h>
+        #include <unistd.h>
+        
+        int main() {
+            const char *device = "/dev/ttyS3";
+            int baudrate = B115200;
+            int fd = open(device, O_RDWR | O_NOCTTY | O_SYNC);
+        
+            if (fd < 0) {
+                perror("open");
+                return 1;
+            }
+        
+            struct termios tty;
+            memset(&tty, 0, sizeof tty);
+        
+            if (tcgetattr(fd, &tty) != 0) {
+                perror("tcgetattr");
+                close(fd);
+                return 1;
+            }
+        
+            cfsetospeed(&tty, baudrate);
+            cfsetispeed(&tty, baudrate);
+        
+            tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS8;     // 8-bit chars
+            tty.c_iflag &= ~IGNBRK;                         // disable break processing
+            tty.c_lflag = 0;                                // no signaling chars, no echo
+            tty.c_oflag = 0;                                // no remapping, no delays
+            tty.c_cc[VMIN]  = 0;                            // read doesn't block
+            tty.c_cc[VTIME] = 10;                           // 1 second timeout
+        
+            tty.c_iflag &= ~(IXON | IXOFF | IXANY);         // shut off xon/xoff ctrl
+            tty.c_cflag |= (CLOCAL | CREAD);                // ignore modem controls
+            tty.c_cflag &= ~(PARENB | PARODD);              // shut off parity
+            tty.c_cflag &= ~CSTOPB;
+            tty.c_cflag &= ~CRTSCTS;
+        
+            if (tcsetattr(fd, TCSANOW, &tty) != 0) {
+                perror("tcsetattr");
+                close(fd);
+                return 1;
+            }
+        
+            // Write to UART
+            const char *msg = "Hello UART!\n";
+            write(fd, msg, strlen(msg));
+        
+            // Read from UART
+            char buf[100];
+            int n = read(fd, buf, sizeof(buf) - 1);
+            if (n > 0) {
+                buf[n] = '\0';
+                printf("Received: %s", buf);
+            } else {
+                printf("No data received.\n");
+            }
+        
+            close(fd);
+            return 0;
+        }
+
+        ```
+
+        ### To Compile and Run the C Program on the Mecha Comet:
+
+        1. Save the code as `uart_example.c`.
+        2. Open a terminal and navigate to the directory containing the file.
+        3. Compile the code using `gcc`:
+           ```bash
+           $ gcc -o uart_example uart_example.c
+           ```
+        4. Run the compiled program with appropriate permissions:
+           ```bash
+           $ sudo ./uart_example
+           ```
+        5. Ensure you have the necessary permissions to access UART. You may need to run the program with `sudo`.
+    </TabItem>
+
+  <TabItem value="rust" >
+    Rust Code Example
+  </TabItem>
+</Tabs>
+
+---
+
+## Use Cases
+
+1. **Robotics and Motion Control**
+   UART facilitates precise control of robotic systems by interfacing with motor controllers and servo drivers. This enables accurate navigation for rovers and precise camera angle adjustments in pan-tilt mechanisms, crucial for autonomous navigation and visual tracking.
+2. **System Debugging and Remote Access**
+   UART provides a reliable serial console for debugging embedded systems and enabling remote access. This is essential for diagnosing hardware and software issues, monitoring system performance, and performing remote maintenance without direct physical access.
+3. **Serial Terminal Interface**
+   UART can be used to establish a direct serial terminal for interactive control and debugging of the SBC. This allows developers to send commands, receive system feedback, and monitor real-time data, streamlining development and troubleshooting.
+4. **Wireless Communication Integration**
+   UART serves as a vital interface for integrating wireless communication modules, such as Bluetooth (e.g., HC-05) and LoRa radios. This enables wireless data transfer for applications like remote sensor networks, wireless control systems, and long-range communication.
