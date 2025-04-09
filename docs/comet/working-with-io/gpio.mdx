@@ -1,9 +1,12 @@
 ---
-title: General-Purpose Input/Output (GPIO)
+title: GPIO
 description: General-Purpose Input/Output (GPIO) on Mecha Comet
 keywords: [GPIO, Mecha Comet]
 hide_table_of_contents: true
 ---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # General-Purpose Input/Output (GPIO)
 
@@ -93,109 +96,126 @@ gpioget gpiochip0 12  # Read GPIO12 state
 
 ## Example Use Case: LED Control (libgpiod)
 
-### Using Python
+<Tabs
+ defaultValue="python"
+  values={[
+    {label: 'Python', value: 'python'},
+    {label: 'C', value: 'c'},
+ 
+  ]}
+>
+  <TabItem value="python">    
+        ### Using Python
 
-```python
-import gpiod
-import time
+        ```python
+        import gpiod
+        import time
 
-def toggle_gpio(chip_name, line_num, state):
-    chip = gpiod.Chip(chip_name)
-    line = chip.get_line(line_num)
-    config = gpiod.LineSettings()
-    config.direction = gpiod.LINE_DIR_OUT
-    line.request(config)
-    line.set_value(state)
-    line.release()
+        def toggle_gpio(chip_name, line_num, state):
+            chip = gpiod.Chip(chip_name)
+            line = chip.get_line(line_num)
+            config = gpiod.LineSettings()
+            config.direction = gpiod.LINE_DIR_OUT
+            line.request(config)
+            line.set_value(state)
+            line.release()
 
-toggle_gpio("gpiochip0", 12, 1)  # Turn on LED
-time.sleep(1)
-toggle_gpio("gpiochip0", 12, 0)  # Turn off LED
+        toggle_gpio("gpiochip0", 12, 1)  # Turn on LED
+        time.sleep(1)
+        toggle_gpio("gpiochip0", 12, 0)  # Turn off LED
 
-```
+        ```
 
-### To Run the Python Script on the Mecha Comet:
-1. Save the script as `toggle_gpio.py`.
-2. Make sure you have `gpiod` installed:
-   ```bash
-   $ sudo apt install gpiod python3-gpiod
-   ```
-3. Run the script:
-   ```bash
-   $ python3 toggle_gpio.py
-   ```
-4. Ensure you have the necessary permissions to access GPIO lines. You may need to run the script with `sudo` or add your user to the `gpio` group.
-5. Check the LED connected to GPIO line 12 to see if it toggled on and off.
+        ### To Run the Python Script on the Mecha Comet:
 
+        1. Save the script as `toggle_gpio.py`.
+        2. Make sure you have `gpiod` installed:
+           ```bash
+           $ sudo apt install gpiod python3-gpiod
+           ```
+        3. Run the script:
+           ```bash
+           $ python3 toggle_gpio.py
+           ```
+        4. Ensure you have the necessary permissions to access GPIO lines. You may need to run the script with `sudo` or add your user to the `gpio` group.
+        5. Check the LED connected to GPIO line 12 to see if it toggled on and off.
+     </TabItem>
 
-### Using C
+  <TabItem value="c" >
 
-```c
-#include <gpiod.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+        ### Using C
 
-int main() {
-    const char *chipname = "gpiochip0"; // Replace if necessary
-    unsigned int line_num = 12;        // Replace with the desired GPIO line number
-    struct gpiod_chip *chip;
-    struct gpiod_line *line;
-    int ret;
+        ```c
+        #include <gpiod.h>
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <unistd.h>
 
-    chip = gpiod_chip_open_by_name(chipname);
-    if (!chip) {
-        perror("Failed to open gpiochip");
-        return 1;
-    }
+        int main() {
+            const char *chipname = "gpiochip0"; // Replace if necessary
+            unsigned int line_num = 12;        // Replace with the desired GPIO line number
+            struct gpiod_chip *chip;
+            struct gpiod_line *line;
+            int ret;
 
-    line = gpiod_chip_get_line(chip, line_num);
-    if (!line) {
-        perror("Failed to get GPIO line");
-        gpiod_chip_close(chip);
-        return 1;
-    }
+            chip = gpiod_chip_open_by_name(chipname);
+            if (!chip) {
+                perror("Failed to open gpiochip");
+                return 1;
+            }
 
-    ret = gpiod_line_request_output(line, "gpio-example", 0);
-    if (ret < 0) {
-        perror("Failed to set GPIO as output");
-        gpiod_line_release(line);
-        gpiod_chip_close(chip);
-        return 1;
-    }
+            line = gpiod_chip_get_line(chip, line_num);
+            if (!line) {
+                perror("Failed to get GPIO line");
+                gpiod_chip_close(chip);
+                return 1;
+            }
 
-    printf("Toggling GPIO line %u on %s...\n", line_num, chipname);
-    ret = gpiod_line_set_value(line, 1); // Set High (On)
-    if (ret < 0)
-        perror("Failed to set GPIO value");
-    sleep(1);
-    ret = gpiod_line_set_value(line, 0); // Set Low (Off)
-    if (ret < 0)
-        perror("Failed to set GPIO value");
+            ret = gpiod_line_request_output(line, "gpio-example", 0);
+            if (ret < 0) {
+                perror("Failed to set GPIO as output");
+                gpiod_line_release(line);
+                gpiod_chip_close(chip);
+                return 1;
+            }
 
-    gpiod_line_release(line);
-    gpiod_chip_close(chip);
-    printf("GPIO toggling complete.\n");
+            printf("Toggling GPIO line %u on %s...\n", line_num, chipname);
+            ret = gpiod_line_set_value(line, 1); // Set High (On)
+            if (ret < 0)
+                perror("Failed to set GPIO value");
+            sleep(1);
+            ret = gpiod_line_set_value(line, 0); // Set Low (Off)
+            if (ret < 0)
+                perror("Failed to set GPIO value");
 
-    return 0;
-}
-```
+            gpiod_line_release(line);
+            gpiod_chip_close(chip);
+            printf("GPIO toggling complete.\n");
 
-### To Compile and Run the C Program on the Mecha Comet:
-1. Save the code as `gpio_example.c`.
-2. Open a terminal and navigate to the directory containing the file.
-3. Compile the code using `gcc`:
-   ```bash
-   $ gcc -o gpio_example gpio_example.c 
-   ```
-4. Run the compiled program with appropriate permissions:
-   ```bash
-   $ sudo ./gpio_example
-   ```
-5. Ensure you have the necessary permissions to access GPIO lines. You may need to run the program with `sudo` or add your user to the `gpio` group.
+            return 0;
+        }
+        ```
 
+        ### To Compile and Run the C Program on the Mecha Comet:
+
+        1. Save the code as `gpio_example.c`.
+        2. Open a terminal and navigate to the directory containing the file.
+        3. Compile the code using `gcc`:
+           ```bash
+           $ gcc -o gpio_example gpio_example.c
+           ```
+        4. Run the compiled program with appropriate permissions:
+           ```bash
+           $ sudo ./gpio_example
+           ```
+        5. Ensure you have the necessary permissions to access GPIO lines. You may need to run the program with `sudo` or add your user to the `gpio` group.
+    </TabItem>
+
+  <TabItem value="rust" >
+    Rust Code Example
+  </TabItem>
+</Tabs>
 ---
-
 ## Use Cases
 
 GPIOs are fundamental building blocks for Internet of Things (IoT) devices. They enable direct interaction with the physical world by:

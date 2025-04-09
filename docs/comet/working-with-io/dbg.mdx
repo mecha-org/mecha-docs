@@ -1,9 +1,12 @@
 ---
-title: Debug Pins (DBG)
+title: DBG
 description: Debug Pins (DBG) on Mecha Comet
 keywords: [DBG, GPIO, Mecha Comet]
 hide_table_of_contents: true
 ---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 ## Introduction
 
@@ -20,28 +23,26 @@ Debug pins (DBG) are specialized GPIO pins that provide a low-level serial inter
 
 On the Mecha Comet device, the debug pins are mapped as follows:
 
-| Signal | Pin | Function |
-| --- | --- | --- |
+| Signal | Pin   | Function      |
+| ------ | ----- | ------------- |
 | DBG TX | GPIOX | UART Transmit |
-| DBG RX | GPIOY | UART Receive |
+| DBG RX | GPIOY | UART Receive  |
 
 ### Accessing the Debug Interface
 
 1. **Hardware Connection**
-    - Use a USB-to-serial adapter (e.g., FTDI, CP2102) to connect the DBG TX and RX pins to Mecha comet device.
-    - Connect:
-        - **DBG TX** → **USB-Serial RX**
-        - **DBG RX** → **USB-Serial TX**
-        - **GND** → **GND**
-    - Set the baud rate (typically **115200** baud) for communication.
+   - Use a USB-to-serial adapter (e.g., FTDI, CP2102) to connect the DBG TX and RX pins to Mecha comet device.
+   - Connect:
+     - **DBG TX** → **USB-Serial RX**
+     - **DBG RX** → **USB-Serial TX**
+     - **GND** → **GND**
+   - Set the baud rate (typically **115200** baud) for communication.
 2. **Software Setup**
-    - On Linux, use `screen` or `minicom`:
-        
-        ```bash
-        $ screen /dev/ttyUSB0 115200
-        ```
-        
-    - On Windows, use PuTTY or Tera Term.
+   - On Linux, use `screen` or `minicom`:
+     ```bash
+     $ screen /dev/ttyUSB0 115200
+     ```
+   - On Windows, use PuTTY or Tera Term.
 
 ## Debug Pin Usage in Mecha Comet
 
@@ -55,50 +56,98 @@ On the Mecha Comet device, the debug pins are mapped as follows:
 
 ## Example Code for Debugging
 
-### C Example (UART Communication)
+<Tabs
+ defaultValue="python"
+  values={[
+    {label: 'Python', value: 'python'},
+    {label: 'C', value: 'c'},
+ 
+  ]}
+>
+  <TabItem value="python">   
+    ### Python Example
 
-```c
-#include <stdio.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <unistd.h>
+    ```python
+    import serial
+    ser = serial.Serial('/dev/ttyS0', 115200)
+    ser.write(b'Hello, Debug!\n')
+    ser.close()
 
-int main() {
-    int fd = open("/dev/ttyS0", O_RDWR | O_NOCTTY);
-    struct termios tty;
-    tcgetattr(fd, &tty);
-    cfsetispeed(&tty, B115200);
-    cfsetospeed(&tty, B115200);
-    tcsetattr(fd, TCSANOW, &tty);
-    write(fd, "Hello, Debug!", 13);
-    close(fd);
-    return 0;
-}
+    ```
+    ### To Run the Python Script on the Mecha Comet:
+    1. Save the script as `debug_example.py`.
+    2. Make sure you have `pyserial` installed:
+    ```bash
+    $ pip install pyserial
+    ```
+    3. Run the script:
+    ```bash
+    $ python3 debug_example.py
+    ```
+    4. Ensure you have the necessary permissions to access Debug pins. You may need to run the script with `sudo`.
 
-```
+  </TabItem>
+    <TabItem value="c" >
+    ### C Example (UART Communication)
 
-### Rust Example
+    ```c
+    #include <stdio.h>
+    #include <fcntl.h>
+    #include <termios.h>
+    #include <unistd.h>
 
-```rust
-use std::fs::OpenOptions;
-use std::io::Write;
+    int main() {
+        int fd = open("/dev/ttyS0", O_RDWR | O_NOCTTY);
+        struct termios tty;
+        tcgetattr(fd, &tty);
+        cfsetispeed(&tty, B115200);
+        cfsetospeed(&tty, B115200);
+        tcsetattr(fd, TCSANOW, &tty);
+        write(fd, "Hello, Debug!", 13);
+        close(fd);
+        return 0;
+    }
 
-fn main() {
-    let mut serial = OpenOptions::new().write(true).open("/dev/ttyS0").unwrap();
-    serial.write_all(b"Hello, Debug!\n").unwrap();
-}
+    ```
+    ### To Compile and Run the C Program on the Mecha Comet:
+    1. Save the code as `debug_example.c`.
+    2. Compile the code:
+    ```bash
+    $ gcc -o debug_example debug_example.c
+    ```
+    3. Run the program:
+    ```bash
+    $ ./debug_example
+    ```
+    4. Ensure you have the necessary permissions to access Debug pins. You may need to run the program with `sudo`.
+    5. Check the serial console for output.
 
-```
+  </TabItem>
+  <TabItem value="rust" >
+   ### Rust Example
+    ```rust
+    use std::fs::OpenOptions;
+    use std::io::Write;
 
-### Python Example
+    fn main() {
+        let mut serial = OpenOptions::new().write(true).open("/dev/ttyS0").unwrap();
+        serial.write_all(b"Hello, Debug!\n").unwrap();
+    }
 
-```python
-import serial
-ser = serial.Serial('/dev/ttyS0', 115200)
-ser.write(b'Hello, Debug!\n')
-ser.close()
+    ```
+    ### To Run the Rust Program on the Mecha Comet:
+    1. Save the code as `debug_example.rs`.
+    2. Make sure you have Rust installed:
+    ```bash
+    $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    ```
+    3. Compile the code:
+    ```bash
+    $ rustc debug_example.rs
+    ```
 
-```
+  </TabItem>
+</Tabs>
 
 ---
 
