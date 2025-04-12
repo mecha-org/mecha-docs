@@ -11,14 +11,14 @@ This launcher app is built using **MCTK**, our own GUI library in **Rust**. It p
 
 The **homescreen** serves as the main interface for the user, displaying essential system information and providing access to different functionalities. The following elements are visible:
 
-- **Clock**: Shows the current time.
+- **Clock**: Shows the current time, date and day.
 - **Wireless Signal**: Displays the current wireless network status.
-- **Bluetooth Status**: Indicates whether Bluetooth is enabled or disabled.
+- **Bluetooth Status**: Indicates whether Bluetooth is enabled, disabled or connected.
 - **Battery Status**: Displays battery percentage and charging status.
 - **Device Name**: Shows the name of the device.
 - **IP Address**: Displays the device’s current IP address.
 - **Network Status**: Indicates whether the device is online or offline.
-- **CPU Usage**: Displays the current CPU usage percentage.
+- **CPU Usage**: Displays the current CPU usage.
 - **Memory Usage**: Displays the current memory usage.
 
 Additionally, the homescreen provides:
@@ -31,10 +31,11 @@ Additionally, the homescreen provides:
 </div>
 
 ### Pinned Apps
-In the settings.yml file, the pinned_apps section allows you to specify the app IDs of the apps you want to display directly on the homescreen. 
+In the settings.yml file located at `/etc/mechanix/shell/launcher/settings.yml`
+the pinned_apps section allows you to specify the app ID / name of the apps you want to display directly on the homescreen. 
 These are the apps that will be immediately visible for quick access without opening the app drawer.
 
-#### Example:
+#### Example configuration:
    ```yml
    pinned_apps:
    - org.mecha.connect
@@ -46,7 +47,43 @@ In this example, the following apps will be pinned to the homescreen:
 - Alacritty
 - chromium
 
-Each app is identified by its app ID, which is a unique identifier for the app. You can modify this list to add or remove apps based on which ones you want to appear on the homescreen.
+Each app is identified by its app ID (a unique identifier) or name. You can modify this list to add or remove apps based on which ones you want to appear on the homescreen.
+
+#### Example for updating pinned apps:
+
+Before updating you will need the app ID or name of the app you want to pin.
+You can find app name by opening the app from [app drawer](#app-drawer), once app is opened you can long press home button
+to see the app name in the [running apps list](#running-apps). 
+
+To update the list of pinned apps, simply edit the `settings.yml` file located at `/etc/mechanix/shell/launcher/settings.yml` and modify the `pinned_apps` section.
+
+Suppose you want to:
+- **Remove** `chromium`
+- **Add** `Firefox ESR` and `com.discordapp.Discord`
+
+```bash
+sudo nano /etc/mechanix/shell/launcher/settings.yml
+```
+
+Update the file as follows:
+
+```yml
+pinned_apps:
+  - org.mecha.connect
+  - Alacritty
+  - Firefox ESR
+  - com.discordapp.Discord
+```
+
+```bash
+sudo reboot
+```
+
+After rebooting, the homescreen will now show launch icons for:
+- `org.mecha.connect`
+- `Alacritty`
+- `Firefox ESR`
+- `com.discordapp.Discord`
 
 ## App Drawer
 

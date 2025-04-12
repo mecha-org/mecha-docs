@@ -27,7 +27,18 @@ For example, to install the `htop` package:
 sudo apt install htop
 ```
 
-### 3. Remove software packages
+### 3. Run applications
+
+#### **Using the GUI:**
+
+You can run applications using the GUI. After installing package using above command,
+it should appear in [app drawer](/mechanix/using-the-gui/launcher#app-drawer). 
+You can access the app drawer by sliding up on the homescreen.
+
+#### **Using the Command:**
+If you want to run an application from the command line, you can do so by typing the application name in the terminal.
+
+### 4. Remove software packages
 
 To remove a software package, use the `apt remove` command followed by the package name.
 
@@ -53,7 +64,7 @@ For example, to purge the `htop` package:
 sudo apt purge htop
 ```
 
-### 4. Upgrade installed packages
+### 5. Upgrade installed packages
 
 To upgrade all installed packages to their latest versions, use the `apt upgrade` command:
 
@@ -61,7 +72,7 @@ To upgrade all installed packages to their latest versions, use the `apt upgrade
 sudo apt upgrade
 ```
 
-### 5. Search for software packages
+### 6. Search for software packages
 
 You can search for software packages using the `apt search` command followed by a keyword.
 
@@ -75,7 +86,7 @@ For example, to search for packages related to Python:
 apt search python
 ```
 
-### 6. List installed packages
+### 7. List installed packages
 
 To list all installed packages on your system, use the `apt list --installed` command:
 
@@ -83,7 +94,7 @@ To list all installed packages on your system, use the `apt list --installed` co
 apt list --installed
 ```
 
-### 7. Clean up package cache
+### 8. Clean up package cache
 
 To free up disk space by removing downloaded package files that are no longer needed, use the `apt clean` command:
 
@@ -91,7 +102,7 @@ To free up disk space by removing downloaded package files that are no longer ne
 sudo apt clean
 ```
 
-### 8. Autoremove unused packages
+### 9. Autoremove unused packages
 
 To remove packages that were automatically installed to satisfy dependencies for other packages but are no longer needed, use the `apt autoremove` command:
 
@@ -99,7 +110,7 @@ To remove packages that were automatically installed to satisfy dependencies for
 sudo apt autoremove
 ```
 
-### 9. Check package dependencies
+### 10. Check package dependencies
 
 To check the dependencies of a package before installing it, use the `apt depends` command followed by the package name.
 
@@ -113,7 +124,7 @@ For example, to check the dependencies of the `htop` package:
 apt depends htop
 ```
 
-### 10. Troubleshooting
+### 11. Troubleshooting
 
 If you encounter any issues while using APT, Here are some common issues and their solutions:
 
