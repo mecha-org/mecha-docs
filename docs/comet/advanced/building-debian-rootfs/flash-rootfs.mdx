@@ -110,7 +110,7 @@ If you prefer to build the utility from source, follow these steps:
 
 - Ensure your Mecha Comet device is powered off.
 - Locate the toggle switch on the back of the device.
-- **Toggle the switch to the position of serial mode that enable flash** This position might be indicated by labels or diagrams near the switch. Refer to the images below for visual guidance.
+- Toggle the switches to the "serial mode" position, this will enable flashing. This position may be indicated by labels or diagrams near the switch.
 
 <img
 className="img-rounded"
@@ -128,7 +128,7 @@ style={{ maxWidth: "80%", height: "auto" }}
 
 ### 3. **Connect the Mecha Comet to Your Host Machine:**
 
-- Use the male-to-male USB cable to connect one end to the USB port on your Mecha Comet device (typically the one designated for data transfer or flashing) and the other end to a USB port on your host machine.
+- Use a male-to-male USB cable to connect your Mecha Comet device to your host machine. Ensure the cable is plugged into the first USB port from the top on the Mecha Comet (designated for data transfer or flashing) and any available USB port on your host machine.
 
 <img
 className="img-rounded"
@@ -167,10 +167,24 @@ If the device is not detected:
 
 To flash the Mecha Comet, you will need the appropriate image bundle for your device revision. Please download the correct bundle below:
 
-- **Revision 5**: [Download `mechanix_os_rev5_2025_apr_11.zip`](https://pub-a2f44c787cec4290833312e57fd59522.r2.dev/mechanix_os_rev5_2025_apr_11.zip)
-- **Revision 3**: [Download `mechanix_os_rev3_2025_apr_11.zip`](https://pub-a2f44c787cec4290833312e57fd59522.r2.dev/mechanix_os_rev3_2025_apr_11.zip)
+- **Revision 5**: [Download `mechanix_os_rev5_2025_apr_11.zip`](https://pub-a2f44c787cec4290833312e57fd59522.r2.dev/mechanix_os_rev5_2025_apr_16.zip)
+- **Revision 3**: [Download `mechanix_os_rev3_2025_apr_11.zip`](https://pub-a2f44c787cec4290833312e57fd59522.r2.dev/mechanix_os_rev3_2025_apr_16.zip)
 
-**Make sure you select the revision that matches your Mecha Comet hardware. If you're unsure which revision you have, refer to the documentation.**
+**Make sure you select the revision that matches your Mecha Comet hardware. If you're unsure which revision you have, refer to the image below.**
+<img
+className="img-rounded"
+src="/assets/advanced/building-debian-rootfs/comet-different-rev.jpg"
+alt="mecha-comet-revision"
+style={{ maxWidth: "80%", height: "auto" }}
+/>
+
+
+- The main visual difference between the two revisions is the Pogo pin connctor vs female gpio connector.
+- **Revision 5**: The revision 5 Mecha Comet has a Pogo pin connector.
+- **Revision 3**: The revision 3 Mecha Comet has a female gpio connector.
+
+
+
 
 ### Extract the Bundle
 
@@ -237,11 +251,11 @@ style={{ maxWidth: "80%", height: "auto" }}
 ### 9. **Reboot Your Mecha Comet:**
 
 - Once the flashing is successful, you can disconnect the USB cable from your host machine.
-- Toggle the serial switch on the back of the Mecha Comet back to its normal operating position.
-   For toggle switch, refer to the Diagram below for the correct position.
+- Toggle the serial switch on the back of the Mecha Comet back to its normal operating position, this will enable booting from the eMMC.
+  For correct toggle switch position, refer to the Diagram below.
         <img
         className="img-rounded"
-        src="/assets/advanced/building-debian-rootfs/switch-to-eMMC.png"
+        src="/assets/advanced/building-debian-rootfs/boot-from-eMMC.png"
         alt="mecha-comet-switch-diagram"
         style={{ maxWidth: "80%", height: "auto" }}
         />
