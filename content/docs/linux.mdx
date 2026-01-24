@@ -1,0 +1,73 @@
+---
+title: Linux
+---
+
+The Mecha Comet Linux kernel is based on the NXP i.MX 8M Plus SDK. This guide provides a step-by-step walkthrough for developers to manually cross-compile and package the kernel from source for custom deployments.
+
+## Manual Build Guide
+
+This section covers how to build the kernel on a Linux host (e.g., Ubuntu) for the Mecha Comet (ARM64).
+
+### 1. Set Up Cross-Compilation
+
+Install the ARM64 toolchain and set up the necessary environment variables.
+
+```bash
+# Install the toolchain
+sudo apt install gcc-aarch64-linux-gnu
+
+# Set target architecture and cross-compiler prefix
+export ARCH=arm64
+export CROSS_COMPILE=aarch64-linux-gnu-
+```
+
+### 2. Prepare the Source Tree
+
+Clone the official kernel repository and include the required WiFi driver.
+
+```bash
+# Clone the repository (imx/lf-6.12.20 is the default branch)
+git clone https://github.com/mecha-org/linux
+cd linux
+
+# Add the mwifiex (WiFi module) driver
+mkdir -p drivers/staging
+git clone https://github.com/nxp-imx/mwifiex drivers/staging/mwifiex
+```
+
+### 3. Build the Kernel
+
+Apply the default configuration for the Mecha Comet and start the compilation.
+
+```bash
+# Use the default configuration for Comet
+make mecha_v8_defconfig
+
+# (Optional) Customize the configuration
+make menuconfig
+
+# Build the kernel image and modules
+make -j$(nproc)
+```
+
+### 4. Create Packages
+
+To generate installable packages for Mecha's distribution, you can build both RPM and DEB packages.
+
+**For RPM:**
+```bash
+make KBUILD_IMAGE=arch/arm64/boot/Image binrpm-pkg -j$(nproc)
+```
+
+**For Debian:**
+```bash
+make KBUILD_IMAGE=arch/arm64/boot/Image bindeb-pkg -j$(nproc)
+```
+
+The resulting packages will be located in the `rpmbuild/RPMS/` or the parent directory of the kernel source.
+
+---
+
+<Callout type="info">
+For most users, using pre-built kernel packages is the recommended way to get started. These are automatically generated and accessible via [GitHub Actions](https://github.com/mecha-org/linux/actions). Follow this manual guide only if you require custom kernel configurations or modifications.
+</Callout>

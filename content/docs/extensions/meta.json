@@ -1,0 +1,8 @@
+{
+    "title": "Extensions",
+    "pages": [
+        "gamepad",
+        "keyboard",
+        "io-breakout"
+    ]
+}
