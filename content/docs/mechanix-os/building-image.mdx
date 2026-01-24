@@ -1,0 +1,99 @@
+---
+title: Building Image
+---
+
+Mechanix OS images are built using **mkosi** (Make Operating System Image), a tool for generating declarative and reproducible OS images. This guide explains how to build and customize the Fedora 43-based image for the Mecha Comet using the [mecha-org/mecha-make](https://github.com/mecha-org/mecha-make) repository.
+
+## What is mkosi?
+
+**mkosi** (Make Operating System Image) is a tool for generating declarative and reproducible OS images. You can learn more about it in the [official repository](https://github.com/systemd/mkosi).
+
+Unlike traditional imperative build scripts, mkosi is:
+- **Declarative**: You list *what* you want (packages, partitions, files), not *how* to install them.
+- **Reproducible**: Builds are consistent across different environments.
+- **Flexible**: It handles cross-architecture builds (creating ARM64 images on x86 hosts) and complex partition layouts automatically.
+
+## Prerequisites
+
+To build the image manually, you need to install `mkosi`. We recommend using your distribution's package manager if it provides a recent version (v16+).
+
+### Fedora (Recommended)
+```bash
+sudo dnf install mkosi qemu-system-x86
+```
+
+### Arch Linux
+```bash
+sudo pacman -S mkosi
+```
+
+### Debian / Ubuntu
+For older distributions, you may need to use `pipx` or the [systemd OBS repository](https://github.com/systemd/mkosi#installation) to get the latest version.
+
+```bash
+# Using pipx (recommended for Ubuntu 22.04 LTS)
+pipx install git+https://github.com/systemd/mkosi.git
+```
+
+## Build Process
+
+### 1. Clone the Repository
+Clone the `mecha-make` repository which contains the image definitions.
+
+```bash
+git clone https://github.com/mecha-org/mecha-make
+cd mecha-make
+```
+
+### 2. Build the Image
+Generate the raw disk image using the configuration defined in `mkosi.conf`.
+
+```bash
+sudo mkosi -f build
+```
+This command will:
+- Download the base Fedora 43 packages.
+- Install the Mecha kernel and firmware.
+- Configure users and services.
+- Output a raw disk image (e.g., `fedora43.raw`) in the build directory.
+
+### 3. Validate
+You can inspect the built image environment without booting strictly into it:
+```bash
+sudo mkosi shell
+```
+
+---
+
+## Customization
+
+You can make the image unique by modifying the configuration files in the repository.
+
+### Adding Packages
+Edit the `mkosi.conf` file to include additional software.
+```ini
+[Content]
+Packages=
+    vim
+    git
+    # Add your packages here
+    htop
+    python3
+```
+
+### Adding Files
+Any file placed in the `mkosi.skeleton/` directory is automatically copied to the same path in the final image.
+*   **Example**: To add a custom script to `/usr/local/bin/myscript`:
+    1.  Create `mkosi.skeleton/usr/local/bin/`.
+    2.  Place `myscript` inside that directory.
+
+### Custom Scripts
+- **`mkosi.postinst`**: Run on the *host* machine after the package tree is assembled.
+- **`mkosi.postinst.chroot`**: Run *inside* the image environment. Use this to set up users, enable systemd services, or change permissions.
+
+---
+
+<Callout type="info">
+**Automated Builds**<br/>
+The Mecha project uses [GitHub Actions](https://github.com/mecha-org/mecha-make/actions) to automatically generate and release stable images. You can download the latest official image from the repository's Releases page.
+</Callout>
