@@ -1,25 +1,25 @@
 ---
 title: Keyboard
-description: The custom, in-house virtual keyboard designed for Mechanix OS
+description: Virtual keyboard designed for Mechanix OS
 ---
 
-# Keyboard
+Mechanix OS features a custom-built virtual keyboard designed specifically to meet the unique requirements of Mecha Comet device.
 
-Mechanix OS features a custom-built, in-house virtual keyboard designed specifically to meet the unique requirements of our embedded devices and global user base.
+After testing several open-source solutions, we found that none of them met our performance and customization needs.
+we have few requirements for the keyboard:
+- Localization & Multi-language Support
+- Embedded Optimization
+- Deep Customization
 
-## Why In-House?
+None of the open-source solutions met our requirements, so we decided to build our own.
 
-Existing open-source keyboard solutions often struggled to meet our specific needs for performance on embedded hardware and deep system integration. By developing our own solution, we achieved:
+The Keyboard we built gives us the flexibility to make it exactly how we want it to be, and it is also optimized for embedded devices.
 
-- **Localization & Multi-language Support**: A primary design goal was to support a wide array of languages out of the box, ensuring Mechanix OS is accessible globally.
-- **Embedded Optimization**: The keyboard is lightweight and highly optimized for touch interactions on small-to-medium screens, ensuring low latency and high responsiveness even on constrained hardware.
-- **Deep Customization**: It routes input through our specific windowing system and pairs seamlessly with our theming engine.
+## Features
 
-## Hardware Integration
+- Works with any input method engine, and it is also optimized for embedded devices.
+- Works well with the cusom buit keyboard extension. this is huge requirement for us, to support the keyboard extension hat we built.
+- Localization & Multi-language Support, Auto complete, and furter customization options.
+- This is still in active development, and we are working on adding more features to it.
 
-The keyboard system is not just virtual; it is designed to bridge the gap between touch and physical input.
 
-### Pogo Pin Extension
-The Mecha Comet device features a pogo pin connector that supports a physical QWERTY keyboard attachment.
-- **Seamless Switching**: The system detects when the physical keyboard extension is attached and automatically adjusts the UI (hiding the on-screen keyboard) to maximize screen real estate.
-- **Unified Input Logic**: Both virtual and physical inputs are handled through a unified input stack, ensuring that shortcuts, layouts, and input methods remain consistent regardless of the input source.

@@ -1,21 +1,21 @@
 ---
 title: Services
-description: Core system services powering the Mechanix Shell
+description: Core system services for Mechanix Shell
 ---
 
 # Services
 
-The Mechanix Shell relies on a suite of background services to provide essential functionality such as configuration management, universal search, and system integration. These services communicate primarily over **D-Bus**, ensuring a modular and decoupled architecture.
+The Mechanix Shell relies on a suite of background services to provide essential functionality such as configuration management, universal search, and system integration.
 
 ## Core Services
 
 ### 🔧 MxConf (Configuration Service)
-**MxConf** is the centralized configuration management service for Mechanix OS. It acts as a high-performance database for storing and retrieving configuration keys and values, similar to `dconf` or `gsettings` but optimized for our ecosystem.
+**MxConf** is the centralized configuration management service for Mechanix OS. it provides a simple interface for applications to access and modify configuration values.
 
 **Key Features:**
 - **File Watching**: Automatically detects and loads new TOML configuration schemas from `/usr/share/mxconf/schemas`.
-- **Profiles**: Supports user-level and system-level configuration profiles, allowing for flexible defaults and overrides.
-- **Lockdown Mode**: Administrators can restrict specific settings from being modified by end-users.
+- **Profiles**: Supports user-level and system-level configuration profiles.
+- **Lockdown Mode**: Administrators can restrict specific settings from being modified by end-users. also provides namespace isolation for different applications.
 - **Embedded Database**: Uses [sled](https://github.com/spacejam/sled) for fast, reliable, and verified data storage.
 - **Interfaces**: Fully accessible via D-Bus and a CLI utility (`mxconf`).
 
@@ -45,12 +45,4 @@ The **Display Service** is responsible for managing screen properties.
 
 ### 🔘 Hardware Button Service
 The **HwButton Service** handles physical button events.
-- **Bus Name**: `org.mechanix.services.HwButton`
-- **Functionality**: Subscribes to hardware input events—specifically **Power** and **Home** keys—and broadcasts them on the session bus for other components (like the shell or launcher) to consume.
-
-## Architecture
-
-Services in the Mechanix Shell ecosystem are designed to be:
-- **Decoupled**: Interacting via standard D-Bus interfaces.
-- **Reactive**: Many services, like MxConf and MxSearch, implement watchers to react instantly to file system changes (e.g., new apps installed, config files updated).
-- **Extensible**: New functionality, such as support for new file types or configuration schemas, can often be added by simply placing declarative files in the appropriate system directories (`/usr/share/...`).
+This service is responsible for handling physical button events and broadcasting them on the session bus for other components (like the shell or launcher) to consume, it is maped to the buttons available on the Mecha Comet device.
