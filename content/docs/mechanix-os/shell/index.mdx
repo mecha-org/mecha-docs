@@ -1,0 +1,19 @@
+---
+title: Shell
+description: Overview of the Mechanix Shell architecture and features
+---
+
+The Mechanix Shell is built upon **GPUI**, a hybrid immediate and retained mode, GPU-accelerated UI framework for Rust. GPUI is designed to support a wide variety of applications and serves as the foundation for the high-performance Zed code editor.
+
+While leveraging the powerful capabilities of GPUI, Mechanix Shell introduces vital architectural enhancements to meet our specific performance and design goals.
+
+## Key Highlights
+
+### 🚀 Impeller Rendering Engine
+To achieve ultra-smooth rendering and superior performance required for an OS shell, we have replaced the default underlying rendering engine with **Impeller**. This strategic change ensures that the shell delivers a fluid, high-fidelity visual experience optimized for our target hardware.
+
+### 🧩 Pre-defined UI Components
+The shell exports a robust set of pre-defined UI components. These components are standardized and designed for reuse across the system, enabling developers to build consistent interfaces rapidly.
+
+### 🎨 Centralized Theme Store
+Mechanix Shell implements a centralized theme store that acts as a single source of truth for system styling. This allows other applications to consume shared themes and palettes, ensuring a unified aesthetic across the entire Mechanix OS ecosystem.
