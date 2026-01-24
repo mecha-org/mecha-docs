@@ -2,6 +2,11 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
+.prose {
+  font-size: 1.125rem;
+ line-height: 1.7;
+}
+
 @theme {
   --color-fd-background: hsl(0, 0%, 100%);
   --color-fd-foreground: hsl(0, 0%, 3.94%);

@@ -1,5 +1,222 @@
 ---
 title: Mechanix.dart
+links:
+  - text: GitHub
+    url: https://github.com/mecha-org/mechanix.dart
+    icon: Github
+  - text: View Examples
+    url: https://github.com/mecha-org/mechanix.dart/tree/main/flutter/widgets/example
 ---
 
-This is a placeholder for Mechanix.dart documentation.
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+A beautiful, consistent Flutter UI package that implements the Mechanix design system. Built on core principles that prioritize developer experience and seamless integration.
+
+- GitHub : https://github.com/mecha-org/mechanix.dart
+
+## Core Principles
+
+<Callout type="info">
+  Mechanix dart is built on four fundamental principles that guide every
+  decision.
+</Callout>
+
+- **Customization** - Get started immediately with zero configuration, then customize deeply as your needs evolve.
+
+- **Extensibility** - Mechanix UI is designed to be extended. The theming system integrates seamlessly with Flutter's Material theme extensions, so you can add your own custom properties without breaking Mechanix functionality.
+
+- **Ease of Use** - Clear names, consistent patterns, and strong typing help you build faster with less time spent on docs. IntelliSense and auto-complete show you what’s available as you work.
+
+- **0% Configuration** - No configuration files. No initialization code. No setup steps. Add the package to your `pubspec.yaml`, import it, and start using components immediately.
+  The theme system automatically detects your device's light/dark mode preference and applies the appropriate styling.
+
+## Installation
+
+<Steps>
+
+<Step>
+### Add Dependency
+
+Add Mechanix UI to your `pubspec.yaml`:
+
+```yaml title="pubspec.yaml"
+dependencies:
+  widgets:
+    git:
+      url: https://github.com/mecha-org/mechanix.dart.git
+      path: flutter/widgets
+      ref: main
+```
+
+</Step>
+
+<Step>
+### Install Package
+
+Run the following command:
+
+```bash
+flutter pub get
+```
+
+</Step>
+
+<Step>
+### Import and Use
+
+Import the package in your Dart files:
+
+```dart
+import 'package:widgets/mechanix.dart';
+```
+
+</Step>
+
+</Steps>
+
+---
+
+## Mechanix Theme
+
+A comprehensive theming system that provides complete control over your app's visual appearance with built-in support for multiple variants, dark/light modes, and seamless theme extension integration.
+
+### Features
+
+#### Multiple Theme Variants
+
+- **Pre-built Color Schemes** - Multiple Mechanix variants (blue, green, purple, etc.)
+- **Dark/Light Theme Pairs** - Complete theme sets for both modes
+- **Variant Consistency** - Guaranteed color harmony across all variants
+- **Easy Switching** - Change entire color scheme with one property
+
+#### Automatic Theme Management
+
+- **System Theme Detection** - Automatically follows device theme preferences
+- **Manual Theme Control** - Full control over theme mode when needed
+- **Animated Transitions** - Smooth theme switching animations
+
+---
+
+## Application Methods
+
+Mechanix UI offers two flexible approaches for integrating the theme system into your application.
+
+<Tabs items={['Direct Child', 'Builder Pattern']}>
+
+<Tab value="Direct Child">
+
+### Direct Child Application
+
+The **Direct Child** approach is the simplest way to apply MechanixTheme to your application. Perfect for basic apps, quick prototyping, and situations where you don't need complex theme logic during the build process.
+
+```dart title="main.dart"
+import 'package:flutter/material.dart';
+import 'package:widgets/mechanix.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MechanixTheme(
+      data: MechanixThemeData(
+        mechanixVariant: MechanixVariant.blue,
+        themeMode: ThemeMode.system,
+        useMaterial3: true,
+      ),
+      child: MaterialApp(
+        title: 'My Mechanix App',
+        home: HomePage(),
+      ),
+    );
+  }
+}
+```
+
+<Callout title="When to Use" type="info">
+  Use this method for simple applications or when you don't need access to
+  resolved theme data during MaterialApp configuration.
+</Callout>
+
+</Tab>
+
+<Tab value="Builder Pattern">
+
+### Builder Pattern Application
+
+The **Builder Pattern** approach provides maximum flexibility and control over theme configuration. This method gives you access to the fully resolved `MechanixThemeData` during the build process, allowing for dynamic theme-dependent configurations.
+
+```dart title="main.dart"
+import 'package:flutter/material.dart';
+import 'package:widgets/mechanix.dart';
+import 'package:watch_it/watch_it.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final themeMode = watchPropertyValue((ThemeToggle t) => t.themeMode);
+    final mechanixVariant = watchPropertyValue(
+      (ThemeToggle t) => t.mechanixVariant,
+    );
+
+    return MechanixTheme(
+      data: MechanixThemeData(
+        mechanixVariant: MechanixVariant.blue,
+        themeMode: ThemeMode.system,
+        useMaterial3: true,
+      ),
+      builder: (context, mechanixData, child) {
+        return MaterialApp(
+          theme: mechanixData.lightTheme,     // Access resolved light theme
+          darkTheme: mechanixData.darkTheme,   // Access resolved dark theme
+          themeMode: themeMode,                // Use resolved theme mode
+          title: 'My Mechanix App',
+          home: child,
+        );
+      },
+      child: HomePage(), // Child widget passed to builder
+    );
+  }
+}
+```
+
+<Callout title="Advanced Usage" type="warn">
+  This method is recommended when you need direct access to theme properties or
+  want to implement dynamic theme switching with state management.
+</Callout>
+
+</Tab>
+
+</Tabs>
+
+---
+
+## Components
+
+Mechanix UI provides a comprehensive set of pre-built widgets that follow the Mechanix design language.
+
+### Available Widgets
+
+- MechanixSectionList
+- MechanixSimpleList
+- MechanixIconWidget
+- MechanixPressableList
+- MechanixSlider
+- MechanixSelect
+- MechanixMenu
+- MechanixWheelScroll
+- MechanixTextInput
+- MechanixBottomSheet
+- MechanixBottomBar
+- MechanixFilledButton
+- MechanixNotification
+
+---
