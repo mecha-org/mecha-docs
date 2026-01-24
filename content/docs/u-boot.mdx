@@ -1,0 +1,83 @@
+---
+title: U-Boot
+---
+
+U-Boot (Universal Boot Loader) is the primary bootloader for the Mecha Comet. It initializes the hardware, manages the secure boot environment, and loads the Linux kernel into memory.
+
+## Why U-Boot?
+
+On the Mecha Comet (powered by the NXP i.MX 8M Plus), U-Boot is essential for:
+- **Hardware Initialization**: Setting up the LPDDR4 memory, storage (eMMC/SD), and peripheral controllers.
+- **Hardware Variants**: Automatically handling configurations for both the 4GB and 8GB RAM models.
+- **Secure Foundations**: Coordinating with ARM Trusted Firmware (ATF) to establish a secure platform before the OS starts.
+- **Recovery & Configuration**: Providing a low-level environment for system recovery and boot parameter adjustment.
+
+---
+
+## Prerequisites
+
+Building U-Boot requires a Linux host system (e.g., Ubuntu 22.04+) with the ARM64 cross-compilation toolchain.
+
+### 1. Install Build Dependencies
+```bash
+sudo apt update
+sudo apt install -y build-essential libgnutls28-dev bison flex libssl-dev \
+device-tree-compiler python3-setuptools swig wget git efitools uuid-dev
+```
+
+### 2. Set Up Toolchain
+```bash
+sudo apt install gcc-aarch64-linux-gnu
+export ARCH=arm64
+export CROSS_COMPILE=aarch64-linux-gnu-
+```
+
+### 3. Firmware Components
+U-Boot for i.MX8MP requires external binaries:
+- **ARM Trusted Firmware (ATF)**: Available from [nxp-imx/imx-atf](https://github.com/nxp-imx/imx-atf).
+- **NXP DDR Firmware**: Proprietary binaries for LPDDR4 training.
+
+---
+
+## Build Guide
+
+This guide describes the manual build process based on the [mecha-org/u-boot](https://github.com/mecha-org/u-boot) repository (branch `imx/lf_v2025.04`).
+
+### 1. Prepare Source and Firmware
+```bash
+# Clone U-Boot
+git clone -b imx/lf_v2025.04 https://github.com/mecha-org/u-boot
+cd u-boot
+
+# Clone and Build ATF (for bl31.bin)
+git clone https://github.com/nxp-imx/imx-atf
+cd imx-atf
+make PLAT=imx8mp bl31
+cp build/imx8mp/release/bl31.bin ../
+cd ..
+```
+
+### 2. Configure and Compile
+Select the configuration corresponding to your hardware variant.
+
+**For the 4GB RAM Model:**
+```bash
+make mecha-comet-imx8mp-4gb_defconfig
+make -j$(nproc)
+```
+
+**For the 8GB RAM Model:**
+```bash
+make mecha-comet-imx8mp-8gb_defconfig
+make -j$(nproc)
+```
+
+### 3. Final Image Creation
+The final bootable image (`flash.bin`) is assembled using the `imx-mkimage` tool. This tool combines the U-Boot SPL, the main U-Boot image, the ATF `bl31.bin`, and the NXP DDR firmware.
+
+
+---
+
+<Callout type="info">
+The Mecha Comet U-Boot repository uses [GitHub Actions](https://github.com/mecha-org/u-boot/actions) to automatically build and release boot images for both 4GB and 8GB variants. You can find pre-built `flash.bin` binaries in the repository's actions tab.
+</Callout>

@@ -1,0 +1,8 @@
+{
+    "title": "Hardware",
+    "pages": [
+        "pin-diagram",
+        "mechanicals",
+        "pcb-schematics"
+    ]
+}

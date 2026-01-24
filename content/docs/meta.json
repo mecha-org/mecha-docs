@@ -1,0 +1,12 @@
+{
+    "title": "Docs",
+    "pages": [
+        "index",
+        "linux",
+        "u-boot",
+        "mechanix-os",
+        "mechanix-dart",
+        "hardware",
+        "extensions"
+    ]
+}
