@@ -1,5 +1,172 @@
 ---
 title: Keyboard
+description: A programmable keyboard extension built on Vial-QMK
 ---
 
-This is a placeholder for Keyboard Extension documentation.
+## Overview
+
+Comet Keyboard is a custom programmable keyboard designed for power users, developers, and serial texters likewise.  
+It is built on Vial-QMK, enabling real-time remapping while also supporting advanced firmware-level behaviors that go beyond standard QMK features, and includes an integrated touchpad for pointer input and navigation.
+
+The design emphasizes ergonomic efficiency and minimal finger travel, with an architecture optimized for symbol-heavy workflows, intuitive layer usage, and clear visual feedback.
+By combining real-time GUI remapping, the extension delivers both flexibility and predictability without sacrificing comfort.
+
+---
+
+<img
+  src="/hardware/keyboard.png"
+  alt="Mecha Comet Keyboard"
+  style={{ display: "block", margin: "0 auto", width: "65%" }}
+/>
+
+
+
+## Hardware Specifications
+
+- **MCU**: [STM32G431CBU6](https://www.st.com/en/microcontrollers-microprocessors/stm32g431cb.html)
+- **Firmware**: [Vial-QMK](https://github.com/vial-kb/vial-qmk)
+- **Trackpad IC**: [Azoteq IQS 9150](https://www.azoteq.com/product/iqs9150/)
+- **Keys**: 
+- **LED Indicators**:
+  - Caps Lock LED
+  - Fn Layer LED
+
+
+---
+
+## Firmware Architecture
+
+The firmware is built on **Vial-QMK**, that extends QMK with a secure, persistent configuration interface, 
+allowing keyboards to be remapped in real time. 
+It combines the robustness and flexibility of QMK’s firmware architecture with a lightweight GUI that communicates directly with the keyboard over USB. 
+Allowing modifications in real-time. It also provides:
+
+- USB HID compliance
+- Real-time key remapping via Vial GUI
+- Persistent configuration storage
+- Standard QMK hooks
+
+---
+
+## Keymapping and Layer Design
+
+The keyboard uses **three primary layers**:
+
+### Base Layer (Layer 0)
+- Standard alphanumeric input
+- Custom Caps / Fn / Space behavior
+- Navigation keys
+- Mouse buttons
+
+### Fn Sticky Layer (Layer 1)
+- Activated via **Fn tap**
+- One-shot (auto-clears after a keypress)
+- Contains symbols and navigation shortcuts
+<table>
+  <tr>
+    <td>@</td><td>#</td><td>$</td><td>_</td><td>&amp;</td><td>-</td><td>+</td><td>(</td><td>)</td>
+  </tr>
+</table>
+
+
+### Fn Hold Layer (Layer 2)
+- Activated via **Fn hold**
+- Active only while Fn is physically held
+- Function keys and extended symbols
+<table>
+  <tr>
+    <td>~</td>
+    <td>&apos;</td>
+    <td>%</td>
+    <td>^</td>
+    <td>|</td>
+    <td>&#92;</td>
+    <td>=</td>
+    <td>&#123;</td>
+    <td>&#125;</td>
+  </tr>
+</table>
+
+---
+
+## Custom Key Behaviors
+
+### Caps Key (`CAPS_SFT`)
+
+Caps behaves as a **dual-function key**:
+
+- **Hold** → Left Shift
+- **Double Tap** → Caps Lock toggle
+
+---
+
+### Fn Key (`FN_KEY`)
+
+Fn is implemented as a **layer key with sticky support**:
+
+| Action | Result |
+|------|-------|
+| Tap | Sticky Layer 1 |
+| Hold | Momentary Layer 2 |
+| Release after use | Sticky cleared |
+
+---
+
+### Space Key (`KC_SPC`)
+
+Space has a smart punctuation feature:
+
+- **Single Tap** → Space
+- **Double Tap** → `. ` (period + space)
+
+
+---
+
+## Vial Integration
+
+The firmware is compiled with **Vial enabled**, allowing:
+
+- Live remapping
+- Layer visualization
+- Persistent configuration storage
+
+You can download and install Vial from the [homepage](https://get.vial.today/) and follow their guide [here](https://get.vial.today/manual/) to better customize your keyboard.
+
+<img
+  src="/hardware/vial.png"
+  alt="Vial-GUI"
+  style={{ display: "block", margin: "0 auto", width: "80%" }}
+/>
+
+
+---
+
+## Remapping Guide 
+
+### What You Can Do With Vial
+
+- Remap normal keys on any layer
+
+- Have your own custom macros and key-combos
+
+- Rearrange keys to match your preferred keyboard layout (QWERTY, Dvorak, custom, etc.)
+
+---
+
+## Default Combo Cheatsheet
+
+| Physical Key / Action | Mapped To |
+|----------------------|-----------|
+| Action L1 | Escape |
+| Action L2 | Mouse Left Click |
+| Action R2 | Mouse Right Click |
+| Action R1 | Super / Windows Key |
+| Shift | Double Tap → Caps Lock<br/>Single Tap → Sticky / Combine |
+| Fn | Double Tap → Latch Fn Key<br/>Single Tap → Sticky / Combine |
+| Q-P |Example:<br/> Default → `q`<br/>Shift + Q → `Q`<br/>Fn + Q → `1`<br/>Super + Q → `F1` |
+| A-L |Example:<br/> Default → `a`<br/>Shift + A → `A`<br/>Fn + A → `@`<br/>Hold Fn + A → `~` |
+| Fn + Backspace | Delete |
+| Arrow Keys | Up, Down, Left, Right |
+| Space Bar | Single Tap → Space<br/>Double Tap → `.` + Space |
+| Tab | Fn + Arrow Right → Tab<br/>Fn + Arrow Left → Back Tab |
+

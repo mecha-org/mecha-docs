@@ -1,5 +1,38 @@
 ---
 title: Gamepad
+description: A custom STM32-based programmable gamepad with firmware-defined input logic
 ---
 
-This is a placeholder for Gamepad Extension documentation.
+## Overview
+
+Comet Gamepad is a custom-built plug-and-play device so you can get started with your favourite games in no time,
+focused on low-latency and deterministic input, it includes an integrated trackpad for enhanced control and interaction.
+
+<img
+  src="/hardware/gamepad.png"
+  alt="Mecha Comet Keyboard"
+  style={{ display: "block", margin: "0 auto", width: "65%" }}
+/>
+
+The design prioritizes:
+- Deterministic input behavior
+- Low-latency USB HID reporting
+- Firmware-controlled mappings and modes
+
+---
+
+## Hardware Specifications
+
+- **MCU**: [STM32G431CBU6](https://www.st.com/en/microcontrollers-microprocessors/stm32g431cb.html)
+- **Firmware**: Custom STM32 Firmware
+- **Trackpad IC**: [Azoteq IQS 9150](https://www.azoteq.com/product/iqs9150/)
+
+---
+
+## Firmware Architecture
+
+The gamepad firmware is written specifically for the STM32 platform and does not rely on higher-level keyboard frameworks.  
+All input processing, state tracking, and HID reports are implemented directly in firmware.
+
+---
+
