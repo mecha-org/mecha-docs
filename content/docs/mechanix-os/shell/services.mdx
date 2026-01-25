@@ -1,5 +1,48 @@
 ---
 title: Services
+description: Core system services for Mechanix Shell
 ---
 
-This is a placeholder for Mechanix OS Services documentation.
+# Services
+
+The Mechanix Shell relies on a suite of background services to provide essential functionality such as configuration management, universal search, and system integration.
+
+## Core Services
+
+### 🔧 MxConf (Configuration Service)
+**MxConf** is the centralized configuration management service for Mechanix OS. it provides a simple interface for applications to access and modify configuration values.
+
+**Key Features:**
+- **File Watching**: Automatically detects and loads new TOML configuration schemas from `/usr/share/mxconf/schemas`.
+- **Profiles**: Supports user-level and system-level configuration profiles.
+- **Lockdown Mode**: Administrators can restrict specific settings from being modified by end-users. also provides namespace isolation for different applications.
+- **Embedded Database**: Uses [sled](https://github.com/spacejam/sled) for fast, reliable, and verified data storage.
+- **Interfaces**: Fully accessible via D-Bus and a CLI utility (`mxconf`).
+
+### 🔍 MxSearch (Unified Search)
+**MxSearch** is a powerful, customizable search engine inspired by Spotlight. It indexes various data sources—applications, files, and actions—into a [Tantivy](https://docs.rs/tantivy/) index for instant retrieval.
+
+**Capabilities:**
+1.  **Application Search**: Indexes `.desktop` files to launch installed applications. It supports custom paths, debounce updates, and configurable search fields.
+2.  **File Search**: Indexes files within specified directories. You can configure:
+    - Target directories and depth
+    - Allowed file extensions
+    - Maximum file size
+    - Searchable fields (name, content, file type)
+3.  **App Actions**: A unique feature allowing applications to register executable actions directly in the search results.
+    - Actions are defined in TOML files at `/usr/share/mxsearch/actions`.
+    - Supports dynamic arguments (e.g., passing a search keyword to the action).
+    - *Example*: A "Enable WiFi" action from the Settings app can be triggered directly from the search bar.
+4.  **Sources Service**: An ingestion API for external data. Applications can push items like notes, music, or browser history into the search index via D-Bus, making them searchable alongside system items.
+
+## Session Services
+These services manage hardware interactions and system state within the user session. They operate under the `org.mechanix.services` namespace.
+
+### 🖥️ Display Service
+The **Display Service** is responsible for managing screen properties.
+- **Bus Name**: `org.mechanix.services.Display`
+- **Functionality**: Watches for brightness configuration changes via D-Bus and applies them to the system backlight control.
+
+### 🔘 Hardware Button Service
+The **HwButton Service** handles physical button events.
+This service is responsible for handling physical button events and broadcasting them on the session bus for other components (like the shell or launcher) to consume, it is maped to the buttons available on the Mecha Comet device.

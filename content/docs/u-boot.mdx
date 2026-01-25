@@ -8,7 +8,7 @@ U-Boot (Universal Boot Loader) is the primary bootloader for the Mecha Comet. It
 
 On the Mecha Comet (powered by the NXP i.MX 8M Plus), U-Boot is essential for:
 - **Hardware Initialization**: Setting up the LPDDR4 memory, storage (eMMC/SD), and peripheral controllers.
-- **Hardware Variants**: Automatically handling configurations for both the 4GB and 8GB RAM models.
+- **Hardware Variants**: Automatically handling configurations for the 4GB RAM model.
 - **Secure Foundations**: Coordinating with ARM Trusted Firmware (ATF) to establish a secure platform before the OS starts.
 - **Recovery & Configuration**: Providing a low-level environment for system recovery and boot parameter adjustment.
 
@@ -60,15 +60,8 @@ cd ..
 ### 2. Configure and Compile
 Select the configuration corresponding to your hardware variant.
 
-**For the 4GB RAM Model:**
 ```bash
 make mecha-comet-imx8mp-4gb_defconfig
-make -j$(nproc)
-```
-
-**For the 8GB RAM Model:**
-```bash
-make mecha-comet-imx8mp-8gb_defconfig
 make -j$(nproc)
 ```
 
@@ -79,5 +72,5 @@ The final bootable image (`flash.bin`) is assembled using the `imx-mkimage` tool
 ---
 
 <Callout type="info">
-The Mecha Comet U-Boot repository uses [GitHub Actions](https://github.com/mecha-org/u-boot/actions) to automatically build and release boot images for both 4GB and 8GB variants. You can find pre-built `flash.bin` binaries in the repository's actions tab.
+The Mecha Comet U-Boot repository uses [GitHub Actions](https://github.com/mecha-org/u-boot/actions) to automatically build and release boot images. You can find pre-built `flash.bin` binaries in the repository's actions tab.
 </Callout>
