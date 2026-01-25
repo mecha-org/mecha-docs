@@ -1,5 +1,39 @@
 ---
 title: IO Breakout
+description: A pogo-pin based IO expansion interface for prototyping and peripheral integration
 ---
 
-This is a placeholder for IO Breakout Extension documentation.
+## Overview
+
+The **IO Breakout** is an expansion device designed to expose the Comet’s internal IO in a flexible way.
+
+It features **40 pogo pins**, enabling seamless connection to external peripherals such as GPIO modules, keyboards and other custom peripherals.
+
+<img
+  src="/hardware/breakout.png"
+  alt="Mecha Comet Keyboard"
+  style={{ display: "block", margin: "0 auto", width: "65%" }}
+/>
+
+## Hardware Specifications
+
+- **Primary Interface**: 40-pin pogo connector
+- **Expansion Type**: GPIO breakout and debug interface
+- **Header Pitch**: 2.54 mm female headers (breadboard-compatible)
+- **USB-to-UART IC**: [CP2102](https://www.silabs.com/interface/usb-bridges/classic/device.cp2102)
+- **Intended Use**:
+  - Prototyping and experimentation
+  - Firmware flashing and debugging
+  - External peripheral integration (keyboards, gamepads, sensors)
+
+## Architecture
+
+The **GPIO Extension** adapts the raw pogo-pin interface into standard, breadboard-compatible connectors while also providing a convenient communication interface to the host system. It converts the 40 pogo pins into **2.54 mm pitch female headers**, allowing easy access to all exposed signals using standard jumpers.
+
+This makes it ideal for:
+
+- Rapid prototyping
+- Debugging and signal probing
+- Connecting external sensors or modules
+
+The IO Breakout is designed to bridge the gap between compact hardware design and open-ended experimentation by exposing internal signals through pogo pins and adapting them to familiar connectors without compromising the integrity of the core system.
